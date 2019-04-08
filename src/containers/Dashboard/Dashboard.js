@@ -10,12 +10,10 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div className="DashboardOwner text-center">
-                <div className="row mt-5">
-                    <div className="col-2">
-                        <h1>Dashboard</h1>
-                        <a href='/' className='btn btn-info'>Back</a>
-                    </div>
-                </div>
+            <div className="text-right">
+                <a href='/' className='btn btn-info'>Back</a>
+            </div>
+            <h1>Dashboard</h1>
                 <div className="row">
                     <div className="col">
                         <h3 className="mt-5">Edit User</h3>
