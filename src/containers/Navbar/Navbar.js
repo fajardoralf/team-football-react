@@ -47,6 +47,7 @@ class PageNavbar extends React.Component {
     return (
       <div>
         <h1>Welcome to Football Manager</h1>
+        <br></br>
         <div className='loggedIn'>
 
           {(sessionStorage.getItem('username') === null) ?
