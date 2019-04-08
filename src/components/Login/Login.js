@@ -1,93 +1,72 @@
-import React, { Component } from 'react';
-import './login.css';
-
-
+import React, { Component } from "react";
+import { Form, Button, Card } from "react-bootstrap";
 
 class Login extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      username: '',
-      user_id: 0,
-      role: 'guest'
+      username: "",
+      password: "",
+      role: "admin",
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
   }
 
+  componentDidMount() {}
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const data = new FormData(event.target);
-    let xdata = {
-      username: data.get('username'),
-      password: data.get('password')
-    }
-    console.log(xdata)
-    /*
-    fetch('https://week6api.herokuapp.com/auth', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify(xdata),
-    }).then(resp => resp.json()).then(data => {
-      console.log(data)
-      sessionStorage.setItem('username', data.username)
-      sessionStorage.setItem('user_id', data.user_id)
-      sessionStorage.setItem('role', (data.role) ? 'Owner':'Reviewer')
-      this.setState({
-        username: data.username,
-        user_id: parseInt(data.user_id),
-        role: (data.role) ? 'Owner':'Reviewer'
-      })
-      //window.location.reload();
-    });
-    */
-    // Dummy data until we have DB working
-    sessionStorage.setItem('username', data.get("username"))
-    sessionStorage.setItem('role', 'admin') //admin, user, undefined == anonymous
+  handleSubmit() {
+    var _this = this;
+    sessionStorage.setItem('username', _this.state.username)
+    sessionStorage.setItem('password', _this.state.password)
+    sessionStorage.setItem('role', _this.state.role) //admin, user, undefined == anonymous
   }
 
-  handleLogout() {
-    sessionStorage.clear()
-    this.setState({
-      username: null,
-      user_id: 0,
-      role: ''
-    })
-    //window.location.reload();
-  };
+  handleChangeUsername(event) {
+    this.setState({ username: event.target.value });
+  }
 
+  handleChangePassword(event) {
+    this.setState({ password: event.target.value });
+  }
 
   render() {
-    console.log(this.state.username);
     return (
-      <div>
-        <div className="LoginPage">
-          <h1>Football manager</h1>
-          {(sessionStorage.getItem('username') == null) ?
-            <div><h2>Login!</h2>
-              <form onSubmit={this.handleSubmit}>
-                <label htmlFor="username">Enter username</label>
-                <input id="username" type="text" placeholder="Username" name="username" />
-                <label htmlFor="password">Enter your password</label>
-                <input id="password" type="password" placeholder="Password" name="password" />
-                <button className='btn btn-primary'>Login</button>
-              </form>
+      <div className="text-center">
+      <h1>Welcome to Football Manager</h1>
+      <Card bg="light" text="black" style={{ width: "18rem" }}>
+        <Card.Body>
+          <Form onSubmit={this.handleSubmit.bind(this)}>
+            <Form.Group controlId="formBasicUsernameLogin">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="username"
+                placeholder="Username"
+                value={this.state.username}
+                onChange={this.handleChangeUsername.bind(this)}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicPasswordLogin">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                onChange={this.handleChangePassword.bind(this)}
+              />
+            </Form.Group>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Button variant="dark" type="submit">
+                Sign In
+              </Button>
             </div>
-            :
-            <div className='loggedIn'>
-              <p>Hello {sessionStorage.getItem('username')}</p>
-              <a href='/dashboard' className='btn btn-info'>Dashboard</a>
-              <button className='btn btn-danger' onClick={this.handleLogout}>Logout</button>
-            </div>}
-
-        </div>
+          </Form>
+        </Card.Body>
+      </Card>
       </div>
-
     );
   }
 }
