@@ -1,0 +1,14 @@
+.LoginPage{
+    margin-bottom: 2%;
+    margin-top:5%;
+    background: whitesmoke;
+    border: solid 2px whitesmoke;
+    border-radius: 10px;
+    padding-top: 1%;
+    padding-bottom: 3%;
+}
+
+.loggedIn {
+    text-align: right;
+    margin-right: 3%;
+}
