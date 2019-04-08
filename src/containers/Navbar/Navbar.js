@@ -55,8 +55,8 @@ class PageNavbar extends React.Component {
             :
             <div >
               <p>Hello {sessionStorage.getItem('username')}</p>
-              <a href='/dashboard' className='btn btn-info'>Dashboard</a>
-              <button className='btn btn-danger' onClick={this.handleLogout}>Logout</button>
+                <a href='/dashboard' className='btn btn-info' id="button">Dashboard</a>
+                <button className='btn btn-danger' onClick={this.handleLogout} id="button">Logout</button>
             </div>
           }
         </div>

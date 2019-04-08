@@ -12,27 +12,26 @@ class Dashboard extends React.Component {
         return (
             <div className="DashboardOwner text-center">
             <div className="text-right">
-                <a href='/' className='btn btn-info'>Back</a>
+                <a href='/' className='btn btn-info' id="button">Back</a>
             </div>
             <h1>Dashboard</h1>
                 <div className="row">
-                    <div className="col" id="dashboardElement">
+                    <div className="col" id="button">
                         <h3 className="mt-5">Edit User</h3>
                         <EditPerson/>
                     </div>
-                    <div className="col" id="dashboardElement">
+                    <div className="col" id="button">
                         <h3 className="mt-5">Create Person</h3>
                         <CreatePerson/>
                     </div>
-                    <div className="col" id="dashboardElement">
+                    <div className="col" id="button">
                         <h3 className="mt-5">Create Team</h3>
                         <CreateTeam/>
                     </div>
-                    <div className="col" id="dashboardElement">
+                    <div className="col" id="button">
                         <h3 className="mt-5">Create Location</h3>
                         <CreateLocation/>
                     </div>
-
                 </div>
             </div>
         )
