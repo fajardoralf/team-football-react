@@ -32,8 +32,7 @@ class Login extends Component {
   render() {
     return (
       <div className="text-center" id="form">
-          <br></br>
-          <br></br>
+          
             <Form onSubmit={this.handleSubmit.bind(this)}>
               <Form.Group controlId="formBasicUsernameLogin">
                 <Form.Label>Username</Form.Label>

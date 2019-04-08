@@ -9,11 +9,11 @@ class Dashboard extends React.Component {
 
     render() {
         return (
-            <div className="DashboardOwner container-fluid">
+            <div className="DashboardOwner text-center">
                 <div className="row mt-5">
                     <div className="col-2">
-                        <a href='/' className='btn btn-info'>Back</a>
                         <h1>Dashboard</h1>
+                        <a href='/' className='btn btn-info'>Back</a>
                     </div>
                 </div>
                 <div className="row">
