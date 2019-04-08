@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button,} from "react-bootstrap";
+import './Login.css';
 
 class Login extends Component {
   constructor(props) {
@@ -30,10 +31,9 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="text-center">
-
-        <Card bg="light" text="black" style={{ width: "18rem"}}>
-          <Card.Body>
+      <div className="text-center" id="form">
+          <br></br>
+          <br></br>
             <Form onSubmit={this.handleSubmit.bind(this)}>
               <Form.Group controlId="formBasicUsernameLogin">
                 <Form.Label>Username</Form.Label>
@@ -52,20 +52,11 @@ class Login extends Component {
                   onChange={this.handleChangePassword.bind(this)}
                 />
               </Form.Group>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
+              <br></br>
                 <Button variant="dark" type="submit">
                   Sign In
               </Button>
-              </div>
             </Form>
-          </Card.Body>
-        </Card>
       </div>
     );
   }
