@@ -52,9 +52,11 @@ class Login extends Component {
                 />
               </Form.Group>
               <br></br>
+              <div id="button">
                 <Button variant="dark" type="submit">
                   Sign In
-              </Button>
+                </Button>
+              </div>
             </Form>
       </div>
     );
