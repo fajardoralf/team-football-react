@@ -6,12 +6,12 @@ import './index.css';
 //import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import Dashboard from './containers/Dashboard/Dashboard';
-import CreateContactTable from './components/Tables/CreateContactTable';
+import CreateSeasonTable from './components/Tables/CreateSeasonTable';
 
 ReactDOM.render(
 <Router>
     <Route path='/' exact component={App}/>
     <Route path="/dashboard" exact component={Dashboard} />
-    <Route path="/test" exact component={CreateContactTable} />
+    <Route path="/test" exact component={CreateSeasonTable} />
 </Router>,
  document.getElementById('root'));
