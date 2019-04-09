@@ -79,7 +79,7 @@ class CreateTeamTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="addPersonForm">
+            <Form.Group controlId="createTeamForm">
               <Form.Label>Coach ID</Form.Label>
               <Form.Control
                 type="coachId"
@@ -89,7 +89,7 @@ class CreateTeamTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="addPersonForm">
+            <Form.Group controlId="createTeamForm">
               <Form.Label>Owner ID</Form.Label>
               <Form.Control
                 type="ownerId"
@@ -99,7 +99,7 @@ class CreateTeamTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="addPersonForm">
+            <Form.Group controlId="createTeamForm">
               <Form.Label>Location ID</Form.Label>
               <Form.Control
                 type="locationId"
