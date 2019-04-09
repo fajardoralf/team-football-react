@@ -61,7 +61,7 @@ class CreatePersonTable extends React.Component {
   }
 
   render() {
-    let title = "Add Person"
+    let title = "Create Person"
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
