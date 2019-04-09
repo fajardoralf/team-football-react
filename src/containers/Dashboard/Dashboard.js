@@ -12,6 +12,7 @@ import CreateMatchTable from '../../components/CreateTables/CreateMatchTable'
 import CreateResultTable from '../../components/CreateTables/CreateResultTable'
 import CreateSeasonTable from '../../components/CreateTables/CreateSeasonTable'
 import CreateTeamTable from '../../components/CreateTables/CreateTeamTable'
+import UpdatePersonTable from '../../components/UpdateTables/UpdatePersonTable'
 /* A JSX comment 
 import CreateLocation from '../../components/Dashboard/createLocation';
 import CreatePerson from '../../components/Dashboard/createPerson';
@@ -55,6 +56,7 @@ class Dashboard extends React.Component {
                             <div onClick={this.setStatus.bind(this, 10)}><li className="list-group-item" id="button">Create Result</li></div>
                             <div onClick={this.setStatus.bind(this, 11)}><li className="list-group-item" id="button">Create Season</li></div>
                             <div onClick={this.setStatus.bind(this, 12)}><li className="list-group-item" id="button">Create Team</li></div>
+                            <div onClick={this.setStatus.bind(this, 13)}><li className="list-group-item" id="button">Update Person</li></div>
                         </ul>
                     </div>
                     <div className="col-8">
@@ -71,7 +73,8 @@ class Dashboard extends React.Component {
                             9: <CreateMatchTable></CreateMatchTable>,
                             10: <CreateResultTable></CreateResultTable>,
                             11: <CreateSeasonTable></CreateSeasonTable>,
-                            12: <CreateTeamTable></CreateTeamTable>
+                            12: <CreateTeamTable></CreateTeamTable>,
+                            13: <UpdatePersonTable></UpdatePersonTable>
                         }[this.state.status]}
                      </div>
                 </div>
