@@ -60,7 +60,7 @@ class CreateTeamTable extends React.Component {
   }
 
   render() {
-    let title = "Create team"
+    let title = "Create Team"
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
