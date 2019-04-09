@@ -6,12 +6,10 @@ import './index.css';
 //import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import Dashboard from './containers/Dashboard/Dashboard';
-import CreateMatchPositionTable from './components/Tables/CreateMatchPositionTable';
 
 ReactDOM.render(
 <Router>
     <Route path='/' exact component={App}/>
     <Route path="/dashboard" exact component={Dashboard} />
-    <Route path="/test" exact component={CreateMatchPositionTable} />
 </Router>,
  document.getElementById('root'));
