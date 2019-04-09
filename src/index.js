@@ -6,10 +6,12 @@ import './index.css';
 //import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import Dashboard from './containers/Dashboard/Dashboard';
+import CreateTeamTable from './components/Tables/CreateTeamTable';
 
 ReactDOM.render(
 <Router>
     <Route path='/' exact component={App}/>
     <Route path="/dashboard" exact component={Dashboard} />
+    <Route path="/test" exact component={CreateTeamTable} />
 </Router>,
  document.getElementById('root'));

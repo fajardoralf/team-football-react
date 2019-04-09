@@ -4,6 +4,7 @@ import CreatePerson from '../../components/Dashboard/createPerson';
 import CreateTeam from '../../components/Dashboard/createTeam';
 import EditPerson from '../../components/Dashboard/editPerson';
 import './Dashboard.css';
+import CreatePersonTable from '../../components/Dashboard/createPersonTable';
 
 
 class Dashboard extends React.Component {
@@ -32,6 +33,11 @@ class Dashboard extends React.Component {
                         <h3 className="mt-5">Create Location</h3>
                         <CreateLocation/>
                     </div>
+                    <div className="col" id="button">
+                        <h3 className="mt-5">Create Person</h3>
+                        <CreatePersonTable/>
+                    </div>
+
                 </div>
             </div>
         )
