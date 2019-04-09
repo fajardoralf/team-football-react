@@ -40,37 +40,37 @@ class CreateAddressTable extends React.Component {
   }
 
   setAddressLine1(event) {
-    this.setAddressLine1({ 
+    this.setState({ 
       addressLine1: event.target.value
     });
   }
 
   setAddressLine2(event) {
-    this.setAddressLine1({ 
+    this.setState({ 
       addressLine2: event.target.value
     });
   }
 
   setAddressLine3(event) {
-    this.setAddressLine1({ 
+    this.setState({ 
       addressLine3: event.target.value
     });
   }
 
   setPostalCode(event) {
-    this.setAddressLine1({ 
+    this.setState({ 
       postalCode: event.target.value
     });
   }
 
   setCity(event) {
-    this.setAddressLine1({ 
+    this.setState({ 
       city: event.target.value
     });
   }
 
   setCountry(event) {
-    this.setAddressLine1({ 
+    this.setState({ 
       country: event.target.value
     });
   }
