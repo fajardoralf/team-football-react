@@ -97,10 +97,6 @@ class UpdateAddressTable extends React.Component {
     });
   }
 
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
-  }
-
   render() {
     const title = "Update Address";
 
