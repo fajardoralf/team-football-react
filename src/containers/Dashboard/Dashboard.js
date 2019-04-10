@@ -14,13 +14,11 @@ import CreateSeasonTable from '../../components/CreateTables/CreateSeasonTable'
 import CreateTeamTable from '../../components/CreateTables/CreateTeamTable'
 import UpdatePersonTable from '../../components/UpdateTables/UpdatePersonTable'
 import UpdateAddressTable from '../../components/UpdateTables/UpdateAddressTable'
+import UpdateSelfTable from '../../components/UpdateTables/UpdateSelfTable'
+import ManageWatchlist from '../../components/Dashboard/ManageWatchlist'
+import SubmitCorrection from '../../components/Dashboard/SubmitCorrection'
 import UpdateAssociationTable from '../../components/UpdateTables/UpdateAssociationTable';
-/* A JSX comment 
-import CreateLocation from '../../components/Dashboard/createLocation';
-import CreatePerson from '../../components/Dashboard/createPerson';
-import CreateTeam from '../../components/Dashboard/createTeam';
-import EditPerson from '../../components/Dashboard/editPerson';
-*/
+
 
 
 
@@ -29,7 +27,7 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: 1
+            status: 0
         };
     }
 
@@ -43,30 +41,40 @@ class Dashboard extends React.Component {
         return (
             <div className="container">
                 <h1 className="text-center">Dashboard</h1>
-                <div className="row">
-                    <div className="col-4">
-                        <ul className="list-group text-center">
-                            <div onClick={this.setStatus.bind(this, 1)}><li className="list-group-item" id="button">Create Person</li></div>
-                            <div onClick={this.setStatus.bind(this, 2)}><li className="list-group-item" id="button">Create Address</li></div>
-                            <div onClick={this.setStatus.bind(this, 3)}><li className="list-group-item" id="button">Create Association</li></div>
-                            <div onClick={this.setStatus.bind(this, 4)}><li className="list-group-item" id="button">Create Contact</li></div>
-                            <div onClick={this.setStatus.bind(this, 5)}><li className="list-group-item" id="button">Create GoalType</li></div>
-                            <div onClick={this.setStatus.bind(this, 6)}><li className="list-group-item" id="button">Create Location</li></div>
-                            <div onClick={this.setStatus.bind(this, 7)}><li className="list-group-item" id="button">Create Match Goal</li></div>
-                            <div onClick={this.setStatus.bind(this, 8)}><li className="list-group-item" id="button">Create Match Position</li></div>
-                            <div onClick={this.setStatus.bind(this, 9)}><li className="list-group-item" id="button">Create Match</li></div>
-                            <div onClick={this.setStatus.bind(this, 10)}><li className="list-group-item" id="button">Create Result</li></div>
-                            <div onClick={this.setStatus.bind(this, 11)}><li className="list-group-item" id="button">Create Season</li></div>
-                            <div onClick={this.setStatus.bind(this, 12)}><li className="list-group-item" id="button">Create Team</li></div>
-                            <div onClick={this.setStatus.bind(this, 13)}><li className="list-group-item" id="button">Update Person</li></div>
-                            <div onClick={this.setStatus.bind(this, 14)}><li className="list-group-item" id="button">Update Address</li></div>
-                            <div onClick={this.setStatus.bind(this, 15)}><li className="list-group-item" id="button">Update Association</li></div>
 
+                <div className="row">
+                    {sessionStorage.getItem("role") ?
+                        <div className="col-4">
+                            <ul className="list-group text-center">
+                                <div onClick={this.setStatus.bind(this, 1)}><li className="list-group-item" id="button">Create Person</li></div>
+                                <div onClick={this.setStatus.bind(this, 2)}><li className="list-group-item" id="button">Create Address</li></div>
+                                <div onClick={this.setStatus.bind(this, 3)}><li className="list-group-item" id="button">Create Association</li></div>
+                                <div onClick={this.setStatus.bind(this, 4)}><li className="list-group-item" id="button">Create Contact</li></div>
+                                <div onClick={this.setStatus.bind(this, 5)}><li className="list-group-item" id="button">Create GoalType</li></div>
+                                <div onClick={this.setStatus.bind(this, 6)}><li className="list-group-item" id="button">Create Location</li></div>
+                                <div onClick={this.setStatus.bind(this, 7)}><li className="list-group-item" id="button">Create Match Goal</li></div>
+                                <div onClick={this.setStatus.bind(this, 8)}><li className="list-group-item" id="button">Create Match Position</li></div>
+                                <div onClick={this.setStatus.bind(this, 9)}><li className="list-group-item" id="button">Create Match</li></div>
+                                <div onClick={this.setStatus.bind(this, 10)}><li className="list-group-item" id="button">Create Result</li></div>
+                                <div onClick={this.setStatus.bind(this, 11)}><li className="list-group-item" id="button">Create Season</li></div>
+                                <div onClick={this.setStatus.bind(this, 12)}><li className="list-group-item" id="button">Create Team</li></div>
+                                <div onClick={this.setStatus.bind(this, 13)}><li className="list-group-item" id="button">Update Person</li></div>
+                                <div onClick={this.setStatus.bind(this, 14)}><li className="list-group-item" id="button">Update Address</li></div>
+                                <div onClick={this.setStatus.bind(this, 18)}><li className="list-group-item" id="button">Update Association</li></div>
+
+                            </ul>
+                        </div>
+                        :
+                        <ul className="list-group text-center">
+                            <div onClick={this.setStatus.bind(this, 15)}><li className="list-group-item" id="button">Update Info</li></div>
+                            <div onClick={this.setStatus.bind(this, 16)}><li className="list-group-item" id="button">Manage Watchlist</li></div>
+                            <div onClick={this.setStatus.bind(this, 17)}><li className="list-group-item" id="button">BONUS: Submit Correction</li></div>
                         </ul>
-                    </div>
+                    }
                     <div className="col-8">
-                    
-                         {{
+
+                        {{
+                            0: <div></div>,
                             1: <CreatePersonTable></CreatePersonTable>,
                             2: <CreateAddressTable></CreateAddressTable>,
                             3: <CreateAssociationTable></CreateAssociationTable>,
@@ -81,12 +89,15 @@ class Dashboard extends React.Component {
                             12: <CreateTeamTable></CreateTeamTable>,
                             13: <UpdatePersonTable></UpdatePersonTable>,
                             14: <UpdateAddressTable></UpdateAddressTable>,
-                            15: <UpdateAssociationTable></UpdateAssociationTable>
+                            15: <UpdateSelfTable personID="0"></UpdateSelfTable>,
+                            16: <ManageWatchlist></ManageWatchlist>,
+                            17: <SubmitCorrection></SubmitCorrection>,
+                            18: <UpdateAssociationTable></UpdateAssociationTable>
                         }[this.state.status]}
-                     </div>
+                    </div>
                 </div>
             </div>
-            
+
             /* A JSX comment 
 
             <div className="DashboardOwner text-center">
