@@ -20,11 +20,24 @@ class CreateMatchGoalTable extends React.Component {
 
     axios
       .post(URL, {
-        playerId: this.state.playerId,
-        goalTypeId: this.state.goalTypeId,
-        matchId: this.state.matchId,
+        player_id: this.state.playerId,
+        goal_type_id: this.state.goalTypeId,
+        match_id: this.state.matchId,
         description: this.state.description
-      })
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
       playerId: "",
       goalTypeId: "",

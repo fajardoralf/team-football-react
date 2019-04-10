@@ -22,13 +22,26 @@ class CreateAddressTable extends React.Component {
 
     axios
       .post(URL, {
-        addressLine1: this.state.addressLine1,
-        addressLine2: this.state.addressLine2,
-        addressLine3: this.state.addressLine3,
-        postalCode: this.state.postalCode,
+        address_line_1: this.state.addressLine1,
+        address_line_2: this.state.addressLine2,
+        address_line_3: this.state.addressLine3,
+        postal_code: this.state.postalCode,
         city: this.state.city,
         country: this.state.country
-      })
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
         addressLine1: "",
         addressLine2: "",

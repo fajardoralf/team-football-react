@@ -19,10 +19,23 @@ class CreateContactTable extends React.Component {
 
     axios
       .post(URL, {
-        personId: this.state.personId,
-        contactType: this.state.contactType,
-        contactDetail: this.state.contactDetail
-      })
+        person_id: this.state.personId,
+        contact_type: this.state.contactType,
+        contact_detail: this.state.contactDetail
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
       personId: "",
       contactType: "",

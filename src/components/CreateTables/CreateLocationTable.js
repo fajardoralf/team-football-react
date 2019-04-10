@@ -19,10 +19,23 @@ class CreateLocationTable extends React.Component {
 
     axios
       .post(URL, {
-        addressId: this.state.addressId,
+        address_id: this.state.addressId,
         name: this.state.addressName,
         description: this.state.description
-      })
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
         addressId: "",
         name: "",
