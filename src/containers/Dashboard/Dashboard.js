@@ -17,6 +17,8 @@ import UpdateAddressTable from '../../components/UpdateTables/UpdateAddressTable
 import UpdateSelfTable from '../../components/UpdateTables/UpdateSelfTable'
 import ManageWatchlist from '../../components/Dashboard/ManageWatchlist'
 import SubmitCorrection from '../../components/Dashboard/SubmitCorrection'
+import UpdateAssociationTable from '../../components/UpdateTables/UpdateAssociationTable';
+
 
 
 
@@ -58,6 +60,7 @@ class Dashboard extends React.Component {
                                 <div onClick={this.setStatus.bind(this, 12)}><li className="list-group-item" id="button">Create Team</li></div>
                                 <div onClick={this.setStatus.bind(this, 13)}><li className="list-group-item" id="button">Update Person</li></div>
                                 <div onClick={this.setStatus.bind(this, 14)}><li className="list-group-item" id="button">Update Address</li></div>
+                                <div onClick={this.setStatus.bind(this, 18)}><li className="list-group-item" id="button">Update Association</li></div>
 
                             </ul>
                         </div>
@@ -88,7 +91,8 @@ class Dashboard extends React.Component {
                             14: <UpdateAddressTable></UpdateAddressTable>,
                             15: <UpdateSelfTable personID="0"></UpdateSelfTable>,
                             16: <ManageWatchlist></ManageWatchlist>,
-                            17: <SubmitCorrection></SubmitCorrection>
+                            17: <SubmitCorrection></SubmitCorrection>,
+                            18: <UpdateAssociationTable></UpdateAssociationTable>
                         }[this.state.status]}
                     </div>
                 </div>
