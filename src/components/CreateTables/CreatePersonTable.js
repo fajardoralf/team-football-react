@@ -17,23 +17,34 @@ class CreatePersonTable extends React.Component {
 
   handleForm = event => {
     event.preventDefault();
-    axios.post(URL, {
-      addressId:this.state.addressId,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      dateOfBirth: this.state.dateOfBirth
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    axios
+      .post(
+        URL,
+        {
+          addressId: this.state.addressId,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          dateOfBirth: this.state.dateOfBirth
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
+        }
+      )
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
     this.setState({
-      addressId: "",
+      addressid: "",
       firstName: "",
       lastName: "",
       dateOfBirth: ""
-    })
+    });
   };
 
   setAddressId(event) {
@@ -58,9 +69,16 @@ class CreatePersonTable extends React.Component {
     });
   }
 
-  //componentDidMount() {
-  //axios.get(URL).then(json => this.setState({ store: json.data }));
-  //}
+  componentWillMount() {
+    axios
+      .get(URL)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   render() {
     let title = "Create Person";
