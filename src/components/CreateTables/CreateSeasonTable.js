@@ -20,8 +20,8 @@ class CreateSeasonTable extends React.Component {
 
     axios
       .post(URL, {
-        startDate: this.state.startDate,
-        endDate: this.state.endDate,
+        start_date: this.state.startDate,
+        end_date: this.state.endDate,
         name: this.state.name,
         description: this.state.description
       })

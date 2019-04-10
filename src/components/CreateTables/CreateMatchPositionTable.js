@@ -8,8 +8,8 @@ class CreateMatchPositionTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      playerId: "",
-      matchId: "",
+      player_id: "",
+      match_id: "",
       position: ""
     };
   }
@@ -19,26 +19,26 @@ class CreateMatchPositionTable extends React.Component {
 
     axios
       .post(URL, {
-        playerId: this.state.playerId,
-        matchId: this.state.matchId,
+        player_id: this.state.player_id,
+        match_id: this.state.match_id,
         position: this.state.position
       })
     this.setState({
-      playerId: "",
-      matchId: "",
+      player_id: "",
+      match_id: "",
       position: ""
     });
   }
 
-  setPlayerId(event) {
+  setPlayer_id(event) {
     this.setState({ 
-      playerId: event.target.value
+      player_id: event.target.value
     });
   }
 
-  setMatchId(event) {
+  setMatch_id(event) {
     this.setState({
-      matchId: event.target.value
+      match_id: event.target.value
     });
   }
 
@@ -65,20 +65,20 @@ class CreateMatchPositionTable extends React.Component {
             <Form.Group controlId="createMatchPositionForm">
               <Form.Label>Player ID</Form.Label>
               <Form.Control
-                type="playerId"
+                type="player_id"
                 placeholder="Player ID"
-                value={this.state.playerId}
-                onChange={this.setPlayerId.bind(this)}
+                value={this.state.player_id}
+                onChange={this.setPlayer_id.bind(this)}
               />
             </Form.Group>
 
             <Form.Group controlId="createMatchPositionForm">
               <Form.Label>Match ID</Form.Label>
               <Form.Control
-                type="matchId"
+                type="match_id"
                 placeholder="Match ID"
-                value={this.state.matchId}
-                onChange={this.setMatchId.bind(this)}
+                value={this.state.match_id}
+                onChange={this.setMatch_id.bind(this)}
               />
             </Form.Group>
 

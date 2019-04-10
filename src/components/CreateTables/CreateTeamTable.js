@@ -8,10 +8,10 @@ class CreateTeamTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      associationId: "",
-      coachId: "",
-      ownerId: "",
-      locationId: ""
+      association_id: "",
+      coach_id: "",
+      owner_id: "",
+      location_id: ""
     };
   }
 
@@ -20,38 +20,38 @@ class CreateTeamTable extends React.Component {
 
     axios
       .post(URL, {
-        associationId: this.state.associationId,
-        coachId: this.state.coachId,
-        ownerId: this.state.ownerId,
-        locationId: this.state.locationId
+        association_id: this.state.association_id,
+        coach_id: this.state.coach_id,
+        owner_id: this.state.owner_id,
+        location_id: this.state.location_id
       })
     this.setState({
-      associationId: "",
-      coachId: "",
-      ownerId: "",
-      locationId: ""
+      association_id: "",
+      coach_id: "",
+      owner_id: "",
+      location_id: ""
     });
   }
 
-  setAssociationId(event) {
+  setAssociation_id(event) {
     this.setState({ 
-      associationId: event.target.value
+      association_id: event.target.value
     });
   }
 
-  setCoachId(event) {
+  setCoach_id(event) {
     this.setState({
-      coachId: event.target.value
+      coach_id: event.target.value
     });
   }
-  setOwnerId(event) {
+  setOwner_id(event) {
     this.setState({
-      ownerId: event.target.value
+      owner_id: event.target.value
     });
   }
-  setLocationId(event) {
+  setLocation_id(event) {
     this.setState({ 
-      locationId: event.target.value
+      location_id: event.target.value
     });
   }
 
@@ -72,40 +72,40 @@ class CreateTeamTable extends React.Component {
             <Form.Group controlId="createTeamForm">
               <Form.Label>Association ID</Form.Label>
               <Form.Control
-                type="associationId"
+                type="association_id"
                 placeholder="Association ID"
-                value={this.state.associationId}
-                onChange={this.setAssociationId.bind(this)}
+                value={this.state.association_id}
+                onChange={this.setAssociation_id.bind(this)}
               />
             </Form.Group>
 
             <Form.Group controlId="createTeamForm">
               <Form.Label>Coach ID</Form.Label>
               <Form.Control
-                type="coachId"
+                type="coach_id"
                 placeholder="Coach ID"
-                value={this.state.coachId}
-                onChange={this.setCoachId.bind(this)}
+                value={this.state.coach_id}
+                onChange={this.setCoach_id.bind(this)}
               />
             </Form.Group>
 
             <Form.Group controlId="createTeamForm">
               <Form.Label>Owner ID</Form.Label>
               <Form.Control
-                type="ownerId"
+                type="owner_id"
                 placeholder="Owner ID"
-                value={this.state.ownerId}
-                onChange={this.setOwnerId.bind(this)}
+                value={this.state.owner_id}
+                onChange={this.setOwner_id.bind(this)}
               />
             </Form.Group>
 
             <Form.Group controlId="createTeamForm">
               <Form.Label>Location ID</Form.Label>
               <Form.Control
-                type="locationId"
+                type="location_id"
                 placeholder="location ID"
-                value={this.state.locationId}
-                onChange={this.setLocationId.bind(this)}
+                value={this.state.location_id}
+                onChange={this.setLocation_id.bind(this)}
               />
             </Form.Group>
             <div
