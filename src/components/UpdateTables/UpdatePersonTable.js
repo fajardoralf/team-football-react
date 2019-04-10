@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/person";
 
 class UpdatePersonTable extends React.Component {
   constructor(props) {
@@ -71,10 +71,6 @@ class UpdatePersonTable extends React.Component {
 
   setDateOfBirth(event) {
     this.setState({ dateOfBirth: event.target.value });
-  }
-
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
   }
 
   render() {
