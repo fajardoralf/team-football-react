@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button,} from "react-bootstrap";
-import './Login.css';
+import { Form, Button } from "react-bootstrap";
 
 class Login extends Component {
   constructor(props) {
@@ -8,17 +7,17 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      role: "admin",
+      role: "admin"
     };
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   handleSubmit() {
     var _this = this;
-    sessionStorage.setItem('username', _this.state.username)
-    sessionStorage.setItem('password', _this.state.password)
-    sessionStorage.setItem('role', _this.state.role) //admin, user, undefined == anonymous
+    sessionStorage.setItem("username", _this.state.username);
+    sessionStorage.setItem("password", _this.state.password);
+    sessionStorage.setItem("role", _this.state.role); //admin, user, undefined == anonymous
   }
 
   handleChangeUsername(event) {
@@ -32,32 +31,31 @@ class Login extends Component {
   render() {
     return (
       <div className="text-center" id="form">
-          
-            <Form onSubmit={this.handleSubmit.bind(this)}>
-              <Form.Group controlId="formBasicUsernameLogin">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type="username"
-                  placeholder="Username"
-                  value={this.state.username}
-                  onChange={this.handleChangeUsername.bind(this)}
-                />
-              </Form.Group>
-              <Form.Group controlId="formBasicPasswordLogin">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  onChange={this.handleChangePassword.bind(this)}
-                />
-              </Form.Group>
-              <br></br>
-              <div id="button">
-                <Button variant="dark" type="submit">
-                  Sign In
-                </Button>
-              </div>
-            </Form>
+        <Form onSubmit={this.handleSubmit.bind(this)}>
+          <Form.Group controlId="formBasicUsernameLogin">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="username"
+              placeholder="Username"
+              value={this.state.username}
+              onChange={this.handleChangeUsername.bind(this)}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicPasswordLogin">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={this.handleChangePassword.bind(this)}
+            />
+          </Form.Group>
+          <br />
+          <div id="button">
+            <Button variant="dark" type="submit">
+              Sign In
+            </Button>
+          </div>
+        </Form>
       </div>
     );
   }
