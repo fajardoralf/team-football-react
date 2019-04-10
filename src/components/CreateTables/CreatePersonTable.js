@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
+const PROXYURL = "https://cors-anywhere.herokuapp.com/";
 const URL = "https://team-football-api.herokuapp.com/person";
 
 class CreatePersonTable extends React.Component {
@@ -17,6 +18,7 @@ class CreatePersonTable extends React.Component {
 
   handleForm = event => {
     event.preventDefault();
+<<<<<<< HEAD
     axios
       .post(
         URL,
@@ -39,6 +41,21 @@ class CreatePersonTable extends React.Component {
       .catch(err => {
         console.log("Axios error: ", err);
       });
+=======
+    axios.post(PROXYURL + URL, {
+      addressId:this.state.addressId,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      dateOfBirth: this.state.dateOfBirth
+    },
+    {
+      headers: {
+        'Access-Control-Allow-Origin' : URL,
+        'Access-Control-Allow-Methods': 'GET, POST, PUT',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      }
+    })
+>>>>>>> cbf8c98d0c01df1d9a9fc788c660b9c2e1b77cb1
     this.setState({
       addressid: "",
       firstName: "",
