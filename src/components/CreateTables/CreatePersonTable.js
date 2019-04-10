@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
+const PROXYURL = "https://cors-anywhere.herokuapp.com/";
 const URL = "https://team-football-api.herokuapp.com/person";
 
 class CreatePersonTable extends React.Component {
@@ -17,25 +18,34 @@ class CreatePersonTable extends React.Component {
 
   handleForm = event => {
     event.preventDefault();
-    axios.post(URL, {
-      address_id:this.state.address_id,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      dateOfBirth: this.state.dateOfBirth
-    },
-    {
-      headers: {
-        'Access-Control-Allow-Origin' : URL,
-        'Access-Control-Allow-Methods': 'GET, POST, PUT',
-        'Access-Control-Allow-Headers': 'Content-Type'
-      }
-    })
+    axios
+      .post(
+        URL,
+        {
+          address_id: this.state.address_id,
+          first_name: this.state.firstName,
+          last_name: this.state.lastName,
+          date_of_birth: this.state.dateOfBirth
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
+        }
+      )
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
     this.setState({
       address_id: "",
       firstName: "",
       lastName: "",
       dateOfBirth: ""
-    })
+    });
   };
 
   setAddress_id(event) {
@@ -60,9 +70,16 @@ class CreatePersonTable extends React.Component {
     });
   }
 
-  //componentDidMount() {
-  //axios.get(URL).then(json => this.setState({ store: json.data }));
-  //}
+  componentWillMount() {
+    axios
+      .get(URL)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   render() {
     let title = "Create Person";
