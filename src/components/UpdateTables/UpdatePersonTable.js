@@ -20,7 +20,7 @@ class UpdatePersonTable extends React.Component {
     event.preventDefault();
 
     axios
-      .put(URL, {
+      .post(URL, {
         person_id: this.state.personId,
         address_id: this.state.addressId,
         first_name: this.state.firstName,
