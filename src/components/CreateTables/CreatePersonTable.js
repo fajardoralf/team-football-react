@@ -17,7 +17,7 @@ class CreatePersonTable extends React.Component {
 
   handleForm = event => {
     event.preventDefault();
-    axios.post("https://cors-anywhere.herokuapp.com/" + URL, {
+    axios.post(URL, {
       addressId: this.state.addressId,
       firstName: this.state.firstName,
       lastName: this.state.lastName,

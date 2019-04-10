@@ -4,17 +4,13 @@ import axios from "axios";
 
 const URL = "";
 
-class UpdateAddressTable extends React.Component {
+class UpdateAssociationTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addressId: "",
-      addressLine1: "",
-      addressLine2: "",
-      addressLine3: "",
-      postalCode: "",
-      city: "",
-      country: ""
+      associationId: "",
+      name: "",
+      description: ""
     };
   }
 
@@ -23,64 +19,32 @@ class UpdateAddressTable extends React.Component {
 
     axios
       .put(URL, {
-        addressId: this.state.addressId,
-        addressLine1: this.state.addressLine1,
-        addressLine2: this.state.addressLine2,
-        addressLine3: this.state.addressLine3,
-        postalCode: this.state.postalCode,
-        city: this.state.postalCode,
-        country: this.state.country
+        associationId: this.state.associationId,
+        name: this.state.name,
+        description: this.state.description
       })
     this.setState({
-        addressId: "",
-        addressLine1: "",
-        addressLine2: "",
-        addressLine3: "",
-        postalCode: "",
-        city: "",
-        country: ""
+        associationId: "",
+        name: "",
+        description: ""
     });
   }
 
-  handleAddressId(event) {
+  handleAssociationId(event) {
       this.setState({
-          addressId: event.target.value
+          associationId: event.target.value
       })
   }
 
-  setAddressLine1(event) {
+  setName(event) {
     this.setState({ 
-      addressLine1: event.target.value
+      name: event.target.value
     });
   }
 
-  setAddressLine2(event) {
+  setDescription(event) {
     this.setState({ 
-      addressLine2: event.target.value
-    });
-  }
-
-  setAddressLine3(event) {
-    this.setState({ 
-      addressLine3: event.target.value
-    });
-  }
-
-  setPostalCode(event) {
-    this.setState({ 
-      postalCode: event.target.value
-    });
-  }
-
-  setCity(event) {
-    this.setState({ 
-      city: event.target.value
-    });
-  }
-
-  setCountry(event) {
-    this.setState({ 
-      country: event.target.value
+      description: event.target.value
     });
   }
 
@@ -89,7 +53,7 @@ class UpdateAddressTable extends React.Component {
   }
 
   render() {
-    const title = "Update Address";
+    const title = "Update Association";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -97,73 +61,33 @@ class UpdateAddressTable extends React.Component {
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-            <Form.Group controlId="updateAddressForm">
-              <Form.Label>Where Address ID is:</Form.Label>
+            <Form.Group controlId="updateAssociationForm">
+              <Form.Label>Where Association ID is:</Form.Label>
               <Form.Control
-                type="addressId"
-                placeholder="Address ID"
-                value={this.state.addressId}
-                onChange={this.handleAddressId.bind(this)}
+                type="associationId"
+                placeholder="Association ID"
+                value={this.state.associationId}
+                onChange={this.handleAssociationId.bind(this)}
               />
             </Form.Group>
 
-            <Form.Group controlId="updateAddressForm">
-              <Form.Label>Address Line 1</Form.Label>
+            <Form.Group controlId="updateAssociationForm">
+              <Form.Label>Name</Form.Label>
               <Form.Control
-                type="addressLine1"
-                placeholder="Address Line 1"
-                value={this.state.addressLine1}
-                onChange={this.setAddressLine1.bind(this)}
+                type="name"
+                placeholder="Name"
+                value={this.state.name}
+                onChange={this.setName.bind(this)}
               />
             </Form.Group>
 
-            <Form.Group controlId="udpateAddressForm">
-              <Form.Label>Address Line 2</Form.Label>
+            <Form.Group controlId="udpateAssociationForm">
+              <Form.Label>Description</Form.Label>
               <Form.Control
-                type="addressLine2"
-                placeholder="Address Line 2"
-                value={this.state.addressLine2}
-                onChange={this.setAddressLine2.bind(this)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="updateAddressForm">
-              <Form.Label>Address Line 3</Form.Label>
-              <Form.Control
-                type="addressLine3"
-                placeholder="Address Line 3"
-                value={this.state.addressLine3}
-                onChange={this.setAddressLine3.bind(this)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="updateAddressForm">
-              <Form.Label>Postal Code</Form.Label>
-              <Form.Control
-                type="postalCode"
-                placeholder="Postal Code"
-                value={this.state.postalCode}
-                onChange={this.setPostalCode.bind(this)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="updateAddressForm">
-              <Form.Label>City</Form.Label>
-              <Form.Control
-                type="city"
-                placeholder="City"
-                value={this.state.city}
-                onChange={this.setCity.bind(this)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="updateAddressForm">
-              <Form.Label>Country</Form.Label>
-              <Form.Control
-                type="country"
-                placeholder="Country"
-                value={this.state.country}
-                onChange={this.setCountry.bind(this)}
+                type="description"
+                placeholder="Description"
+                value={this.state.description}
+                onChange={this.setDescription.bind(this)}
               />
             </Form.Group>
             <div
@@ -184,4 +108,4 @@ class UpdateAddressTable extends React.Component {
   }
 }
 
-export default UpdateAddressTable;
+export default UpdateAssociationTable;
