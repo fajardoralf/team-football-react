@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const CORS = "https://cors-anywhere.herokuapp.com/"
 const URL = "https://team-football-api.herokuapp.com/person";
 
 class CreatePersonTable extends React.Component {
@@ -18,24 +17,23 @@ class CreatePersonTable extends React.Component {
 
   handleForm = event => {
     event.preventDefault();
-    axios.post(CORS + URL, {
-      addressId: this.state.addressId,
+    axios.post(URL, {
+      addressId:this.state.addressId,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       dateOfBirth: this.state.dateOfBirth
-    });
-    console.log(
-      this.state.addressId,
-      this.state.firstName,
-      this.state.lastName,
-      this.state.dateOfBirth
-    );
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
     this.setState({
       addressId: "",
       firstName: "",
       lastName: "",
       dateOfBirth: ""
-    });
+    })
   };
 
   setAddressId(event) {
