@@ -41,7 +41,9 @@ class Dashboard extends React.Component {
         return (
             <div className="container">
                 <h1 className="text-center">Dashboard</h1>
-
+                <div className="text-right">
+                    <a href='/' className='btn btn-info' id="button">Back</a>
+                </div>
                 <div className="row">
                     {sessionStorage.getItem("role") ?
                         <div className="col-4">

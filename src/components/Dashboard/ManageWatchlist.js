@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Button, Card } from 'react-bootstrap'
 import axios from 'axios';
+import './ManageWatchList.css'
 
 class ManageWatchlist extends React.Component {
     constructor(props) {
@@ -10,7 +11,7 @@ class ManageWatchlist extends React.Component {
             playerWatchList: [],
             teamWatchList: [],
             playerList: ["Ronaldo", "Ronaldinho", "Pele", "Messi", "Salah"],
-            teamList: [],
+            teamList: ["Real Madrid", "Barcelona", "Liverpool", "Manchester United", "Manchester City"],
             playerInput: '',
             teamInput: ''
 

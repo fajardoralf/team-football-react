@@ -5,7 +5,7 @@ const SubmitCorrection = (props) => {
 
     return (
         <div>
-            <p>Submit a Correction</p>
+            <p>NOT IMPLEMENTED</p>
         </div>
     )
 };
