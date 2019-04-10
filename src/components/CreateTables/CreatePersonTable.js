@@ -25,7 +25,9 @@ class CreatePersonTable extends React.Component {
     },
     {
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Access-Control-Allow-Origin' : URL,
+        'Access-Control-Allow-Methods': 'GET, POST, PUT',
+        'Access-Control-Allow-Headers': 'Content-Type'
       }
     })
     this.setState({
