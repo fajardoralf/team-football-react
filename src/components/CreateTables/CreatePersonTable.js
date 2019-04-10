@@ -25,7 +25,7 @@ class CreatePersonTable extends React.Component {
     },
     {
       headers: {
-        'Content-Type': 'application/json'
+        'Access-Control-Allow-Origin' : URL
       }
     })
     this.setState({
