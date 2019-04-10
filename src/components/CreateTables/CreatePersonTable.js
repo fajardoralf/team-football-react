@@ -15,27 +15,30 @@ class CreatePersonTable extends React.Component {
     };
   }
 
-  handleForm(event) {
+  handleForm = event => {
     event.preventDefault();
-
-    axios
-      .post(URL, {
-        addressId: this.state.addressId,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        dateOfBirth: this.state.dateOfBirth
-      })
-      console.log(this.state.addressId, this.state.firstName, this.state.lastName, this.state.dateOfBirth)
+    axios.post("https://cors-anywhere.herokuapp.com/" + URL, {
+      addressId: this.state.addressId,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      dateOfBirth: this.state.dateOfBirth
+    });
+    console.log(
+      this.state.addressId,
+      this.state.firstName,
+      this.state.lastName,
+      this.state.dateOfBirth
+    );
     this.setState({
       addressId: "",
       firstName: "",
       lastName: "",
       dateOfBirth: ""
     });
-  }
+  };
 
   setAddressId(event) {
-    this.setState({ 
+    this.setState({
       addressId: event.target.value
     });
   }
@@ -51,27 +54,24 @@ class CreatePersonTable extends React.Component {
     });
   }
   setDateOfBirth(event) {
-    this.setState({ 
+    this.setState({
       dateOfBirth: event.target.value
     });
   }
 
-  /*
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
-  }
-  */
+  //componentDidMount() {
+  //axios.get(URL).then(json => this.setState({ store: json.data }));
+  //}
 
   render() {
-    let title = "Create Person"
+    let title = "Create Person";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
-          <Form onSubmit={this.handleForm.bind(this)}>
-
+          <Form onSubmit={this.handleForm}>
             <Form.Group controlId="addPersonForm">
               <Form.Label>Address ID</Form.Label>
               <Form.Control
