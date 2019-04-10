@@ -8,7 +8,7 @@ class CreatePersonTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addressId: "",
+      address_id: "",
       firstName: "",
       lastName: "",
       dateOfBirth: ""
@@ -21,7 +21,7 @@ class CreatePersonTable extends React.Component {
       .post(
         URL,
         {
-          address_id: this.state.addressId,
+          address_id: this.state.address_id,
           first_name: this.state.firstName,
           last_name: this.state.lastName,
           date_of_birth: this.state.dateOfBirth
@@ -40,16 +40,16 @@ class CreatePersonTable extends React.Component {
         console.log("Axios error: ", err);
       });
     this.setState({
-      addressid: "",
+      address_id: "",
       firstName: "",
       lastName: "",
       dateOfBirth: ""
     });
   };
 
-  setAddressId(event) {
+  setAddress_id(event) {
     this.setState({
-      addressId: event.target.value
+      address_id: event.target.value
     });
   }
 
@@ -81,10 +81,10 @@ class CreatePersonTable extends React.Component {
             <Form.Group controlId="addPersonForm">
               <Form.Label>Address ID</Form.Label>
               <Form.Control
-                type="addressId"
+                type="address_id"
                 placeholder="Address ID"
-                value={this.state.addressId}
-                onChange={this.setAddressId.bind(this)}
+                value={this.state.address_id}
+                onChange={this.setAddress_id.bind(this)}
               />
             </Form.Group>
 

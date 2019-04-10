@@ -8,7 +8,7 @@ class CreateResultTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      teamId: "",
+      team_id: "",
       score: "",
       result: ""
     };
@@ -19,20 +19,20 @@ class CreateResultTable extends React.Component {
 
     axios
       .post(URL, {
-        teamId: this.state.teamId,
+        team_id: this.state.team_id,
         score: this.state.score,
         result: this.state.result
       })
     this.setState({
-        teamId: "",
+        team_id: "",
         score: "",
         result: ""
     });
   }
 
-  setTeamId(event) {
+  setTeam_id(event) {
     this.setState({ 
-        teamId: event.target.value
+        team_id: event.target.value
     });
   }
 
@@ -65,10 +65,10 @@ class CreateResultTable extends React.Component {
             <Form.Group controlId="createResultForm">
               <Form.Label>Team ID</Form.Label>
               <Form.Control
-                type="teamId"
+                type="team_id"
                 placeholder="Team ID"
-                value={this.state.teamId}
-                onChange={this.setTeamId.bind(this)}
+                value={this.state.team_id}
+                onChange={this.setTeam_id.bind(this)}
               />
             </Form.Group>
 

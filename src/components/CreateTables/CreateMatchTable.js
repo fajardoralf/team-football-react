@@ -9,10 +9,10 @@ class CreateMatchTable extends React.Component {
     super(props);
     this.state = {
       matchDate: "",
-      homeTeamId: "",
-      awayTeamId: "",
-      seasonId: "",
-      locationId: ""
+      homeTeam_id: "",
+      awayTeam_id: "",
+      season_id: "",
+      location_id: ""
     };
   }
 
@@ -22,17 +22,17 @@ class CreateMatchTable extends React.Component {
     axios
       .post(URL, {
         matchDate: this.state.matchDate,
-        homeTeamId: this.state.homeTeamId,
-        awayTeamId: this.state.awayTeamId,
-        seasonId: this.state.seasonId,
-        locationId: this.state.locationId
+        homeTeam_id: this.state.homeTeam_id,
+        awayTeam_id: this.state.awayTeam_id,
+        season_id: this.state.season_id,
+        location_id: this.state.location_id
       })
     this.setState({
       matchDate: "",
-      homeTeamId: "",
-      awayTeamId: "",
-      seasonId: "",
-      locationId: ""
+      homeTeam_id: "",
+      awayTeam_id: "",
+      season_id: "",
+      location_id: ""
     });
   }
 
@@ -42,27 +42,27 @@ class CreateMatchTable extends React.Component {
     });
   }
 
-  setHomeTeamId(event) {
+  setHomeTeam_id(event) {
     this.setState({
-      homeTeamId: event.target.value
+      homeTeam_id: event.target.value
     });
   }
 
-  setAwayTeamId(event) {
+  setAwayTeam_id(event) {
     this.setState({
-      awayTeamId: event.target.value
+      awayTeam_id: event.target.value
     });
   }
 
-  setSeasonId(event) {
+  setSeason_id(event) {
     this.setState({ 
-      seasonId: event.target.value
+      season_id: event.target.value
     });
   }
 
-  setLocationId(event) {
+  setLocation_id(event) {
       this.setState({
-          locationId: event.target.value
+          location_id: event.target.value
       })
   }
 
@@ -93,40 +93,40 @@ class CreateMatchTable extends React.Component {
             <Form.Group controlId="createMatchForm">
               <Form.Label>Home Team ID</Form.Label>
               <Form.Control
-                type="homeTeamId"
+                type="homeTeam_id"
                 placeholder="Home Team ID"
-                value={this.state.homeTeamId}
-                onChange={this.setHomeTeamId.bind(this)}
+                value={this.state.homeTeam_id}
+                onChange={this.setHomeTeam_id.bind(this)}
               />
             </Form.Group>
 
             <Form.Group controlId="createMatchForm">
               <Form.Label>Away Team ID</Form.Label>
               <Form.Control
-                type="awayTeamId"
+                type="awayTeam_id"
                 placeholder="Away Team ID"
-                value={this.state.awayTeamId}
-                onChange={this.setAwayTeamId.bind(this)}
+                value={this.state.awayTeam_id}
+                onChange={this.setAwayTeam_id.bind(this)}
               />
             </Form.Group>
 
             <Form.Group controlId="createMatchForm">
               <Form.Label>Season ID</Form.Label>
               <Form.Control
-                type="seasonId"
+                type="season_id"
                 placeholder="Season ID"
-                value={this.state.seasonId}
-                onChange={this.setSeasonId.bind(this)}
+                value={this.state.season_id}
+                onChange={this.setSeason_id.bind(this)}
               />
             </Form.Group>
 
             <Form.Group controlId="createMatchForm">
               <Form.Label>Location ID</Form.Label>
               <Form.Control
-                type="locationId"
+                type="location_id"
                 placeholder="Location ID"
-                value={this.state.locationId}
-                onChange={this.setLocationId.bind(this)}
+                value={this.state.location_id}
+                onChange={this.setLocation_id.bind(this)}
               />
             </Form.Group>
             <div
