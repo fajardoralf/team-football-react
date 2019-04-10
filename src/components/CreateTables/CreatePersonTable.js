@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/person/";
+const URL = "https://team-football-api.herokuapp.com/person";
 
 class CreatePersonTable extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class CreatePersonTable extends React.Component {
 
   handleForm = event => {
     event.preventDefault();
-    axios.post("https://cors-anywhere.herokuapp.com/" + URL, {
+    axios.post(URL, {
       addressId: this.state.addressId,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
