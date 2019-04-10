@@ -3,6 +3,8 @@ import { Form, Button, Card } from 'react-bootstrap'
 import axios from 'axios';
 import './ManageWatchList.css'
 
+const URL = "https://team-football-api.herokuapp.com/"
+
 class ManageWatchlist extends React.Component {
     constructor(props) {
         super(props);
@@ -27,16 +29,51 @@ class ManageWatchlist extends React.Component {
             teamInput: e.target.value,
         })
     }
+    getPlayerId(name){
+        return 0
+    }
+
+    getTeamId(name){
+        return 0
+    }
 
     handleFormPlayer(e) {
         // Submit to database
+        axios.post(URL+'watchlistplayer', {
+            person_id: this.state.personId,
+            player_id: this.getPlayerId(this.state.playerInput)
+        }).then(res => {
+            if (res.status === 202){
+                console.log("success")
+            }
+        })
     }
     handleFormTeam(e) {
         // Submit to database
+        axios.post(URL+'watchlistteam', {
+            person_id: this.state.personId,
+            team_id: this.getTeamId(this.state.teamInput)
+        }).then(res => {
+            if (res.status === 202){
+                console.log("success")
+            }
+        })
     }
+
+    
 
     componentDidMount() {
         //fetch players, teams and watchlists for user
+        axios.get(URL+'player',{
+            headers: {
+                Accept: "application/json"
+            }
+        }).then(res => {
+            console.log(res.data)
+        })
+        axios.get(URL+'team').then(res=>{
+            console.log(res.data)
+        })
     }
 
     render() {

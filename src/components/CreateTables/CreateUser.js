@@ -1,8 +1,9 @@
 import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
+import { Redirect} from 'react-router-dom';
 
-const URL = "https://team-football-api.herokuapp.com/addUser";
+const URL = "https://team-football-api.herokuapp.com/users";
 
 class CreateUser extends React.Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class CreateUser extends React.Component {
         this.state = {
             username: "",
             password: "",
+            redirect: false
         };
     }
 
@@ -24,7 +26,19 @@ class CreateUser extends React.Component {
             headers: {
                 "content-type":"application/json"
             }
-        }).then(res => console.log("Response", res));
+        }).then(res => {
+            console.log("Response", res)
+            if (res.status === 202){
+                console.log("User" + this.state.username + " registered")
+                sessionStorage.setItem('username', res.data.username)
+                sessionStorage.setItem('role', 'user')
+                sessionStorage.setItem('password', res.data.password)
+                this.setState({
+                    redirect: true
+                })
+
+            }
+        });
         this.setState({
             username: "",
             password: "",
@@ -39,20 +53,15 @@ class CreateUser extends React.Component {
 
     setPassword(event) {
         this.setState({
-            firstName: event.target.value
-        });
-    }
-    setLastName(event) {
-        this.setState({
-            lastName: event.target.value
-        });
-    }
-    setDateOfBirth(event) {
-        this.setState({
-            dateOfBirth: event.target.value
+            password: event.target.value
         });
     }
 
+    renderRedirect = () => {
+        if (this.state.redirect){
+            return <Redirect to='/'/>
+        }
+    }
     //componentDidMount() {
     //axios.get(URL).then(json => this.setState({ store: json.data }));
     //}
@@ -66,6 +75,7 @@ class CreateUser extends React.Component {
                     <h3 className="text-center">{title}</h3>
                     <div className="text-right">
                         <a href='/' className='btn btn-info' id="button">Back</a>
+                        {this.renderRedirect()}
                     </div>
                     <br />
                     <Form onSubmit={this.handleForm}>
@@ -98,7 +108,7 @@ class CreateUser extends React.Component {
                         >
                             <Button variant="dark" type="Submit">
                                 Create
-              </Button>
+                            </Button>
                         </div>
                     </Form>
                 </Card.Body>
