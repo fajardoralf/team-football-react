@@ -19,10 +19,23 @@ class UpdateAssociationTable extends React.Component {
 
     axios
       .put(URL, {
-        associationId: this.state.associationId,
+        association_id: this.state.associationId,
         name: this.state.name,
         description: this.state.description
-      })
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
         associationId: "",
         name: "",
