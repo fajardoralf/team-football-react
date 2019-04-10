@@ -21,12 +21,25 @@ class UpdatePersonTable extends React.Component {
 
     axios
       .put(URL, {
-        personId: this.state.personId,
-        addressId: this.state.addressId,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        dateOfBirth: this.state.dateOfBirth
-      })
+        person_id: this.state.personId,
+        address_id: this.state.addressId,
+        first_name: this.state.firstName,
+        last_name: this.state.lastName,
+        date_of_birth: this.state.dateOfBirth
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
         personId: "",
         addressId: "",
