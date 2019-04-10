@@ -15,10 +15,9 @@ class CreatePersonTable extends React.Component {
     };
   }
 
-  handleForm(event) {
+  handleForm = event => {
     event.preventDefault();
-
-    axios.post(URL, {
+    axios.post("https://cors-anywhere.herokuapp.com/" + URL, {
       addressId: this.state.addressId,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -36,7 +35,7 @@ class CreatePersonTable extends React.Component {
       lastName: "",
       dateOfBirth: ""
     });
-  }
+  };
 
   setAddressId(event) {
     this.setState({
@@ -60,9 +59,9 @@ class CreatePersonTable extends React.Component {
     });
   }
 
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
-  }
+  //componentDidMount() {
+  //axios.get(URL).then(json => this.setState({ store: json.data }));
+  //}
 
   render() {
     let title = "Create Person";
@@ -72,7 +71,7 @@ class CreatePersonTable extends React.Component {
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
-          <Form onSubmit={this.handleForm.bind(this)}>
+          <Form onSubmit={this.handleForm}>
             <Form.Group controlId="addPersonForm">
               <Form.Label>Address ID</Form.Label>
               <Form.Control
