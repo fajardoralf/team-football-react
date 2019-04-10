@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/person";
 
 class CreatePersonTable extends React.Component {
   constructor(props) {
