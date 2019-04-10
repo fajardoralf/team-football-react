@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/person";
+const URL = "https://team-football-api.herokuapp.com/addUser";
 
 class CreateUser extends React.Component {
     constructor(props) {
@@ -19,13 +19,12 @@ class CreateUser extends React.Component {
             username: this.state.username,
             password: this.state.password,
             role: false // false == regular user
-        });
-        console.log(
-            this.state.username,
-            this.state.password,
-            this.state.lastName,
-            this.state.dateOfBirth
-        );
+        },
+        {
+            headers: {
+                "content-type":"application/json"
+            }
+        }).then(res => console.log("Response", res));
         this.setState({
             username: "",
             password: "",
