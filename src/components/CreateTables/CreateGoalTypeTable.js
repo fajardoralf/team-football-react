@@ -18,7 +18,20 @@ class CreateGoalTypeTable extends React.Component {
     axios
       .post(URL, {
         type: this.state.type
-      })
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
       type: ""
     });

@@ -20,7 +20,20 @@ class CreateAssociationTable extends React.Component {
       .post(URL, {
         name: this.state.associationId,
         description: this.state.coachId
-      })
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
       name: "",
       description: ""

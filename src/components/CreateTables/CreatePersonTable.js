@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const PROXYURL = "https://cors-anywhere.herokuapp.com/";
 const URL = "https://team-football-api.herokuapp.com/person";
 
 class CreatePersonTable extends React.Component {
@@ -68,17 +67,6 @@ class CreatePersonTable extends React.Component {
     this.setState({
       dateOfBirth: event.target.value
     });
-  }
-
-  componentWillMount() {
-    axios
-      .get(URL)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
   }
 
   render() {
