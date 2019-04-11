@@ -2,17 +2,18 @@ import React from "react";
 import { Form, Button, Card, FormGroup } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/address/";
+const URL = "https://team-football-api.herokuapp.com/contact/";
 
-class DeleteAddressTable extends React.Component {
+class DeleteContactTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: [],
-      addressName: "",
+      contacts: [],
+      contactName: "",
       id: "",
       message: "",
-      submitted: false
+      submitted: false,
+      mounted: true
     };
   }
 
@@ -21,7 +22,7 @@ class DeleteAddressTable extends React.Component {
     axios.delete(URL + this.state.id).then(res => {
       this.setState({
         message: "Successfully deleted ",
-        addressName: this.state.addressName,
+        contactName: this.state.contactName,
         submitted: true
       });
     });
@@ -30,45 +31,45 @@ class DeleteAddressTable extends React.Component {
   handleChange = event => {
     this.setState({
       id: event.target.value,
-      addressName: event.target.selectedOptions[0].text
+      contactName: event.target.selectedOptions[0].text
     });
   };
 
-  fetchAddress = () => {
-    axios
-      .get(URL, {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
-        }
-      })
-      .then(res => {
-        let data = res.data.map(data => {
-          return {
-            key: data.address_id,
-            value: data.address_id,
-            text: data.address_line_1
-          };
+  fetchContacts = () => {
+    if (this.state.mounted) {
+      axios
+        .get(URL, {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
+        })
+        .then(res => {
+          let data = res.data.map(data => {
+            return {
+              key: data.contact_id,
+              value: data.contact_id,
+              text: data.contact_type
+            };
+          });
+          this.setState({ contacts: data });
+        })
+        .catch(err => {
+          console.log("Axios error: ", err);
         });
-        this.setState({ address: data });
-      })
-      .catch(err => {
-        console.log("Axios error: ", err);
-      });
+    }
   };
 
   componentWillMount() {
-    this.fetchAddress();
+    this.fetchContacts();
   }
 
   componentWillUpdate() {
-    this.fetchAddress();
+    this.fetchContacts();
   }
 
-  componentWillUnmount() {}
-
   render() {
-    let title = "Delete Address";
+    let title = "Delete Contacts";
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -76,9 +77,9 @@ class DeleteAddressTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm}>
             <FormGroup>
-              <Form.Label>Address</Form.Label>
+              <Form.Label>Contacts</Form.Label>
               <Form.Control onChange={this.handleChange} as="select">
-                {this.state.address.map(data => {
+                {this.state.contacts.map(data => {
                   return (
                     <option key={data.key} value={data.value}>
                       {data.text}
@@ -103,7 +104,7 @@ class DeleteAddressTable extends React.Component {
 
             <div className="text-center">
               {this.state.message}
-              {this.state.submitted ? this.state.addressName : ""}
+              {this.state.submitted ? this.state.contactName : ""}
             </div>
           </Form>
         </Card.Body>
@@ -112,4 +113,4 @@ class DeleteAddressTable extends React.Component {
   }
 }
 
-export default DeleteAddressTable;
+export default DeleteContactTable;
