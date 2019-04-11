@@ -1,3 +1,7 @@
 .col-8 {
     left: 5%
 }
+
+.Collapsible:active {
+    color: red;
+}

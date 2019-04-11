@@ -19,12 +19,12 @@ class CreateAddressTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL, [{
         address_line_1: this.state.addressLine1,
         postal_code: this.state.postalCode,
         city: this.state.city,
         country: this.state.country
-      },
+      }],
       {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
