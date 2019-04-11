@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
-import './Login.css'
+import './login.css'
 
 class Login extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Login extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   handleSubmit() {
     var _this = this;
@@ -29,34 +29,54 @@ class Login extends Component {
     this.setState({ password: event.target.value });
   }
 
+  handleLogout(event) {
+    this.setState({
+      user: '',
+      passworrd: ''
+    })
+    sessionStorage.clear()
+  }
+
   render() {
     return (
-      <div className="text-center" id="form">
-        <Form onSubmit={this.handleSubmit.bind(this)}>
-          <Form.Group controlId="formBasicUsernameLogin" id="Username">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="username"
-              placeholder="Username"
-              value={this.state.username}
-              onChange={this.handleChangeUsername.bind(this)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicPasswordLogin" id="Password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              onChange={this.handleChangePassword.bind(this)}
-            />
-          </Form.Group>
-          <br />
-          <div id="button">
-            <Button variant="dark" type="submit">
-              Sign In
-            </Button>
+      <div id="form">
+        {(sessionStorage.getItem('username') === null) ?
+          <div className="navbar-collapse collapse w-100 order-3 dual-collapsed">
+            <ul className="navbar-nav mr-auto">
+              <li className="nav-item">
+                <input
+                  class="form-control"
+                  type="username"
+                  placeholder="Username"
+                  value={this.state.username}
+                  onChange={this.handleChangeUsername.bind(this)} />
+              </li>
+              <li className="nav-item">
+                <form onSubmit={this.handleSubmit.bind(this)}>
+                  <input
+                    class="form-control"
+                    type="password"
+                    placeholder="Password"
+                    onChange={this.handleChangePassword.bind(this)}
+                    onSubmit={this.handleSubmit.bind(this)}
+                  />
+                </form>
+              </li>
+              <li className="nav-item">
+                <a className='nav-link text-nowrap' href='/' onClick={this.handleSubmit.bind(this)} id="button">Log in</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-nowrap" href="/signup">Sign up</a>
+              </li>
+            </ul>
+
           </div>
-        </Form>
+          :
+          <div >
+            <p>Hello {sessionStorage.getItem('username')}</p>
+            <button className='btn btn-danger' onClick={this.handleLogout.bind(this)} id="button">Logout</button>
+          </div>
+        }
       </div>
     );
   }

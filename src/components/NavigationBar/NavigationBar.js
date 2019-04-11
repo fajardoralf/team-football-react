@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Login from '../Login/Login'
 
 class NavigationBar extends React.Component {
   constructor(props) {
@@ -9,10 +9,12 @@ class NavigationBar extends React.Component {
     };
   }
 
+ 
+
   render() {
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="NavigationBar">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="NavigationBar">
         <a className="navbar-brand" href="/">Football Manager</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -30,9 +32,10 @@ class NavigationBar extends React.Component {
             </li>
           </ul>
           <span className="navbar-text">
-            <a className="nav-link" href="/">Logout</a>
+
           </span>
         </div>
+        <Login />
       </nav>
     );
   }
