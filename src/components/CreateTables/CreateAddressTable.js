@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/address";
 
 class CreateAddressTable extends React.Component {
   constructor(props) {
@@ -19,12 +19,12 @@ class CreateAddressTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, [{
+      .post(URL,{
         address_line_1: this.state.addressLine1,
         postal_code: this.state.postalCode,
         city: this.state.city,
         country: this.state.country
-      }],
+      },
       {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
