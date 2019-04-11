@@ -27,13 +27,15 @@ import UpdateResultTable from '../../components/UpdateTables/UpdateResultTable'
 import UpdateSeasonTable from '../../components/UpdateTables/UpdateSeasonTable'
 import UpdateTeamTable from '../../components/UpdateTables/UpdateTeamTable'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
+import Collapsible from 'react-collapsible';
 
 class Dashboard extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            status: 0
+            status: 0,
+            showCreate: false
         };
     }
 
@@ -55,30 +57,33 @@ class Dashboard extends React.Component {
                     {sessionStorage.getItem("role") ?
                         <div className="col-4">
                             <ul className="list-group text-center">
-                                <div onClick={this.setStatus.bind(this, 1)}><li className="list-group-item" id="button">Create Person</li></div>
-                                <div onClick={this.setStatus.bind(this, 2)}><li className="list-group-item" id="button">Create Address</li></div>
-                                <div onClick={this.setStatus.bind(this, 3)}><li className="list-group-item" id="button">Create Association</li></div>
-                                <div onClick={this.setStatus.bind(this, 4)}><li className="list-group-item" id="button">Create Contact</li></div>
-                                <div onClick={this.setStatus.bind(this, 5)}><li className="list-group-item" id="button">Create GoalType</li></div>
-                                <div onClick={this.setStatus.bind(this, 6)}><li className="list-group-item" id="button">Create Location</li></div>
-                                <div onClick={this.setStatus.bind(this, 7)}><li className="list-group-item" id="button">Create Match Goal</li></div>
-                                <div onClick={this.setStatus.bind(this, 8)}><li className="list-group-item" id="button">Create Match Position</li></div>
-                                <div onClick={this.setStatus.bind(this, 9)}><li className="list-group-item" id="button">Create Match</li></div>
-                                <div onClick={this.setStatus.bind(this, 10)}><li className="list-group-item" id="button">Create Result</li></div>
-                                <div onClick={this.setStatus.bind(this, 11)}><li className="list-group-item" id="button">Create Season</li></div>
-                                <div onClick={this.setStatus.bind(this, 12)}><li className="list-group-item" id="button">Create Team</li></div>
-                                <div onClick={this.setStatus.bind(this, 13)}><li className="list-group-item" id="button">Update Person</li></div>
-                                <div onClick={this.setStatus.bind(this, 14)}><li className="list-group-item" id="button">Update Address</li></div>
-                                <div onClick={this.setStatus.bind(this, 18)}><li className="list-group-item" id="button">Update Association</li></div>
-                                <div onClick={this.setStatus.bind(this, 19)}><li className="list-group-item" id="button">Update Contact</li></div>
-                                <div onClick={this.setStatus.bind(this, 20)}><li className="list-group-item" id="button">Update Location</li></div>
-                                <div onClick={this.setStatus.bind(this, 21)}><li className="list-group-item" id="button">Update Match Goal</li></div>
-                                <div onClick={this.setStatus.bind(this, 22)}><li className="list-group-item" id="button">Update Match Position</li></div>
-                                <div onClick={this.setStatus.bind(this, 23)}><li className="list-group-item" id="button">Update Match</li></div>
-                                <div onClick={this.setStatus.bind(this, 24)}><li className="list-group-item" id="button">Update Result</li></div>
-                                <div onClick={this.setStatus.bind(this, 25)}><li className="list-group-item" id="button">Update Season</li></div>
-                                <div onClick={this.setStatus.bind(this, 26)}><li className="list-group-item" id="button">Update Team</li></div>
-
+                                <Collapsible trigger="Create" className="list-group-item" id="button">
+                                    <div onClick={this.setStatus.bind(this, 1)}><li className="list-group-item" id="button">Create Person</li></div>
+                                    <div onClick={this.setStatus.bind(this, 2)}><li className="list-group-item" id="button">Create Address</li></div>
+                                    <div onClick={this.setStatus.bind(this, 3)}><li className="list-group-item" id="button">Create Association</li></div>
+                                    <div onClick={this.setStatus.bind(this, 4)}><li className="list-group-item" id="button">Create Contact</li></div>
+                                    <div onClick={this.setStatus.bind(this, 5)}><li className="list-group-item" id="button">Create GoalType</li></div>
+                                    <div onClick={this.setStatus.bind(this, 6)}><li className="list-group-item" id="button">Create Location</li></div>
+                                    <div onClick={this.setStatus.bind(this, 7)}><li className="list-group-item" id="button">Create Match Goal</li></div>
+                                    <div onClick={this.setStatus.bind(this, 8)}><li className="list-group-item" id="button">Create Match Position</li></div>
+                                    <div onClick={this.setStatus.bind(this, 9)}><li className="list-group-item" id="button">Create Match</li></div>
+                                    <div onClick={this.setStatus.bind(this, 10)}><li className="list-group-item" id="button">Create Result</li></div>
+                                    <div onClick={this.setStatus.bind(this, 11)}><li className="list-group-item" id="button">Create Season</li></div>
+                                    <div onClick={this.setStatus.bind(this, 12)}><li className="list-group-item" id="button">Create Team</li></div>
+                                </Collapsible>
+                                <Collapsible trigger="Update" className="list-group-item">
+                                    <div onClick={this.setStatus.bind(this, 13)}><li className="list-group-item" id="button">Update Person</li></div>
+                                    <div onClick={this.setStatus.bind(this, 14)}><li className="list-group-item" id="button">Update Address</li></div>
+                                    <div onClick={this.setStatus.bind(this, 18)}><li className="list-group-item" id="button">Update Association</li></div>
+                                    <div onClick={this.setStatus.bind(this, 19)}><li className="list-group-item" id="button">Update Contact</li></div>
+                                    <div onClick={this.setStatus.bind(this, 20)}><li className="list-group-item" id="button">Update Location</li></div>
+                                    <div onClick={this.setStatus.bind(this, 21)}><li className="list-group-item" id="button">Update Match Goal</li></div>
+                                    <div onClick={this.setStatus.bind(this, 22)}><li className="list-group-item" id="button">Update Match Position</li></div>
+                                    <div onClick={this.setStatus.bind(this, 23)}><li className="list-group-item" id="button">Update Match</li></div>
+                                    <div onClick={this.setStatus.bind(this, 24)}><li className="list-group-item" id="button">Update Result</li></div>
+                                    <div onClick={this.setStatus.bind(this, 25)}><li className="list-group-item" id="button">Update Season</li></div>
+                                    <div onClick={this.setStatus.bind(this, 26)}><li className="list-group-item" id="button">Update Team</li></div>
+                                </Collapsible> 
                             </ul>
                         </div>
                         :
