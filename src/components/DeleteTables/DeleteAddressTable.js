@@ -9,7 +9,8 @@ class DeleteAddressTable extends React.Component {
     super(props);
     this.state = {
       address: [],
-      id: ""
+      id: "",
+      message: ""
     };
   }
 
@@ -17,7 +18,9 @@ class DeleteAddressTable extends React.Component {
     event.preventDefault();
     axios.delete(URL + this.state.id).then(res => {
       console.log(res);
-    });
+    }).then(
+      
+    );
   };
 
   handleChange = event => {
