@@ -2,6 +2,12 @@
     left: 5%
 }
 
-.Collapsible:active {
-    color: red;
+.Collapsible {
+    color:#696969;
+    border:1px solid #CCC;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    padding: 5%;
+    text-align: center;
 }

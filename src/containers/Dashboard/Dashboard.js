@@ -57,7 +57,7 @@ class Dashboard extends React.Component {
                     {sessionStorage.getItem("role") ?
                         <div className="col-4">
                             <ul className="list-group text-center">
-                                <Collapsible trigger="Create" className="list-group-item" id="button">
+                                <Collapsible trigger="Create" id="button">
                                     <div onClick={this.setStatus.bind(this, 1)}><li className="list-group-item" id="button">Create Person</li></div>
                                     <div onClick={this.setStatus.bind(this, 2)}><li className="list-group-item" id="button">Create Address</li></div>
                                     <div onClick={this.setStatus.bind(this, 3)}><li className="list-group-item" id="button">Create Association</li></div>
@@ -71,7 +71,7 @@ class Dashboard extends React.Component {
                                     <div onClick={this.setStatus.bind(this, 11)}><li className="list-group-item" id="button">Create Season</li></div>
                                     <div onClick={this.setStatus.bind(this, 12)}><li className="list-group-item" id="button">Create Team</li></div>
                                 </Collapsible>
-                                <Collapsible trigger="Update" className="list-group-item">
+                                <Collapsible trigger="Update">
                                     <div onClick={this.setStatus.bind(this, 13)}><li className="list-group-item" id="button">Update Person</li></div>
                                     <div onClick={this.setStatus.bind(this, 14)}><li className="list-group-item" id="button">Update Address</li></div>
                                     <div onClick={this.setStatus.bind(this, 18)}><li className="list-group-item" id="button">Update Association</li></div>
