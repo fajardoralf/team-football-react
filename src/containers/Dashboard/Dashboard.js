@@ -18,7 +18,9 @@ import UpdateSelfTable from '../../components/UpdateTables/UpdateSelfTable'
 import ManageWatchlist from '../../components/Dashboard/ManageWatchlist'
 import SubmitCorrection from '../../components/Dashboard/SubmitCorrection'
 import UpdateAssociationTable from '../../components/UpdateTables/UpdateAssociationTable'
-import UpdateContactTable from '../../components/UpdateTables/UpdateContactTable';
+import UpdateContactTable from '../../components/UpdateTables/UpdateContactTable'
+import UpdateLocationTable from '../../components/UpdateTables/UpdateLocationTable'
+import UpdateMatchGoalTable from '../../components/UpdateTables/UpdateMatchGoalTable'
 
 class Dashboard extends React.Component {
 
@@ -62,6 +64,8 @@ class Dashboard extends React.Component {
                                 <div onClick={this.setStatus.bind(this, 14)}><li className="list-group-item" id="button">Update Address</li></div>
                                 <div onClick={this.setStatus.bind(this, 18)}><li className="list-group-item" id="button">Update Association</li></div>
                                 <div onClick={this.setStatus.bind(this, 19)}><li className="list-group-item" id="button">Update Contact</li></div>
+                                <div onClick={this.setStatus.bind(this, 20)}><li className="list-group-item" id="button">Update Location</li></div>
+                                <div onClick={this.setStatus.bind(this, 21)}><li className="list-group-item" id="button">Update Match Goal</li></div>
 
                             </ul>
                         </div>
@@ -94,7 +98,9 @@ class Dashboard extends React.Component {
                             16: <ManageWatchlist></ManageWatchlist>,
                             17: <SubmitCorrection></SubmitCorrection>,
                             18: <UpdateAssociationTable></UpdateAssociationTable>,
-                            19: <UpdateContactTable></UpdateContactTable>
+                            19: <UpdateContactTable></UpdateContactTable>,
+                            20: <UpdateLocationTable></UpdateLocationTable>,
+                            21: <UpdateMatchGoalTable></UpdateMatchGoalTable>
                         }[this.state.status]}
                     </div>
                 </div>
