@@ -4,10 +4,11 @@ import axios from "axios";
 
 const URL = "";
 
-class CreateResultTable extends React.Component {
+class UpdateResultTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      matchId: "",
       team_id: "",
       score: "",
       result: ""
@@ -19,14 +20,22 @@ class CreateResultTable extends React.Component {
 
     axios
       .post(URL, {
+        match_id: this.state.matchId,
         team_id: this.state.team_id,
         score: this.state.score,
         result: this.state.result
       })
     this.setState({
+        match_id: "",
         team_id: "",
         score: "",
         result: ""
+    });
+  }
+
+  setMatchId(event) {
+    this.setState({ 
+        matchId: event.target.value
     });
   }
 
@@ -49,7 +58,7 @@ class CreateResultTable extends React.Component {
   }
 
   render() {
-    let title = "Create Result"
+    let title = "Update Result"
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -58,7 +67,17 @@ class CreateResultTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
 
-            <Form.Group controlId="createResultForm">
+            <Form.Group controlId="updateResultForm">
+              <Form.Label>Match ID</Form.Label>
+              <Form.Control
+                type="matchId"
+                placeholder="Match ID"
+                value={this.state.matchId}
+                onChange={this.setMatchId.bind(this)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="updateResultForm">
               <Form.Label>Team ID</Form.Label>
               <Form.Control
                 type="team_id"
@@ -68,7 +87,7 @@ class CreateResultTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="createResultForm">
+            <Form.Group controlId="updateResultForm">
               <Form.Label>Score</Form.Label>
               <Form.Control
                 type="score"
@@ -78,7 +97,7 @@ class CreateResultTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="createResultForm">
+            <Form.Group controlId="updateResultForm">
               <Form.Label>Result</Form.Label>
               <Form.Control
                 type="result"
@@ -96,7 +115,7 @@ class CreateResultTable extends React.Component {
               }}
             >
               <Button variant="dark" type="Submit">
-                Create
+                Update
               </Button>
             </div>
           </Form>
@@ -106,4 +125,4 @@ class CreateResultTable extends React.Component {
   }
 }
 
-export default CreateResultTable;
+export default UpdateResultTable;

@@ -9,8 +9,6 @@ class CreateAddressTable extends React.Component {
     super(props);
     this.state = {
       addressLine1: "",
-      addressLine2: "",
-      addressLine3: "",
       postalCode: "",
       city: "",
       country: ""
@@ -23,8 +21,6 @@ class CreateAddressTable extends React.Component {
     axios
       .post(URL, {
         address_line_1: this.state.addressLine1,
-        address_line_2: this.state.addressLine2,
-        address_line_3: this.state.addressLine3,
         postal_code: this.state.postalCode,
         city: this.state.city,
         country: this.state.country
@@ -44,8 +40,6 @@ class CreateAddressTable extends React.Component {
     });
     this.setState({
         addressLine1: "",
-        addressLine2: "",
-        addressLine3: "",
         postalCode: "",
         city: "",
         country: ""
@@ -55,18 +49,6 @@ class CreateAddressTable extends React.Component {
   setAddressLine1(event) {
     this.setState({ 
       addressLine1: event.target.value
-    });
-  }
-
-  setAddressLine2(event) {
-    this.setState({ 
-      addressLine2: event.target.value
-    });
-  }
-
-  setAddressLine3(event) {
-    this.setState({ 
-      addressLine3: event.target.value
     });
   }
 
@@ -88,10 +70,6 @@ class CreateAddressTable extends React.Component {
     });
   }
 
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
-  }
-
   render() {
     let title = "Create Address"
 
@@ -109,26 +87,6 @@ class CreateAddressTable extends React.Component {
                 placeholder="Address Line 1"
                 value={this.state.addressLine1}
                 onChange={this.setAddressLine1.bind(this)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="createAddressForm">
-              <Form.Label>Address Line 2</Form.Label>
-              <Form.Control
-                type="addressLine2"
-                placeholder="Address Line 2"
-                value={this.state.addressLine2}
-                onChange={this.setAddressLine2.bind(this)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="createAddressForm">
-              <Form.Label>Address Line 3</Form.Label>
-              <Form.Control
-                type="addressLine3"
-                placeholder="Address Line 3"
-                value={this.state.addressLine3}
-                onChange={this.setAddressLine3.bind(this)}
               />
             </Form.Group>
 

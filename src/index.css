@@ -18,6 +18,10 @@ body {
   transform: scale(1.1);
 }
 
+#NavigationBar {
+  margin-bottom: 1%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

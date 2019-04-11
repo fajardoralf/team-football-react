@@ -4,10 +4,11 @@ import axios from "axios";
 
 const URL = "";
 
-class CreateMatchTable extends React.Component {
+class UpdateMatchTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      matchId: "",
       matchDate: "",
       homeTeam_id: "",
       awayTeam_id: "",
@@ -21,18 +22,26 @@ class CreateMatchTable extends React.Component {
 
     axios
       .post(URL, {
-        matchDate: this.state.matchDate,
-        homeTeam_id: this.state.homeTeam_id,
-        awayTeam_id: this.state.awayTeam_id,
+        macth_id: this.state.matchId,
+        match_date: this.state.matchDate,
+        home_team_id: this.state.homeTeam_id,
+        away_team_id: this.state.awayTeam_id,
         season_id: this.state.season_id,
         location_id: this.state.location_id
       })
     this.setState({
+      matchId: "",
       matchDate: "",
       homeTeam_id: "",
       awayTeam_id: "",
       season_id: "",
       location_id: ""
+    });
+  }
+
+  setMatchId(event) {
+    this.setState({ 
+      matchId: event.target.value
     });
   }
 
@@ -67,7 +76,7 @@ class CreateMatchTable extends React.Component {
   }
 
   render() {
-    let title = "Create Match"
+    let title = "Update Match"
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -76,17 +85,27 @@ class CreateMatchTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
 
-            <Form.Group controlId="createMatchForm">
+            <Form.Group controlId="updateMatchForm">
+              <Form.Label>Match ID</Form.Label>
+              <Form.Control
+                type="matchId"
+                placeholder="Match ID"
+                value={this.state.matchId}
+                onChange={this.setMatchId.bind(this)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="updateMatchForm">
               <Form.Label>Match Date</Form.Label>
               <Form.Control
-                type="match Date"
+                type="matchDate"
                 placeholder="Match Date"
                 value={this.state.matchDate}
                 onChange={this.setMatchDate.bind(this)}
               />
             </Form.Group>
 
-            <Form.Group controlId="createMatchForm">
+            <Form.Group controlId="updateMatchForm">
               <Form.Label>Home Team ID</Form.Label>
               <Form.Control
                 type="homeTeam_id"
@@ -96,7 +115,7 @@ class CreateMatchTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="createMatchForm">
+            <Form.Group controlId="updateMatchForm">
               <Form.Label>Away Team ID</Form.Label>
               <Form.Control
                 type="awayTeam_id"
@@ -106,7 +125,7 @@ class CreateMatchTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="createMatchForm">
+            <Form.Group controlId="updateMatchForm">
               <Form.Label>Season ID</Form.Label>
               <Form.Control
                 type="season_id"
@@ -116,7 +135,7 @@ class CreateMatchTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="createMatchForm">
+            <Form.Group controlId="updateMatchForm">
               <Form.Label>Location ID</Form.Label>
               <Form.Control
                 type="location_id"
@@ -133,7 +152,7 @@ class CreateMatchTable extends React.Component {
               }}
             >
               <Button variant="dark" type="Submit">
-                Create
+                Update
               </Button>
             </div>
           </Form>
@@ -143,4 +162,4 @@ class CreateMatchTable extends React.Component {
   }
 }
 
-export default CreateMatchTable;
+export default UpdateMatchTable;

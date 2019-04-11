@@ -4,12 +4,12 @@ import axios from "axios";
 
 const URL = "";
 
-class CreateSeasonTable extends React.Component {
+class UpdateLocationTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: "",
-      endDate: "",
+      locationId: "",
+      addressId: "",
       name: "",
       description: ""
     };
@@ -20,45 +20,58 @@ class CreateSeasonTable extends React.Component {
 
     axios
       .post(URL, {
-        start_date: this.state.startDate,
-        end_date: this.state.endDate,
-        name: this.state.name,
+        location_id: this.state.locationId,
+        address_id: this.state.addressId,
+        name: this.state.addressName,
         description: this.state.description
-      })
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
-      startDate: "",
-      endDate: "",
-      name: "",
-      description: ""
+        locationId: "",
+        addressId: "",
+        name: "",
+        description: ""
     });
   }
 
-  setStartDate(event) {
+  setLocationId(event) {
     this.setState({ 
-      startDate: event.target.value
+      locationId: event.target.value
     });
   }
 
-  setEndDate(event) {
-    this.setState({
-      endDate: event.target.value
+  setAddressId(event) {
+    this.setState({ 
+      addressId: event.target.value
     });
   }
 
   setName(event) {
-    this.setState({
+    this.setState({ 
       name: event.target.value
     });
   }
 
   setDescription(event) {
-    this.setState({ 
-      description: event.target.value
-    });
+      this.setState({
+          description: event.target.value
+      })
   }
 
   render() {
-    let title = "Create Season"
+    let title = "Update Location"
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -67,27 +80,27 @@ class CreateSeasonTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
 
-            <Form.Group controlId="createSeasonForm">
-              <Form.Label>Start Date</Form.Label>
+            <Form.Group controlId="updateLocationForm">
+              <Form.Label>Location ID</Form.Label>
               <Form.Control
-                type="startDate"
-                placeholder="YYYY-MM-DD"
-                value={this.state.startDate}
-                onChange={this.setStartDate.bind(this)}
+                type="locationId"
+                placeholder="Location ID"
+                value={this.state.locationId}
+                onChange={this.setLocationId.bind(this)}
               />
             </Form.Group>
 
-            <Form.Group controlId="createSeasonForm">
-              <Form.Label>End Date</Form.Label>
+            <Form.Group controlId="updateLocationForm">
+              <Form.Label>Address ID</Form.Label>
               <Form.Control
-                type="endDate"
-                placeholder="YYYY-MM-DD"
-                value={this.state.endDate}
-                onChange={this.setEndDate.bind(this)}
+                type="addressId"
+                placeholder="Address ID"
+                value={this.state.addressId}
+                onChange={this.setAddressId.bind(this)}
               />
             </Form.Group>
 
-            <Form.Group controlId="createSeasonForm">
+            <Form.Group controlId="updateLocationForm">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="name"
@@ -97,7 +110,7 @@ class CreateSeasonTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="createSeasonForm">
+            <Form.Group controlId="updateLocationForm">
               <Form.Label>Description</Form.Label>
               <Form.Control
                 type="description"
@@ -114,7 +127,7 @@ class CreateSeasonTable extends React.Component {
               }}
             >
               <Button variant="dark" type="Submit">
-                Create
+                Update
               </Button>
             </div>
           </Form>
@@ -124,4 +137,4 @@ class CreateSeasonTable extends React.Component {
   }
 }
 
-export default CreateSeasonTable;
+export default UpdateLocationTable;

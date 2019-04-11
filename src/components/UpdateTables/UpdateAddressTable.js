@@ -23,14 +23,27 @@ class UpdateAddressTable extends React.Component {
 
     axios
       .put(URL, {
-        addressId: this.state.addressId,
-        addressLine1: this.state.addressLine1,
-        addressLine2: this.state.addressLine2,
-        addressLine3: this.state.addressLine3,
-        postalCode: this.state.postalCode,
+        address_id: this.state.addressId,
+        address_line_1: this.state.addressLine1,
+        address_line_2: this.state.addressLine2,
+        address_line_3: this.state.addressLine3,
+        postal_code: this.state.postalCode,
         city: this.state.postalCode,
         country: this.state.country
-      })
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
         addressId: "",
         addressLine1: "",
@@ -82,10 +95,6 @@ class UpdateAddressTable extends React.Component {
     this.setState({ 
       country: event.target.value
     });
-  }
-
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
   }
 
   render() {

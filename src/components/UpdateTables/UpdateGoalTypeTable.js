@@ -4,10 +4,11 @@ import axios from "axios";
 
 const URL = "";
 
-class CreateGoalTypeTable extends React.Component {
+class UpdateGoalTypeTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      goal_type_id: "",
       type: ""
     };
   }
@@ -17,6 +18,7 @@ class CreateGoalTypeTable extends React.Component {
 
     axios
       .post(URL, {
+        goal_type_id: this.state.goal_type_id,
         type: this.state.type
       },
       {
@@ -33,7 +35,14 @@ class CreateGoalTypeTable extends React.Component {
       console.log("Axios error: ", err);
     });
     this.setState({
-      type: ""
+        goal_type_id: "",
+        type: ""
+    });
+  }
+
+  setGoalTypeId(event) {
+    this.setState({ 
+      goal_type_id: event.target.value
     });
   }
 
@@ -53,7 +62,17 @@ class CreateGoalTypeTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
 
-            <Form.Group controlId="createGoalTypeForm">
+            <Form.Group controlId="updateGoalTypeForm">
+              <Form.Label>Goal Type IT</Form.Label>
+              <Form.Control
+                type="goal_type_id"
+                placeholder="Goal Type ID"
+                value={this.state.goal_type_id}
+                onChange={this.setGoalTypeId.bind(this)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="updateGoalTypeForm">
               <Form.Label>Type</Form.Label>
               <Form.Control
                 type="type"
@@ -80,4 +99,4 @@ class CreateGoalTypeTable extends React.Component {
   }
 }
 
-export default CreateGoalTypeTable;
+export default UpdateGoalTypeTable;

@@ -4,7 +4,7 @@ import axios from "axios";
 
 const URL = "";
 
-class CreateMatchPositionTable extends React.Component {
+class UpdateMatchPositionTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,7 +49,7 @@ class CreateMatchPositionTable extends React.Component {
   }
 
   render() {
-    let title = "Create Match-Position"
+    let title = "Update Match-Position"
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -58,7 +58,7 @@ class CreateMatchPositionTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
 
-            <Form.Group controlId="createMatchPositionForm">
+            <Form.Group controlId="updateMatchPositionForm">
               <Form.Label>Player ID</Form.Label>
               <Form.Control
                 type="player_id"
@@ -68,7 +68,7 @@ class CreateMatchPositionTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="createMatchPositionForm">
+            <Form.Group controlId="updateMatchPositionForm">
               <Form.Label>Match ID</Form.Label>
               <Form.Control
                 type="match_id"
@@ -78,7 +78,7 @@ class CreateMatchPositionTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="createMatchPositionForm">
+            <Form.Group controlId="updateMatchPositionForm">
               <Form.Label>Position</Form.Label>
               <Form.Control
                 type="position"
@@ -95,7 +95,7 @@ class CreateMatchPositionTable extends React.Component {
               }}
             >
               <Button variant="dark" type="Submit">
-                Create
+                Update
               </Button>
             </div>
           </Form>
@@ -105,4 +105,4 @@ class CreateMatchPositionTable extends React.Component {
   }
 }
 
-export default CreateMatchPositionTable;
+export default UpdateMatchPositionTable;
