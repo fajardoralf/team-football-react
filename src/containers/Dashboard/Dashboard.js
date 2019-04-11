@@ -21,6 +21,8 @@ import UpdateAssociationTable from '../../components/UpdateTables/UpdateAssociat
 import UpdateContactTable from '../../components/UpdateTables/UpdateContactTable'
 import UpdateLocationTable from '../../components/UpdateTables/UpdateLocationTable'
 import UpdateMatchGoalTable from '../../components/UpdateTables/UpdateMatchGoalTable'
+import UpdateMatchPositionTable from '../../components/UpdateTables/UpdateMatchPositionTable'
+import UpdateMatchTable from '../../components/UpdateTables/UpdateMatchTable'
 
 class Dashboard extends React.Component {
 
@@ -66,6 +68,8 @@ class Dashboard extends React.Component {
                                 <div onClick={this.setStatus.bind(this, 19)}><li className="list-group-item" id="button">Update Contact</li></div>
                                 <div onClick={this.setStatus.bind(this, 20)}><li className="list-group-item" id="button">Update Location</li></div>
                                 <div onClick={this.setStatus.bind(this, 21)}><li className="list-group-item" id="button">Update Match Goal</li></div>
+                                <div onClick={this.setStatus.bind(this, 22)}><li className="list-group-item" id="button">Update Match Position</li></div>
+                                <div onClick={this.setStatus.bind(this, 23)}><li className="list-group-item" id="button">Update Match</li></div>
 
                             </ul>
                         </div>
@@ -100,7 +104,9 @@ class Dashboard extends React.Component {
                             18: <UpdateAssociationTable></UpdateAssociationTable>,
                             19: <UpdateContactTable></UpdateContactTable>,
                             20: <UpdateLocationTable></UpdateLocationTable>,
-                            21: <UpdateMatchGoalTable></UpdateMatchGoalTable>
+                            21: <UpdateMatchGoalTable></UpdateMatchGoalTable>,
+                            22: <UpdateMatchPositionTable></UpdateMatchPositionTable>,
+                            23: <UpdateMatchTable></UpdateMatchTable>
                         }[this.state.status]}
                     </div>
                 </div>
