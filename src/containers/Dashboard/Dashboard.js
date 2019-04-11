@@ -23,6 +23,7 @@ import UpdateLocationTable from '../../components/UpdateTables/UpdateLocationTab
 import UpdateMatchGoalTable from '../../components/UpdateTables/UpdateMatchGoalTable'
 import UpdateMatchPositionTable from '../../components/UpdateTables/UpdateMatchPositionTable'
 import UpdateMatchTable from '../../components/UpdateTables/UpdateMatchTable'
+import UpdateResultTable from '../../components/UpdateTables/UpdateResultTable'
 
 class Dashboard extends React.Component {
 
@@ -70,6 +71,7 @@ class Dashboard extends React.Component {
                                 <div onClick={this.setStatus.bind(this, 21)}><li className="list-group-item" id="button">Update Match Goal</li></div>
                                 <div onClick={this.setStatus.bind(this, 22)}><li className="list-group-item" id="button">Update Match Position</li></div>
                                 <div onClick={this.setStatus.bind(this, 23)}><li className="list-group-item" id="button">Update Match</li></div>
+                                <div onClick={this.setStatus.bind(this, 24)}><li className="list-group-item" id="button">Update Result</li></div>
 
                             </ul>
                         </div>
@@ -106,7 +108,8 @@ class Dashboard extends React.Component {
                             20: <UpdateLocationTable></UpdateLocationTable>,
                             21: <UpdateMatchGoalTable></UpdateMatchGoalTable>,
                             22: <UpdateMatchPositionTable></UpdateMatchPositionTable>,
-                            23: <UpdateMatchTable></UpdateMatchTable>
+                            23: <UpdateMatchTable></UpdateMatchTable>,
+                            24: <UpdateResultTable></UpdateResultTable>
                         }[this.state.status]}
                     </div>
                 </div>
