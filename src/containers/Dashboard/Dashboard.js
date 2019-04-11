@@ -25,6 +25,8 @@ import UpdateMatchPositionTable from '../../components/UpdateTables/UpdateMatchP
 import UpdateMatchTable from '../../components/UpdateTables/UpdateMatchTable'
 import UpdateResultTable from '../../components/UpdateTables/UpdateResultTable'
 import UpdateSeasonTable from '../../components/UpdateTables/UpdateSeasonTable'
+import UpdateTeamTable from '../../components/UpdateTables/UpdateTeamTable'
+import NavigationBar from '../../components/NavigationBar/NavigationBar'
 
 class Dashboard extends React.Component {
 
@@ -44,6 +46,7 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div className="container">
+                <NavigationBar></NavigationBar>,
                 <h1 className="text-center">Dashboard</h1>
                 <div className="text-right">
                     <a href='/' className='btn btn-info' id="button">Back</a>
@@ -74,6 +77,7 @@ class Dashboard extends React.Component {
                                 <div onClick={this.setStatus.bind(this, 23)}><li className="list-group-item" id="button">Update Match</li></div>
                                 <div onClick={this.setStatus.bind(this, 24)}><li className="list-group-item" id="button">Update Result</li></div>
                                 <div onClick={this.setStatus.bind(this, 25)}><li className="list-group-item" id="button">Update Season</li></div>
+                                <div onClick={this.setStatus.bind(this, 26)}><li className="list-group-item" id="button">Update Team</li></div>
 
                             </ul>
                         </div>
@@ -112,7 +116,8 @@ class Dashboard extends React.Component {
                             22: <UpdateMatchPositionTable></UpdateMatchPositionTable>,
                             23: <UpdateMatchTable></UpdateMatchTable>,
                             24: <UpdateResultTable></UpdateResultTable>,
-                            25: <UpdateSeasonTable></UpdateSeasonTable>
+                            25: <UpdateSeasonTable></UpdateSeasonTable>,
+                            26: <UpdateTeamTable></UpdateTeamTable>
                         }[this.state.status]}
                     </div>
                 </div>
