@@ -48,10 +48,6 @@ class CreateResultTable extends React.Component {
       })
   }
 
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
-  }
-
   render() {
     let title = "Create Result"
 
