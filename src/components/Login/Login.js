@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
+import './Login.css'
 
 class Login extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class Login extends Component {
     return (
       <div className="text-center" id="form">
         <Form onSubmit={this.handleSubmit.bind(this)}>
-          <Form.Group controlId="formBasicUsernameLogin">
+          <Form.Group controlId="formBasicUsernameLogin" id="Username">
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="username"
@@ -41,7 +42,7 @@ class Login extends Component {
               onChange={this.handleChangeUsername.bind(this)}
             />
           </Form.Group>
-          <Form.Group controlId="formBasicPasswordLogin">
+          <Form.Group controlId="formBasicPasswordLogin" id="Password">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
