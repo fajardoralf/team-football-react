@@ -29,6 +29,17 @@ class ManageWatchlist extends React.Component {
             teamInput: e.target.value,
         })
     }
+
+    onClickPlayer(name) {
+        this.setState({
+            playerInput: name
+        })
+    }
+    onClickTeam(name) {
+        this.setState({
+            teamInput: name
+        })
+    }
     getPlayerId(name) {
         return 0
     }
@@ -64,6 +75,10 @@ class ManageWatchlist extends React.Component {
 
     componentWillMount() {
         //fetch players, teams and watchlists for user
+
+        // Player data currently does not return player name, only person_id. 
+        // Waiting on response from backend to see if that can be included in response 
+        // or if I need to fetch person table as well to find names.
         axios.get(URL + 'player', {
             headers: {
                 Accept: "application/json"
@@ -85,12 +100,14 @@ class ManageWatchlist extends React.Component {
     render() {
         const title = "Manage Watchlist"
         const players = this.state.playerList
-            .filter(d => this.state.playerInput === '' || d.includes(this.state.playerInput))
-            .map((d, index) => <li key={index}>{d}</li>);
+            .filter(d => this.state.playerInput === '' || (d.first_name + ' ' + d.last_name).includes(this.state.playerInput))
+            .map((d, index) => <li onClick={this.onClickPlayer.bind(this,(d.first_name + ' ' + d.last_name))} key={index}>{d.first_name + ' ' + d.last_name}</li>);
         const teams = this.state.teamList
-            .filter(d => this.state.teamInput === '' || d.includes(this.state.teamInput))
-            .map((d, index) => <li key={index}>{d}</li>);
+            .filter(d => this.state.teamInput === '' || d.team_name.includes(this.state.teamInput))
+            .map((d, index) => <li onClick={this.onClickTeam.bind(this, d.team_name)} key={index}>{d.team_name}</li>);
 
+        const players10 = (players.length > 10) ? players.slice(0,10) : players
+        const teams10 = (teams.length > 10) ? teams.slice(0, 10) : teams
         return (
             <div>
                 <h3 className='text-center'>{title}</h3><br />
@@ -108,7 +125,7 @@ class ManageWatchlist extends React.Component {
                                             onChange={this.onChangeHandlerPlayer.bind(this)}
                                         />
                                     </Form.Group>
-                                    <ul>{players}</ul>
+                                    <ul>{players10}</ul>
                                     <Button variant="dark" type="Submit">
                                         Add
                                     </Button>
@@ -132,7 +149,7 @@ class ManageWatchlist extends React.Component {
                                             onChange={this.onChangeHandlerTeam.bind(this)}
                                         />
                                     </Form.Group>
-                                    <ul>{teams}</ul>
+                                    <ul>{teams10}</ul>
                                     <Button variant="dark" type="Submit">
                                         Add
                                     </Button>
