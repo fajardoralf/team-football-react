@@ -2,7 +2,6 @@ import React from 'react';
 import './Dashboard.css';
 import CreatePersonTable from '../../components/CreateTables/CreatePersonTable'
 import CreateAddressTable from '../../components/CreateTables/CreateAddressTable'
-import CreateAssociationTable from '../../components/CreateTables/CreateAssociationTable'
 import CreateContactTable from '../../components/CreateTables/CreateContactTable'
 import CreateGoalTypeTable from '../../components/CreateTables/CreateGoalTypeTable'
 import CreateLocationTable from '../../components/CreateTables/CreateLocationTable'
@@ -18,7 +17,6 @@ import UpdateAddressTable from '../../components/UpdateTables/UpdateAddressTable
 import UpdateSelfTable from '../../components/UpdateTables/UpdateSelfTable'
 import ManageWatchlist from '../../components/Dashboard/ManageWatchlist'
 import SubmitCorrection from '../../components/Dashboard/SubmitCorrection'
-import UpdateAssociationTable from '../../components/UpdateTables/UpdateAssociationTable'
 import UpdateContactTable from '../../components/UpdateTables/UpdateContactTable'
 import UpdateLocationTable from '../../components/UpdateTables/UpdateLocationTable'
 import UpdateMatchGoalTable from '../../components/UpdateTables/UpdateMatchGoalTable'
@@ -29,7 +27,6 @@ import UpdateSeasonTable from '../../components/UpdateTables/UpdateSeasonTable'
 import UpdateTeamTable from '../../components/UpdateTables/UpdateTeamTable'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
 import DeleteAddressTable from '../../components/DeleteTables/DeleteAddressTable'
-import DeleteAssociationTable from '../../components/DeleteTables/DeleteAssociationTable'
 import DeleteContactTable from '../../components/DeleteTables/DeleteContactTable'
 import DeleteGoalTypeTable from '../../components/DeleteTables/DeleteGoalTypeTable'
 import DeleteLocationTable from '../../components/DeleteTables/DeleteLocationTable'
@@ -71,7 +68,6 @@ class Dashboard extends React.Component {
                                 <Collapsible trigger="Create" id="button">
                                     <div onClick={this.setStatus.bind(this, 1)}><li className="list-group-item" id="button">Create Person</li></div>
                                     <div onClick={this.setStatus.bind(this, 2)}><li className="list-group-item" id="button">Create Address</li></div>
-                                    <div onClick={this.setStatus.bind(this, 3)}><li className="list-group-item" id="button">Create Association</li></div>
                                     <div onClick={this.setStatus.bind(this, 4)}><li className="list-group-item" id="button">Create Contact</li></div>
                                     <div onClick={this.setStatus.bind(this, 5)}><li className="list-group-item" id="button">Create GoalType</li></div>
                                     <div onClick={this.setStatus.bind(this, 6)}><li className="list-group-item" id="button">Create Location</li></div>
@@ -86,7 +82,6 @@ class Dashboard extends React.Component {
                                 <Collapsible trigger="Update">
                                     <div onClick={this.setStatus.bind(this, 13)}><li className="list-group-item" id="button">Update Person</li></div>
                                     <div onClick={this.setStatus.bind(this, 14)}><li className="list-group-item" id="button">Update Address</li></div>
-                                    <div onClick={this.setStatus.bind(this, 18)}><li className="list-group-item" id="button">Update Association</li></div>
                                     <div onClick={this.setStatus.bind(this, 19)}><li className="list-group-item" id="button">Update Contact</li></div>
                                     <div onClick={this.setStatus.bind(this, 20)}><li className="list-group-item" id="button">Update Location</li></div>
                                     <div onClick={this.setStatus.bind(this, 21)}><li className="list-group-item" id="button">Update Match Goal</li></div>
@@ -99,7 +94,6 @@ class Dashboard extends React.Component {
                                 </Collapsible>
                                 <Collapsible trigger="Delete">
                                     <div onClick={this.setStatus.bind(this, 27)}><li className="list-group-item" id="button">Delete Address</li></div>
-                                    <div onClick={this.setStatus.bind(this, 28)}><li className="list-group-item" id="button">Delete Association</li></div>
                                     <div onClick={this.setStatus.bind(this, 29)}><li className="list-group-item" id="button">Delete Contact</li></div>
                                     <div onClick={this.setStatus.bind(this, 30)}><li className="list-group-item" id="button">Delete Goal Type</li></div>
                                     <div onClick={this.setStatus.bind(this, 31)}><li className="list-group-item" id="button">Delete Location</li></div>
@@ -125,7 +119,6 @@ class Dashboard extends React.Component {
                             0: <div></div>,
                             1: <CreatePersonTable></CreatePersonTable>,
                             2: <CreateAddressTable></CreateAddressTable>,
-                            3: <CreateAssociationTable></CreateAssociationTable>,
                             4: <CreateContactTable></CreateContactTable>,
                             5: <CreateGoalTypeTable></CreateGoalTypeTable>,
                             6: <CreateLocationTable></CreateLocationTable>,
@@ -140,7 +133,6 @@ class Dashboard extends React.Component {
                             15: <UpdateSelfTable personID="0"></UpdateSelfTable>,
                             16: <ManageWatchlist></ManageWatchlist>,
                             17: <SubmitCorrection></SubmitCorrection>,
-                            18: <UpdateAssociationTable></UpdateAssociationTable>,
                             19: <UpdateContactTable></UpdateContactTable>,
                             20: <UpdateLocationTable></UpdateLocationTable>,
                             21: <UpdateMatchGoalTable></UpdateMatchGoalTable>,
@@ -150,7 +142,6 @@ class Dashboard extends React.Component {
                             25: <UpdateSeasonTable></UpdateSeasonTable>,
                             26: <UpdateTeamTable></UpdateTeamTable>,
                             27: <DeleteAddressTable></DeleteAddressTable>,
-                            28: <DeleteAssociationTable></DeleteAssociationTable>,
                             29: <DeleteContactTable></DeleteContactTable>,
                             30: <DeleteGoalTypeTable></DeleteGoalTypeTable>,
                             31: <DeleteLocationTable></DeleteLocationTable>,

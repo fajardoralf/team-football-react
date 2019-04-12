@@ -7,11 +7,13 @@ import './index.css';
 import App from './App';
 import Dashboard from './containers/Dashboard/Dashboard';
 import CreateUser from './components/CreateTables/CreateUser'
+import BrowsePlayer from './components/AnonymousBrowse/BrowsePlayer'
 
 ReactDOM.render(
 <Router>
     <Route path='/' exact component={App}/>
     <Route path="/dashboard" exact component={Dashboard} />
     <Route path="/signup" exact component={CreateUser}/>
+    <Route path="/browse" exact component={BrowsePlayer}/>
 </Router>,
  document.getElementById('root'));
