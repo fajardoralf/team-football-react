@@ -28,6 +28,17 @@ import UpdateSeasonTable from '../../components/UpdateTables/UpdateSeasonTable'
 import UpdateTeamTable from '../../components/UpdateTables/UpdateTeamTable'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
 import DeleteAddressTable from '../../components/DeleteTables/DeleteAddressTable'
+import DeleteAssociationTable from '../../components/DeleteTables/DeleteAssociationTable'
+import DeleteContactTable from '../../components/DeleteTables/DeleteContactTable'
+import DeleteGoalTypeTable from '../../components/DeleteTables/DeleteGoalTypeTable'
+import DeleteLocationTable from '../../components/DeleteTables/DeleteLocationTable'
+import DeleteMatchGoalTable from '../../components/DeleteTables/DeleteMatchGoalTable'
+import DeleteMatchPositionTable from '../../components/DeleteTables/DeleteMatchPositionTable'
+import DeleteMatchTable from '../../components/DeleteTables/DeleteMatchTable'
+import DeletePersonTable from '../../components/DeleteTables/DeletePersonTable'
+import DeleteTeamTable from '../../components/DeleteTables/DeleteTeamTable'
+import DeleteUserTable from '../../components/DeleteTables/DeleteUsersTable'
+
 import Collapsible from 'react-collapsible';
 
 class Dashboard extends React.Component {
@@ -84,6 +95,16 @@ class Dashboard extends React.Component {
                                 </Collapsible>
                                 <Collapsible trigger="Delete">
                                     <div onClick={this.setStatus.bind(this, 27)}><li className="list-group-item" id="button">Delete Address</li></div>
+                                    <div onClick={this.setStatus.bind(this, 28)}><li className="list-group-item" id="button">Delete Association</li></div>
+                                    <div onClick={this.setStatus.bind(this, 29)}><li className="list-group-item" id="button">Delete Contact</li></div>
+                                    <div onClick={this.setStatus.bind(this, 30)}><li className="list-group-item" id="button">Delete Goal Type</li></div>
+                                    <div onClick={this.setStatus.bind(this, 31)}><li className="list-group-item" id="button">Delete Location</li></div>
+                                    <div onClick={this.setStatus.bind(this, 32)}><li className="list-group-item" id="button">Delete Match Goal</li></div>
+                                    <div onClick={this.setStatus.bind(this, 33)}><li className="list-group-item" id="button">Delete Match Position</li></div>
+                                    <div onClick={this.setStatus.bind(this, 34)}><li className="list-group-item" id="button">Delete Match</li></div>
+                                    <div onClick={this.setStatus.bind(this, 35)}><li className="list-group-item" id="button">Delete Person</li></div>
+                                    <div onClick={this.setStatus.bind(this, 36)}><li className="list-group-item" id="button">Delete Team</li></div>
+                                    <div onClick={this.setStatus.bind(this, 37)}><li className="list-group-item" id="button">Delete User</li></div>
                                 </Collapsible> 
                             </ul>
                         </div>
@@ -124,7 +145,18 @@ class Dashboard extends React.Component {
                             24: <UpdateResultTable></UpdateResultTable>,
                             25: <UpdateSeasonTable></UpdateSeasonTable>,
                             26: <UpdateTeamTable></UpdateTeamTable>,
-                            27: <DeleteAddressTable></DeleteAddressTable>
+                            27: <DeleteAddressTable></DeleteAddressTable>,
+                            28: <DeleteAssociationTable></DeleteAssociationTable>,
+                            29: <DeleteContactTable></DeleteContactTable>,
+                            30: <DeleteGoalTypeTable></DeleteGoalTypeTable>,
+                            31: <DeleteLocationTable></DeleteLocationTable>,
+                            32: <DeleteMatchGoalTable></DeleteMatchGoalTable>,
+                            33: <DeleteMatchPositionTable></DeleteMatchPositionTable>,
+                            34: <DeleteMatchTable></DeleteMatchTable>,
+                            35: <DeletePersonTable></DeletePersonTable>,
+                            36: <DeleteTeamTable></DeleteTeamTable>,
+                            37: <DeleteUserTable></DeleteUserTable>
+
                         }[this.state.status]}
                     </div>
                 </div>
