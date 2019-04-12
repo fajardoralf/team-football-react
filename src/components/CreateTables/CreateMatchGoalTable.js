@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/matchgoal/";
 
 class CreateMatchGoalTable extends React.Component {
   constructor(props) {
@@ -23,7 +23,9 @@ class CreateMatchGoalTable extends React.Component {
         player_id: this.state.playerId,
         goal_type_id: this.state.goalTypeId,
         match_id: this.state.matchId,
-        description: this.state.description
+        description: this.state.description,
+        message: "Successfully created ",
+        submitted: true
       },
       {
         headers: {
@@ -68,10 +70,6 @@ class CreateMatchGoalTable extends React.Component {
       this.setState({
           description: event.target.value
       })
-  }
-
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
   }
 
   render() {
@@ -133,6 +131,11 @@ class CreateMatchGoalTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.description : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

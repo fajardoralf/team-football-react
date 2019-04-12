@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/result/";
 
 class UpdateResultTable extends React.Component {
   constructor(props) {
@@ -11,7 +11,9 @@ class UpdateResultTable extends React.Component {
       matchId: "",
       team_id: "",
       score: "",
-      result: ""
+      result: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -19,12 +21,27 @@ class UpdateResultTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.matchId, {
         match_id: this.state.matchId,
         team_id: this.state.team_id,
         score: this.state.score,
-        result: this.state.result
-      })
+        result: this.state.result,
+        message: "Successfully Updated",
+        submitted: true
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
         match_id: "",
         team_id: "",
@@ -117,6 +134,11 @@ class UpdateResultTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.matchId : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

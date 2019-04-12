@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/location/";
 
 class UpdateLocationTable extends React.Component {
   constructor(props) {
@@ -11,7 +11,9 @@ class UpdateLocationTable extends React.Component {
       locationId: "",
       addressId: "",
       name: "",
-      description: ""
+      description: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -19,11 +21,13 @@ class UpdateLocationTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.locationId, {
         location_id: this.state.locationId,
         address_id: this.state.addressId,
         name: this.state.addressName,
-        description: this.state.description
+        description: this.state.description,
+        message: "Successfully Updated",
+        submitted: true
       },
       {
         headers: {
@@ -129,6 +133,11 @@ class UpdateLocationTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.name : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

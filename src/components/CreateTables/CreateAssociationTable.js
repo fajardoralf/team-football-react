@@ -2,14 +2,16 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/association/";
 
 class CreateAssociationTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      description: ""
+      description: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -19,7 +21,9 @@ class CreateAssociationTable extends React.Component {
     axios
       .post(URL, {
         name: this.state.associationId,
-        description: this.state.coachId
+        description: this.state.coachId,
+        message: "Successfully created ",
+        submitted: true
       },
       {
         headers: {
@@ -50,10 +54,6 @@ class CreateAssociationTable extends React.Component {
     this.setState({
       description: event.target.value
     });
-  }
-
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
   }
 
   render() {
@@ -95,6 +95,11 @@ class CreateAssociationTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.name : ""}
+            </div>
             </div>
           </Form>
         </Card.Body>

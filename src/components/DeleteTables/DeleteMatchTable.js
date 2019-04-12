@@ -2,17 +2,19 @@ import React from "react";
 import { Form, Button, Card, FormGroup } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/address/";
+const URL = "https://team-football-api.herokuapp.com/match/";
 
-class DeleteAddressTable extends React.Component {
+class DeleteMatchPositionTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: [],
-      addressName: "",
+      match: [],
+      matchInfo: [],
+      matchPosition: "",
       id: "",
       message: "",
-      submitted: false
+      submitted: false,
+      mounted: true
     };
   }
 
@@ -21,7 +23,6 @@ class DeleteAddressTable extends React.Component {
     axios.delete(URL + this.state.id).then(res => {
       this.setState({
         message: "Successfully deleted ",
-        addressName: this.state.addressName,
         submitted: true
       });
     });
@@ -30,11 +31,13 @@ class DeleteAddressTable extends React.Component {
   handleChange = event => {
     this.setState({
       id: event.target.value,
-      addressName: event.target.selectedOptions[0].text
+      matchPosition: event.target.selectedOptions[0].text
     });
+
+    this.fetchMatchInfo();
   };
 
-  fetchAddress = () => {
+  fetchMatch = () => {
     axios
       .get(URL, {
         headers: {
@@ -45,12 +48,35 @@ class DeleteAddressTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           return {
-            key: data.address_id,
-            value: data.address_id,
-            text: data.address_line_1
+            key: data.goal_type_id,
+            value: data.goal_type_id,
+            text: data.type
           };
         });
-        this.setState({ address: data });
+        this.setState({ matchPositions: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  fetchMatch = () => {
+    axios
+      .get(URL + this.state.id, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        let data = res.data.map(data => {
+          return {
+            match_date: data.match_date,
+            value: data.goal_type_id,
+            text: data.type
+          };
+        });
+        this.setState({ matchInfo: data });
       })
       .catch(err => {
         console.log("Axios error: ", err);
@@ -58,17 +84,15 @@ class DeleteAddressTable extends React.Component {
   };
 
   componentWillMount() {
-    this.fetchAddress();
+    this.fetchMatch();
   }
 
   componentWillUpdate() {
-    this.fetchAddress();
+    this.fetchMatch();
   }
 
-  componentWillUnmount() {}
-
   render() {
-    let title = "Delete Address";
+    let title = "Delete Match";
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -76,7 +100,7 @@ class DeleteAddressTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm}>
             <FormGroup>
-              <Form.Label>Address</Form.Label>
+              <Form.Label>Match</Form.Label>
               <Form.Control onChange={this.handleChange} as="select">
                 {this.state.address.map(data => {
                   return (
@@ -103,7 +127,7 @@ class DeleteAddressTable extends React.Component {
 
             <div className="text-center">
               {this.state.message}
-              {this.state.submitted ? this.state.addressName : ""}
+              {this.state.submitted ? this.state.match : ""}
             </div>
           </Form>
         </Card.Body>
@@ -112,4 +136,4 @@ class DeleteAddressTable extends React.Component {
   }
 }
 
-export default DeleteAddressTable;
+export default DeleteMatchPositionTable;

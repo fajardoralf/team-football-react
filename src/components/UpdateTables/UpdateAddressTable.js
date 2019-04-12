@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/address/";
 
 class UpdateAddressTable extends React.Component {
   constructor(props) {
@@ -10,11 +10,11 @@ class UpdateAddressTable extends React.Component {
     this.state = {
       addressId: "",
       addressLine1: "",
-      addressLine2: "",
-      addressLine3: "",
       postalCode: "",
       city: "",
-      country: ""
+      country: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -22,14 +22,14 @@ class UpdateAddressTable extends React.Component {
     event.preventDefault();
 
     axios
-      .put(URL, {
+      .post(URL + this.state.addressId, {
         address_id: this.state.addressId,
         address_line_1: this.state.addressLine1,
-        address_line_2: this.state.addressLine2,
-        address_line_3: this.state.addressLine3,
         postal_code: this.state.postalCode,
         city: this.state.postalCode,
-        country: this.state.country
+        country: this.state.country,
+        message: "Successfully Updated",
+        submitted: true
       },
       {
         headers: {
@@ -47,8 +47,6 @@ class UpdateAddressTable extends React.Component {
     this.setState({
         addressId: "",
         addressLine1: "",
-        addressLine2: "",
-        addressLine3: "",
         postalCode: "",
         city: "",
         country: ""
@@ -64,18 +62,6 @@ class UpdateAddressTable extends React.Component {
   setAddressLine1(event) {
     this.setState({ 
       addressLine1: event.target.value
-    });
-  }
-
-  setAddressLine2(event) {
-    this.setState({ 
-      addressLine2: event.target.value
-    });
-  }
-
-  setAddressLine3(event) {
-    this.setState({ 
-      addressLine3: event.target.value
     });
   }
 
@@ -126,26 +112,6 @@ class UpdateAddressTable extends React.Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="udpateAddressForm">
-              <Form.Label>Address Line 2</Form.Label>
-              <Form.Control
-                type="addressLine2"
-                placeholder="Address Line 2"
-                value={this.state.addressLine2}
-                onChange={this.setAddressLine2.bind(this)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="updateAddressForm">
-              <Form.Label>Address Line 3</Form.Label>
-              <Form.Control
-                type="addressLine3"
-                placeholder="Address Line 3"
-                value={this.state.addressLine3}
-                onChange={this.setAddressLine3.bind(this)}
-              />
-            </Form.Group>
-
             <Form.Group controlId="updateAddressForm">
               <Form.Label>Postal Code</Form.Label>
               <Form.Control
@@ -185,6 +151,11 @@ class UpdateAddressTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.address_line_1 : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/matchposition/";
 
 class UpdateMatchPositionTable extends React.Component {
   constructor(props) {
@@ -10,7 +10,9 @@ class UpdateMatchPositionTable extends React.Component {
     this.state = {
       player_id: "",
       match_id: "",
-      position: ""
+      position: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -18,11 +20,26 @@ class UpdateMatchPositionTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.player_id, {
         player_id: this.state.player_id,
         match_id: this.state.match_id,
-        position: this.state.position
-      })
+        position: this.state.position,
+        message: "Successfully Updated",
+        submitted: true
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
       player_id: "",
       match_id: "",
@@ -97,6 +114,11 @@ class UpdateMatchPositionTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.position : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

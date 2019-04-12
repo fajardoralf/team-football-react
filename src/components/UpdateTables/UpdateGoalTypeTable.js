@@ -2,14 +2,16 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/goaltype/";
 
 class UpdateGoalTypeTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       goal_type_id: "",
-      type: ""
+      type: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -17,9 +19,11 @@ class UpdateGoalTypeTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.goal_type_id, {
         goal_type_id: this.state.goal_type_id,
-        type: this.state.type
+        type: this.state.type,
+        message: "Successfully Updated",
+        submitted: true
       },
       {
         headers: {
@@ -53,7 +57,7 @@ class UpdateGoalTypeTable extends React.Component {
   }
 
   render() {
-    let title = "Create Goal Type"
+    let title = "Update Goal Type"
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -91,6 +95,11 @@ class UpdateGoalTypeTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.type : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

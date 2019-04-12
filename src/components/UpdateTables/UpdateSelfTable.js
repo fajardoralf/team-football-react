@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/person/";
 
 class UpdateSelfTable extends React.Component {
   constructor(props) {
@@ -12,7 +12,9 @@ class UpdateSelfTable extends React.Component {
       addressId: "",
       firstName: "",
       lastName: "",
-      dateOfBirth: ""
+      dateOfBirth: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -20,12 +22,14 @@ class UpdateSelfTable extends React.Component {
     event.preventDefault();
 
     axios
-      .put(URL, {
+      .post(URL + this.state.personId, {
         personId: this.state.personId,
         addressId: this.state.addressId,
         firstName: this.state.firstName,
         lastName: this.state.lastName,
-        dateOfBirth: this.state.dateOfBirth
+        dateOfBirth: this.state.dateOfBirth,
+        message: "Successfully Updated",
+        submitted: true
       })
     this.setState({
         addressId: "",
@@ -58,7 +62,7 @@ class UpdateSelfTable extends React.Component {
   }
 
   render() {
-    const title = "Update Person";
+    const title = "Update Your Info";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -116,6 +120,10 @@ class UpdateSelfTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+              </div>
             </div>
           </Form>
         </Card.Body>

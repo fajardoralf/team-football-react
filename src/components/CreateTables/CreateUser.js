@@ -11,7 +11,9 @@ class CreateUser extends React.Component {
         this.state = {
             username: "",
             password: "",
-            redirect: false
+            redirect: false,
+            message: "",
+            submitted: false
         };
     }
 
@@ -20,7 +22,9 @@ class CreateUser extends React.Component {
         axios.post(URL, {
             username: this.state.username,
             password: this.state.password,
-            role: false // false == regular user
+            role: false, // false == regular user
+            message: "Successfully created ",
+            submitted: true
         },
         {
             headers: {
@@ -109,6 +113,11 @@ class CreateUser extends React.Component {
                             <Button variant="dark" type="Submit">
                                 Create
                             </Button>
+
+                            <div className="text-center">
+                                {this.state.message}
+                                {this.state.submitted ? this.state.username : ""}
+                            </div>
                         </div>
                     </Form>
                 </Card.Body>

@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/season/";
 
 class UpdateSeasonTable extends React.Component {
   constructor(props) {
@@ -12,7 +12,9 @@ class UpdateSeasonTable extends React.Component {
       startDate: "",
       endDate: "",
       name: "",
-      description: ""
+      description: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -20,13 +22,28 @@ class UpdateSeasonTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.seasonId, {
         seasons_id: this.state.seasonId,
         start_date: this.state.startDate,
         end_date: this.state.endDate,
         name: this.state.name,
-        description: this.state.description
-      })
+        description: this.state.description,
+        message: "Successfully Updated",
+        submitted: true
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
       seasonId: "",
       startDate: "",
@@ -135,6 +152,11 @@ class UpdateSeasonTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.name : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>
