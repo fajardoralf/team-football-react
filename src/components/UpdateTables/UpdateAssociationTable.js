@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/association/";
 
 class UpdateAssociationTable extends React.Component {
   constructor(props) {
@@ -10,7 +10,9 @@ class UpdateAssociationTable extends React.Component {
     this.state = {
       associationId: "",
       name: "",
-      description: ""
+      description: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -18,10 +20,12 @@ class UpdateAssociationTable extends React.Component {
     event.preventDefault();
 
     axios
-      .put(URL, {
+      .post(URL, {
         association_id: this.state.associationId,
         name: this.state.name,
-        description: this.state.description
+        description: this.state.description,
+        message: "Successfully Updated",
+        submitted: true
       },
       {
         headers: {
@@ -109,6 +113,11 @@ class UpdateAssociationTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.name : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>
