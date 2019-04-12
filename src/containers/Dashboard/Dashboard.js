@@ -39,6 +39,7 @@ import DeleteMatchTable from '../../components/DeleteTables/DeleteMatchTable'
 import DeletePersonTable from '../../components/DeleteTables/DeletePersonTable'
 import DeleteTeamTable from '../../components/DeleteTables/DeleteTeamTable'
 import DeleteUserTable from '../../components/DeleteTables/DeleteUsersTable'
+import UpdatePlayerTable from '../../components/UpdateTables/UpdatePlayerTable'
 
 import Collapsible from 'react-collapsible';
 
@@ -94,6 +95,7 @@ class Dashboard extends React.Component {
                                     <div onClick={this.setStatus.bind(this, 24)}><li className="list-group-item" id="button">Update Result</li></div>
                                     <div onClick={this.setStatus.bind(this, 25)}><li className="list-group-item" id="button">Update Season</li></div>
                                     <div onClick={this.setStatus.bind(this, 26)}><li className="list-group-item" id="button">Update Team</li></div>
+                                    <div onClick={this.setStatus.bind(this, 39)}><li className="list-group-item" id="button">Update Player</li></div>
                                 </Collapsible>
                                 <Collapsible trigger="Delete">
                                     <div onClick={this.setStatus.bind(this, 27)}><li className="list-group-item" id="button">Delete Address</li></div>
@@ -158,7 +160,8 @@ class Dashboard extends React.Component {
                             35: <DeletePersonTable></DeletePersonTable>,
                             36: <DeleteTeamTable></DeleteTeamTable>,
                             37: <DeleteUserTable></DeleteUserTable>,
-                            38: <CreatePlayerTable></CreatePlayerTable>
+                            38: <CreatePlayerTable></CreatePlayerTable>,
+                            39: <UpdatePlayerTable></UpdatePlayerTable>
 
                         }[this.state.status]}
                     </div>
