@@ -69,7 +69,7 @@ class DeletePersonTable extends React.Component {
   }
 
   render() {
-    let title = "Delete Person";
+    let title = "Delete Team";
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
