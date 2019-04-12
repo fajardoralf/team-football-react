@@ -12,8 +12,8 @@ class ManageWatchlist extends React.Component {
             personId: '',
             playerWatchList: [],
             teamWatchList: [],
-            playerList: ["Ronaldo", "Ronaldinho", "Pele", "Messi", "Salah"],
-            teamList: ["Real Madrid", "Barcelona", "Liverpool", "Manchester United", "Manchester City"],
+            playerList: [],
+            teamList: [],
             playerInput: '',
             teamInput: ''
 
@@ -100,14 +100,26 @@ class ManageWatchlist extends React.Component {
     render() {
         const title = "Manage Watchlist"
         const players = this.state.playerList
-            .filter(d => this.state.playerInput === '' || (d.first_name + ' ' + d.last_name).includes(this.state.playerInput))
-            .map((d, index) => <li onClick={this.onClickPlayer.bind(this,(d.first_name + ' ' + d.last_name))} key={index}>{d.first_name + ' ' + d.last_name}</li>);
+            .filter(d => {
+                let personExists = d.person.length > 0
+                let matchName = false
+                if (personExists) {
+                    matchName = (d.person[0].first_name + ' ' + d.person[0].last_name).includes(this.state.playerInput)
+                }
+                return this.state.playerInput === '' || matchName
+            })
+            .map((d, index) =>
+                <li
+                    onClick={this.onClickPlayer.bind(this, ((d.person.length > 0 ? d.person[0].first_name : '') + ' ' + (d.person.length > 0 ? d.person[0].last_name : '')))}
+                    key={index}>
+                    {(d.person.length > 0 ? d.person[0].first_name : '') + ' ' + (d.person.length > 0 ? d.person[0].last_name : '')}
+                </li>);
         const teams = this.state.teamList
             .filter(d => this.state.teamInput === '' || d.team_name.includes(this.state.teamInput))
             .map((d, index) => <li onClick={this.onClickTeam.bind(this, d.team_name)} key={index}>{d.team_name}</li>);
 
-        const players10 = (players.length > 10) ? players.slice(0,10) : players
-        const teams10 = (teams.length > 10) ? teams.slice(0, 10) : teams
+        const players10 = (players.length > 10) ? players.slice(0, 10) : players
+        const teams10 = (teams.length > 10) ? teams.slice(0, 10): teams
         return (
             <div>
                 <h3 className='text-center'>{title}</h3><br />
