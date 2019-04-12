@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/season/";
 
 class CreateSeasonTable extends React.Component {
   constructor(props) {
@@ -11,7 +11,9 @@ class CreateSeasonTable extends React.Component {
       startDate: "",
       endDate: "",
       name: "",
-      description: ""
+      description: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -23,7 +25,9 @@ class CreateSeasonTable extends React.Component {
         start_date: this.state.startDate,
         end_date: this.state.endDate,
         name: this.state.name,
-        description: this.state.description
+        description: this.state.description,
+        message: "Successfully created ",
+        submitted: true
       })
     this.setState({
       startDate: "",
@@ -116,6 +120,11 @@ class CreateSeasonTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.name : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

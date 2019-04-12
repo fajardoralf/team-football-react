@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/address";
+const URL = "https://team-football-api.herokuapp.com/address/";
 
 class CreateAddressTable extends React.Component {
   constructor(props) {
@@ -11,7 +11,9 @@ class CreateAddressTable extends React.Component {
       addressLine1: "",
       postalCode: "",
       city: "",
-      country: ""
+      country: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -23,7 +25,9 @@ class CreateAddressTable extends React.Component {
         address_line_1: this.state.addressLine1,
         postal_code: this.state.postalCode,
         city: this.state.city,
-        country: this.state.country
+        country: this.state.country,
+        message: "Successfully created ",
+        submitted: true
       },
       {
         headers: {
@@ -129,6 +133,11 @@ class CreateAddressTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.address_line_1 : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

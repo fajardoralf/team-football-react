@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/match/";
 
 class CreateMatchTable extends React.Component {
   constructor(props) {
@@ -12,7 +12,9 @@ class CreateMatchTable extends React.Component {
       homeTeam_id: "",
       awayTeam_id: "",
       season_id: "",
-      location_id: ""
+      location_id: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -25,7 +27,9 @@ class CreateMatchTable extends React.Component {
         homeTeam_id: this.state.homeTeam_id,
         awayTeam_id: this.state.awayTeam_id,
         season_id: this.state.season_id,
-        location_id: this.state.location_id
+        location_id: this.state.location_id,
+        message: "Successfully created ",
+        submitted: true
       })
     this.setState({
       matchDate: "",
@@ -135,6 +139,11 @@ class CreateMatchTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.matchDate : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>
