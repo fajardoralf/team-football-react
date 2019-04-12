@@ -20,6 +20,7 @@ class MatchViewer extends React.Component {
         }
     }
 
+    /*
     componentWillMount() {
         axios.get(URL + 'team').then(res => {
             console.log(res.data)
@@ -36,6 +37,7 @@ class MatchViewer extends React.Component {
         })
 
     }
+    */
 
     onChangeHandlerTeam(e) {
         this.setState({
