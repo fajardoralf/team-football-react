@@ -39,8 +39,9 @@ class Login extends Component {
   render() {
     return (
       <div id="form">
-        {(sessionStorage.getItem('username') === null) ?
-          <div className="navbar-collapse collapse w-100 order-3 dual-collapsed">
+        <div className="navbar-collapse collapse w-100 order-3 dual-collapsed">
+
+          {(sessionStorage.getItem('username') === null) ?
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <input
@@ -69,14 +70,20 @@ class Login extends Component {
               </li>
             </ul>
 
-          </div>
-          :
-          <div >
-            <p>Hello {sessionStorage.getItem('username')}</p>
-            <button className='btn btn-danger' onClick={this.handleLogout.bind(this)} id="button">Logout</button>
-          </div>
-        }
-      </div>
+            :
+            <ul className="navbar-nav mr-auto">
+              <li className="navbar-text">
+                Hello {sessionStorage.getItem('username')}!
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-nowrap" href="/" onClick={this.handleLogout.bind(this)} id="button">Log out</a>
+              </li>
+              
+            </ul>
+          }
+
+        </div>
+      </div >
     );
   }
 }
