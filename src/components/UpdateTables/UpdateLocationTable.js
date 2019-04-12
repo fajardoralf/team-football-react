@@ -21,7 +21,7 @@ class UpdateLocationTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.locationId, {
         location_id: this.state.locationId,
         address_id: this.state.addressId,
         name: this.state.addressName,

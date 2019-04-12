@@ -21,7 +21,7 @@ class UpdateContactTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.contactId, {
         contact_id: this.state.contactId,
         person_id: this.state.personId,
         contact_type: this.state.contactType,

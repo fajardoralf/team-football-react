@@ -22,7 +22,7 @@ class UpdateSeasonTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.seasonId, {
         seasons_id: this.state.seasonId,
         start_date: this.state.startDate,
         end_date: this.state.endDate,

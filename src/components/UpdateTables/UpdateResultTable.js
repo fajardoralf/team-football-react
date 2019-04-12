@@ -21,7 +21,7 @@ class UpdateResultTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.matchId, {
         match_id: this.state.matchId,
         team_id: this.state.team_id,
         score: this.state.score,

@@ -22,7 +22,7 @@ class UpdateTeamTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.team_id, {
         team_id: this.state.team_id,
         association_id: this.state.association_id,
         coach_id: this.state.coach_id,
