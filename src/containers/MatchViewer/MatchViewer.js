@@ -16,7 +16,8 @@ class MatchViewer extends React.Component {
             team_id: -1,
             teamInput: '',
             teamList: [],
-            matches: []
+            matches: [],
+            results: []
 
         }
     }
@@ -36,6 +37,12 @@ class MatchViewer extends React.Component {
             })
         })
 
+        axios.get(URL + 'result').then(res => {
+            this.setState({
+                results: res.data
+            })
+        })
+
     }
 
     onChangeHandlerTeam(e) {
@@ -45,6 +52,7 @@ class MatchViewer extends React.Component {
     }
 
     handleFormTeam(e) {
+        e.preventDefault()
         this.setState({
             team: this.state.teamInput,
             team_id: this.getTeamId(this.state.teamInput)
@@ -65,18 +73,39 @@ class MatchViewer extends React.Component {
         return "Unknown"
     }
 
+    getResult(match) {
+        let res = [0, 0]
+        for (let result of this.state.results) {
+            if (result.match_id === match.match_id && result.team_id === match.home_team_id) {
+                res[0] = result.score
+            }
+            if (result.match_id === match.match_id && result.team_id === match.away_team_id) {
+                res[1] = result.score
+            }
+        }
+        return res
+    }
+
+    setTeam(name) {
+        this.setState({
+            team: name,
+            team_id: this.getTeamId(name)
+        })
+    }
+
     render() {
 
         const teams = this.state.teamList
-            .filter(d => this.state.teamInput === '' || d.includes(this.state.teamInput))
-            .map((d, index) => <li key={index}>{d}</li>);
+            .filter(d => this.state.teamInput === '' || d.team_name.includes(this.state.teamInput))
+            .map((d, index) => <li onClick={this.setTeam.bind(this, d.team_name)} key={index}>{d.team_name}</li>);
 
         const matches = this.state.matches
             .filter(d => d.home_team_id === this.state.team_id || d.away_team_id === this.state.team_id)
             .map((d) => <ShowMatch
+                key={d.match_id}
                 homeTeam={this.getTeamName(d.home_team_id)}
                 awayTeam={this.getTeamName(d.away_team_id)}
-                result={d.result}
+                result={this.getResult(d)}
                 role={sessionStorage.getItem('role')}
             />)
 
@@ -100,13 +129,14 @@ class MatchViewer extends React.Component {
                     />
                 </form>
                 <ul>{teams}</ul>
-                <h4> {(this.state.team) ? <div>Show matches for  {this.state.team}</div> : <div>Select a team to show matches for above</div>}</h4>
-                <ShowMatch
-                    homeTeam='Liverpool'
-                    awayTeam='Arsenal'
-                    result={[3, 0]}
-                    role={sessionStorage.getItem('role')}
-                />
+                <h4>
+                    {(this.state.team) ?
+                        <div>Show matches for  {this.state.team}</div>
+                        :
+                        <div>Select a team to show matches for above</div>
+                    }
+                </h4>
+                {matches}
             </div>
         )
     }
