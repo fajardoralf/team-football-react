@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { Form, Button, Card } from 'react-bootstrap'
+//import { Form, Button, Card } from 'react-bootstrap'
 import './MatchViewer.css'
 import ShowMatch from '../../components/Matches/ShowMatch'
 
@@ -138,7 +138,7 @@ class MatchViewer extends React.Component {
                         <div>Select a team to show matches for above</div>
                     }
                 </h4>
-                {matches}
+                <div className="row">{matches}</div>
             </div>
         )
     }
