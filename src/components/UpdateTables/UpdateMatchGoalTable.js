@@ -22,7 +22,7 @@ class UpdateMatchGoalTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.goalId, {
         goal_id: this.state.goalId,
         player_id: this.state.playerId,
         goal_type_id: this.state.goalTypeId,

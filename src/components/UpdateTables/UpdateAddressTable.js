@@ -22,7 +22,7 @@ class UpdateAddressTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.addressId, {
         address_id: this.state.addressId,
         address_line_1: this.state.addressLine1,
         postal_code: this.state.postalCode,

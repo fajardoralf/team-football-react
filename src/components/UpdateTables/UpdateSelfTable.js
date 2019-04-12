@@ -22,7 +22,7 @@ class UpdateSelfTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.personId, {
         personId: this.state.personId,
         addressId: this.state.addressId,
         firstName: this.state.firstName,

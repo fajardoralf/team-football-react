@@ -20,7 +20,7 @@ class UpdateAssociationTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.associationId, {
         association_id: this.state.associationId,
         name: this.state.name,
         description: this.state.description,

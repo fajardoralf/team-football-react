@@ -20,7 +20,7 @@ class UpdateMatchPositionTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
+      .post(URL + this.state.player_id, {
         player_id: this.state.player_id,
         match_id: this.state.match_id,
         position: this.state.position,
