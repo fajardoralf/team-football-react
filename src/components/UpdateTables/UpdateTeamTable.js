@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/team/";
 
 class UpdateTeamTable extends React.Component {
   constructor(props) {
@@ -12,7 +12,9 @@ class UpdateTeamTable extends React.Component {
       association_id: "",
       coach_id: "",
       owner_id: "",
-      location_id: ""
+      location_id: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -25,8 +27,23 @@ class UpdateTeamTable extends React.Component {
         association_id: this.state.association_id,
         coach_id: this.state.coach_id,
         owner_id: this.state.owner_id,
-        location_id: this.state.location_id
-      })
+        location_id: this.state.location_id,
+        message: "Successfully Updated",
+        submitted: true
+      },
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+    .then(res => {
+      console.log("response: ", res);
+    })
+    .catch(err => {
+      console.log("Axios error: ", err);
+    });
     this.setState({
       team_id: "",
       association_id: "",
@@ -133,6 +150,11 @@ class UpdateTeamTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.team_id : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

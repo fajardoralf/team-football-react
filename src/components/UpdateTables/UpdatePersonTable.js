@@ -12,7 +12,9 @@ class UpdatePersonTable extends React.Component {
       addressId: "",
       firstName: "",
       lastName: "",
-      dateOfBirth: ""
+      dateOfBirth: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -25,7 +27,9 @@ class UpdatePersonTable extends React.Component {
         address_id: this.state.addressId,
         first_name: this.state.firstName,
         last_name: this.state.lastName,
-        date_of_birth: this.state.dateOfBirth
+        date_of_birth: this.state.dateOfBirth,
+        message: "Successfully Updated",
+        submitted: true
       },
       {
         headers: {
@@ -141,6 +145,11 @@ class UpdatePersonTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.firstName : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>
