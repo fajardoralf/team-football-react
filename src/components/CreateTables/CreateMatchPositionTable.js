@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/matchposition/";
 
 class CreateMatchPositionTable extends React.Component {
   constructor(props) {
@@ -10,7 +10,9 @@ class CreateMatchPositionTable extends React.Component {
     this.state = {
       player_id: "",
       match_id: "",
-      position: ""
+      position: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -21,7 +23,9 @@ class CreateMatchPositionTable extends React.Component {
       .post(URL, {
         player_id: this.state.player_id,
         match_id: this.state.match_id,
-        position: this.state.position
+        position: this.state.position,
+        message: "Successfully created ",
+        submitted: true
       })
     this.setState({
       player_id: "",
@@ -97,6 +101,11 @@ class CreateMatchPositionTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.position : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

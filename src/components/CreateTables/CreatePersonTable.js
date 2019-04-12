@@ -11,12 +11,15 @@ class CreatePersonTable extends React.Component {
       address_id: "",
       firstName: "",
       lastName: "",
-      dateOfBirth: ""
+      dateOfBirth: "",
+      message: "",
+      submitted: false
     };
   }
 
   handleForm = event => {
     event.preventDefault();
+
     axios
       .post(
         URL,
@@ -24,7 +27,9 @@ class CreatePersonTable extends React.Component {
           address_id: this.state.address_id,
           first_name: this.state.firstName,
           last_name: this.state.lastName,
-          date_of_birth: this.state.dateOfBirth
+          date_of_birth: this.state.dateOfBirth,
+          message: "Successfully created ",
+          submitted: true
         },
         {
           headers: {
@@ -127,6 +132,11 @@ class CreatePersonTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.firstName : ""}
+              </div>
             </div>
           </Form>
         </Card.Body>

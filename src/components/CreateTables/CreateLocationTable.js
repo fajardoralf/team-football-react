@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/location/";
 
 class CreateLocationTable extends React.Component {
   constructor(props) {
@@ -10,7 +10,9 @@ class CreateLocationTable extends React.Component {
     this.state = {
       addressId: "",
       name: "",
-      description: ""
+      description: "",
+      message: "",
+      submitted: false
     };
   }
 
@@ -21,7 +23,9 @@ class CreateLocationTable extends React.Component {
       .post(URL, {
         address_id: this.state.addressId,
         name: this.state.addressName,
-        description: this.state.description
+        description: this.state.description,
+        message: "Successfully created ",
+        submitted: true
       },
       {
         headers: {
@@ -59,10 +63,6 @@ class CreateLocationTable extends React.Component {
       this.setState({
           description: event.target.value
       })
-  }
-
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
   }
 
   render() {
@@ -114,6 +114,11 @@ class CreateLocationTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+                {this.state.submitted ? this.state.name : ""}
+            </div>
             </div>
           </Form>
         </Card.Body>

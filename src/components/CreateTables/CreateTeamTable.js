@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "";
+const URL = "https://team-football-api.herokuapp.com/team/";
 
 class CreateTeamTable extends React.Component {
   constructor(props) {
@@ -11,7 +11,8 @@ class CreateTeamTable extends React.Component {
       association_id: "",
       coach_id: "",
       owner_id: "",
-      location_id: ""
+      location_id: "",
+      message: ""
     };
   }
 
@@ -23,7 +24,8 @@ class CreateTeamTable extends React.Component {
         association_id: this.state.association_id,
         coach_id: this.state.coach_id,
         owner_id: this.state.owner_id,
-        location_id: this.state.location_id
+        location_id: this.state.location_id,
+        message: "Successfully created "
       })
     this.setState({
       association_id: "",
@@ -53,10 +55,6 @@ class CreateTeamTable extends React.Component {
     this.setState({ 
       location_id: event.target.value
     });
-  }
-
-  componentDidMount() {
-    axios.get(URL).then(json => this.setState({ store: json.data }));
   }
 
   render() {
@@ -118,6 +116,10 @@ class CreateTeamTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+
+              <div className="text-center">
+                {this.state.message}
+              </div>
             </div>
           </Form>
         </Card.Body>
