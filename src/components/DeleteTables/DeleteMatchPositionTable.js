@@ -20,10 +20,13 @@ class DeleteMatchPositionTable extends React.Component {
   handleForm = event => {
     event.preventDefault();
     axios.delete(URL + this.state.id).then(res => {
-      this.setState({
-        message: "Successfully deleted ",
-        submitted: true
-      });
+      this.setState(
+        {
+          message: "Successfully deleted ",
+          submitted: true
+        },
+        this.fetchMatchPosition()
+      );
     });
   };
 
@@ -59,11 +62,7 @@ class DeleteMatchPositionTable extends React.Component {
     }
   };
 
-  componentWillMount() {
-    this.fetchMatchPosition();
-  }
-
-  componentWillUpdate() {
+  componentDidMount() {
     this.fetchMatchPosition();
   }
 

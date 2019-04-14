@@ -20,11 +20,14 @@ class DeleteMatchGoal extends React.Component {
   handleForm = event => {
     event.preventDefault();
     axios.delete(URL + this.state.id).then(res => {
-      this.setState({
-        message: "Successfully deleted ",
-        contactName: this.state.goalType,
-        submitted: true
-      });
+      this.setState(
+        {
+          message: "Successfully deleted ",
+          contactName: this.state.goalType,
+          submitted: true
+        },
+        this.fetchMatchGoal()
+      );
     });
   };
 
@@ -61,10 +64,6 @@ class DeleteMatchGoal extends React.Component {
   };
 
   componentWillMount() {
-    this.fetchMatchGoal();
-  }
-
-  componentWillUpdate() {
     this.fetchMatchGoal();
   }
 

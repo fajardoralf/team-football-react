@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/person";
+const URL = "https://team-football-api.herokuapp.com/person/";
 
 class UpdatePersonTable extends React.Component {
   constructor(props) {
@@ -22,41 +22,43 @@ class UpdatePersonTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL + this.state.personId, {
-        person_id: this.state.personId,
-        address_id: this.state.addressId,
-        first_name: this.state.firstName,
-        last_name: this.state.lastName,
-        date_of_birth: this.state.dateOfBirth,
-        message: "Successfully Updated",
-        submitted: true
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+      .put(
+        URL + this.state.personId,
+        {
+          person_id: this.state.personId,
+          address_id: this.state.addressId,
+          first_name: this.state.firstName,
+          last_name: this.state.lastName,
+          date_of_birth: this.state.dateOfBirth,
+          message: "Successfully Updated",
+          submitted: true
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
         }
-      }
-    )
-    .then(res => {
-      console.log("response: ", res);
-    })
-    .catch(err => {
-      console.log("Axios error: ", err);
-    });
+      )
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
     this.setState({
-        personId: "",
-        addressId: "",
-        firstName: "",
-        lastName: "",
-        dateOfBirth: ""
+      personId: "",
+      addressId: "",
+      firstName: "",
+      lastName: "",
+      dateOfBirth: ""
     });
   }
 
   handlePersonId(event) {
-      this.setState({
-          personId: event.target.value
-      })
+    this.setState({
+      personId: event.target.value
+    });
   }
 
   setAddressId(event) {

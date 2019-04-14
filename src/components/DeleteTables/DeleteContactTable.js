@@ -20,11 +20,14 @@ class DeleteContactTable extends React.Component {
   handleForm = event => {
     event.preventDefault();
     axios.delete(URL + this.state.id).then(res => {
-      this.setState({
-        message: "Successfully deleted ",
-        contactName: this.state.contactName,
-        submitted: true
-      });
+      this.setState(
+        {
+          message: "Successfully deleted ",
+          contactName: this.state.contactName,
+          submitted: true
+        },
+        this.fetchContacts()
+      );
     });
   };
 
@@ -49,7 +52,9 @@ class DeleteContactTable extends React.Component {
             return {
               key: data.contact_id,
               value: data.contact_id,
-              text: data.contact_type
+              text: data.contact_type,
+              first_name: data.person.first_name,
+              last_name: data.person.last_name
             };
           });
           this.setState({ contacts: data });
@@ -60,11 +65,7 @@ class DeleteContactTable extends React.Component {
     }
   };
 
-  componentWillMount() {
-    this.fetchContacts();
-  }
-
-  componentWillUpdate() {
+  componentDidMount() {
     this.fetchContacts();
   }
 
@@ -82,7 +83,11 @@ class DeleteContactTable extends React.Component {
                 {this.state.contacts.map(data => {
                   return (
                     <option key={data.key} value={data.value}>
-                      {data.text}
+                      {data.first_name +
+                        " " +
+                        data.last_name +
+                        "'s " +
+                        data.text}
                     </option>
                   );
                 })}

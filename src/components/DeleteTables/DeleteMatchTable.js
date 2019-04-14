@@ -29,10 +29,13 @@ class DeleteMatchPositionTable extends React.Component {
   };
 
   handleChange = event => {
-    this.setState({
-      id: event.target.value,
-      matchPosition: event.target.selectedOptions[0].text
-    });
+    this.setState(
+      {
+        id: event.target.value,
+        matchPosition: event.target.selectedOptions[0].text
+      },
+      this.fetchMatch()
+    );
 
     this.fetchMatchInfo();
   };
@@ -87,10 +90,6 @@ class DeleteMatchPositionTable extends React.Component {
     this.fetchMatch();
   }
 
-  componentWillUpdate() {
-    this.fetchMatch();
-  }
-
   render() {
     let title = "Delete Match";
     return (
@@ -102,7 +101,7 @@ class DeleteMatchPositionTable extends React.Component {
             <FormGroup>
               <Form.Label>Match</Form.Label>
               <Form.Control onChange={this.handleChange} as="select">
-                {this.state.address.map(data => {
+                {this.state.match.map(data => {
                   return (
                     <option key={data.key} value={data.value}>
                       {data.text}

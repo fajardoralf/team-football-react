@@ -80,7 +80,7 @@ class DeletePlayerTable extends React.Component {
       });
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchPlayers();
   }
 
