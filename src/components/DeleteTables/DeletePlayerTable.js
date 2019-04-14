@@ -73,8 +73,6 @@ class DeletePlayerTable extends React.Component {
         }
       })
       .then(res => {
-        console.log(res);
-
         this.setState({ player: res });
       })
       .catch(err => {

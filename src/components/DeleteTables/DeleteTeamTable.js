@@ -2,9 +2,9 @@ import React from "react";
 import { Form, Button, Card, FormGroup } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/person/";
+const URL = "https://team-football-api.herokuapp.com/team/";
 
-class DeletePersonTable extends React.Component {
+class DeleteTeamTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,7 +77,7 @@ class DeletePersonTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm}>
             <FormGroup>
-              <Form.Label>Person</Form.Label>
+              <Form.Label>Team</Form.Label>
               <Form.Control onChange={this.handleChange} as="select">
                 {this.state.persons.map(data => {
                   return (
@@ -113,4 +113,4 @@ class DeletePersonTable extends React.Component {
   }
 }
 
-export default DeletePersonTable;
+export default DeleteTeamTable;
