@@ -49,9 +49,9 @@ class DeleteMatchPositionTable extends React.Component {
         .then(res => {
           let data = res.data.map(data => {
             return {
-              key: data.goal_type_id,
-              value: data.goal_type_id,
-              text: data.type
+              key: data.matchPosition_id,
+              value: data.matchPosition_id,
+              text: data.position
             };
           });
           this.setState({ matchPositions: data });
