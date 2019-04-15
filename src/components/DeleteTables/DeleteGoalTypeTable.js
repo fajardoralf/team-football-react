@@ -20,11 +20,14 @@ class DeleteGoalTypeTable extends React.Component {
   handleForm = event => {
     event.preventDefault();
     axios.delete(URL + this.state.id).then(res => {
-      this.setState({
-        message: "Successfully deleted ",
-        contactName: this.state.goalType,
-        submitted: true
-      });
+      this.setState(
+        {
+          message: "Successfully deleted ",
+          contactName: this.state.goalType,
+          submitted: true
+        },
+        this.fetchGoalType()
+      );
     });
   };
 
@@ -60,11 +63,7 @@ class DeleteGoalTypeTable extends React.Component {
     }
   };
 
-  componentWillMount() {
-    this.fetchGoalType();
-  }
-
-  componentWillUpdate() {
+  componentDidMount() {
     this.fetchGoalType();
   }
 

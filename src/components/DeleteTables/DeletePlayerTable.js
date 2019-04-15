@@ -2,16 +2,16 @@ import React from "react";
 import { Form, Button, Card, FormGroup } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/match/";
+const URL = "https://team-football-api.herokuapp.com/player/";
 
-class DeleteMatchPositionTable extends React.Component {
+class DeletePlayerTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      match: [],
-      matchInfo: [],
-      matchPosition: "",
-      id: "",
+      players: [],
+      player: [],
+      player_name: "",
+      id: 1,
       message: "",
       submitted: false,
       mounted: true
@@ -25,6 +25,7 @@ class DeleteMatchPositionTable extends React.Component {
         message: "Successfully deleted ",
         submitted: true
       });
+      this.fetchPlayers();
     });
   };
 
@@ -32,15 +33,13 @@ class DeleteMatchPositionTable extends React.Component {
     this.setState(
       {
         id: event.target.value,
-        matchPosition: event.target.selectedOptions[0].text
+        player_name: event.target.selectedOptions[0].text
       },
-      this.fetchMatch()
+      this.fetchPlayer
     );
-
-    this.fetchMatchInfo();
   };
 
-  fetchMatch = () => {
+  fetchPlayers = () => {
     axios
       .get(URL, {
         headers: {
@@ -51,19 +50,21 @@ class DeleteMatchPositionTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           return {
-            key: data.goal_type_id,
-            value: data.goal_type_id,
-            text: data.type
+            key: data.player_id,
+            value: data.player_id,
+            first_name: data.person.first_name,
+            last_name: data.person.last_name,
+            team_name: data.team.team_name
           };
         });
-        this.setState({ matchPositions: data });
+        this.setState({ players: data }, this.fetchPlayer);
       })
       .catch(err => {
         console.log("Axios error: ", err);
       });
   };
 
-  fetchMatch = () => {
+  fetchPlayer = () => {
     axios
       .get(URL + this.state.id, {
         headers: {
@@ -72,26 +73,20 @@ class DeleteMatchPositionTable extends React.Component {
         }
       })
       .then(res => {
-        let data = res.data.map(data => {
-          return {
-            match_date: data.match_date,
-            value: data.goal_type_id,
-            text: data.type
-          };
-        });
-        this.setState({ matchInfo: data });
+        this.setState({ player: res });
       })
       .catch(err => {
         console.log("Axios error: ", err);
       });
   };
 
-  componentWillMount() {
-    this.fetchMatch();
+  componentDidMount() {
+    this.fetchPlayers();
   }
 
   render() {
-    let title = "Delete Match";
+    let title = "Delete Player";
+    const { data } = this.state.player;
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -99,16 +94,19 @@ class DeleteMatchPositionTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm}>
             <FormGroup>
-              <Form.Label>Match</Form.Label>
+              <Form.Label>Player</Form.Label>
               <Form.Control onChange={this.handleChange} as="select">
-                {this.state.match.map(data => {
+                {this.state.players.map(data => {
                   return (
                     <option key={data.key} value={data.value}>
-                      {data.text}
+                      {data.first_name + " " + data.last_name}
                     </option>
                   );
                 })}
               </Form.Control>
+              <h1>{data && data.team.team_name}</h1>
+              <h1>{data && data.number}</h1>
+              <h1>{data && data.normal_position}</h1>
             </FormGroup>
 
             <div
@@ -126,7 +124,7 @@ class DeleteMatchPositionTable extends React.Component {
 
             <div className="text-center">
               {this.state.message}
-              {this.state.submitted ? this.state.match : ""}
+              {this.state.submitted ? this.state.player_name : ""}
             </div>
           </Form>
         </Card.Body>
@@ -135,4 +133,4 @@ class DeleteMatchPositionTable extends React.Component {
   }
 }
 
-export default DeleteMatchPositionTable;
+export default DeletePlayerTable;
