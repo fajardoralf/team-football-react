@@ -70,9 +70,8 @@ class Login extends Component {
 
           </div>
           :
-          <div >
-            <p>Hello {sessionStorage.getItem('username')}</p>
-            <button className='btn btn-danger' onClick={this.handleLogout.bind(this)} id="button">Logout</button>
+          <div id="logout">
+            <p className="text-white text-center">Hello {sessionStorage.getItem('username')}  <button className='btn btn-danger' onClick={this.handleLogout.bind(this)} id="button">Logout</button></p>
           </div>
         }
       </div>
