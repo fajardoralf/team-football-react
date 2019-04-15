@@ -20,11 +20,14 @@ class DeleteLocationTable extends React.Component {
   handleForm = event => {
     event.preventDefault();
     axios.delete(URL + this.state.id).then(res => {
-      this.setState({
-        message: "Successfully deleted ",
-        contactName: this.state.locationName,
-        submitted: true
-      });
+      this.setState(
+        {
+          message: "Successfully deleted ",
+          contactName: this.state.locationName,
+          submitted: true
+        },
+        this.fetchLocation()
+      );
     });
   };
 
@@ -60,11 +63,7 @@ class DeleteLocationTable extends React.Component {
     }
   };
 
-  componentWillMount() {
-    this.fetchLocation();
-  }
-
-  componentWillUpdate() {
+  componentDidMount() {
     this.fetchLocation();
   }
 

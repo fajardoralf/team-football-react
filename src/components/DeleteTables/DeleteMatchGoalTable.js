@@ -20,11 +20,14 @@ class DeleteMatchGoal extends React.Component {
   handleForm = event => {
     event.preventDefault();
     axios.delete(URL + this.state.id).then(res => {
-      this.setState({
-        message: "Successfully deleted ",
-        contactName: this.state.goalType,
-        submitted: true
-      });
+      this.setState(
+        {
+          message: "Successfully deleted ",
+          contactName: this.state.goalType,
+          submitted: true
+        },
+        this.fetchMatchGoal()
+      );
     });
   };
 
@@ -64,12 +67,8 @@ class DeleteMatchGoal extends React.Component {
     this.fetchMatchGoal();
   }
 
-  componentWillUpdate() {
-    this.fetchMatchGoal();
-  }
-
   render() {
-    let title = "Delete Goaltypes";
+    let title = "Delete Match Goal";
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -77,7 +76,7 @@ class DeleteMatchGoal extends React.Component {
           <br />
           <Form onSubmit={this.handleForm}>
             <FormGroup>
-              <Form.Label>Goal Type</Form.Label>
+              <Form.Label>Match Goal</Form.Label>
               <Form.Control onChange={this.handleChange} as="select">
                 {this.state.goalTypes.map(data => {
                   return (

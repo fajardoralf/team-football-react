@@ -2,14 +2,14 @@ import React from "react";
 import { Form, Button, Card, FormGroup } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/person/";
+const URL = "https://team-football-api.herokuapp.com/team/";
 
-class DeletePersonTable extends React.Component {
+class DeleteTeamTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      persons: [],
-      person: "",
+      teams: [],
+      team: "",
       id: "",
       message: "",
       submitted: false,
@@ -20,21 +20,24 @@ class DeletePersonTable extends React.Component {
   handleForm = event => {
     event.preventDefault();
     axios.delete(URL + this.state.id).then(res => {
-      this.setState({
-        message: "Successfully deleted ",
-        submitted: true
-      });
+      this.setState(
+        {
+          message: "Successfully deleted ",
+          submitted: true
+        },
+        this.fetchTeam()
+      );
     });
   };
 
   handleChange = event => {
     this.setState({
       id: event.target.value,
-      person: event.target.selectedOptions[0].text
+      name: event.target.selectedOptions[0].text
     });
   };
 
-  fetchPerson = () => {
+  fetchTeam = () => {
     if (this.state.mounted) {
       axios
         .get(URL, {
@@ -46,13 +49,12 @@ class DeletePersonTable extends React.Component {
         .then(res => {
           let data = res.data.map(data => {
             return {
-              key: data.person_id,
-              value: data.person_id,
-              first_name: data.first_name,
-              last_name: data.last_name
+              key: data.team_id,
+              value: data.team_id,
+              name: data.team_name
             };
           });
-          this.setState({ persons: data });
+          this.setState({ teams: data });
         })
         .catch(err => {
           console.log("Axios error: ", err);
@@ -61,11 +63,7 @@ class DeletePersonTable extends React.Component {
   };
 
   componentWillMount() {
-    this.fetchPerson();
-  }
-
-  componentWillUpdate() {
-    this.fetchPerson();
+    this.fetchTeam();
   }
 
   render() {
@@ -77,12 +75,12 @@ class DeletePersonTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm}>
             <FormGroup>
-              <Form.Label>Person</Form.Label>
+              <Form.Label>Team</Form.Label>
               <Form.Control onChange={this.handleChange} as="select">
-                {this.state.persons.map(data => {
+                {this.state.teams.map(data => {
                   return (
                     <option key={data.key} value={data.value}>
-                      {data.first_name + " "} {data.last_name}
+                      {data.name}
                     </option>
                   );
                 })}
@@ -113,4 +111,4 @@ class DeletePersonTable extends React.Component {
   }
 }
 
-export default DeletePersonTable;
+export default DeleteTeamTable;
