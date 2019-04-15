@@ -101,18 +101,14 @@ class ManageWatchlist extends React.Component {
         const title = "Manage Watchlist"
         const players = this.state.playerList
             .filter(d => {
-                let personExists = d.person.length > 0
-                let matchName = false
-                if (personExists) {
-                    matchName = (d.person[0].first_name + ' ' + d.person[0].last_name).includes(this.state.playerInput)
-                }
-                return this.state.playerInput === '' || matchName
+
+                return this.state.playerInput === '' || (d.person.first_name + ' ' + d.person.last_name).includes(this.state.playerInput)
             })
             .map((d, index) =>
                 <li
                     onClick={this.onClickPlayer.bind(this, ((d.person.length > 0 ? d.person[0].first_name : '') + ' ' + (d.person.length > 0 ? d.person[0].last_name : '')))}
                     key={index}>
-                    {(d.person.length > 0 ? d.person[0].first_name : '') + ' ' + (d.person.length > 0 ? d.person[0].last_name : '')}
+                    {d.person.first_name  + ' ' + d.person.last_name}
                 </li>);
         const teams = this.state.teamList
             .filter(d => this.state.teamInput === '' || d.team_name.includes(this.state.teamInput))
