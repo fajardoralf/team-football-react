@@ -19,11 +19,14 @@ class DeleteAddressTable extends React.Component {
   handleForm = event => {
     event.preventDefault();
     axios.delete(URL + this.state.id).then(res => {
-      this.setState({
-        message: "Successfully deleted ",
-        addressName: this.state.addressName,
-        submitted: true
-      });
+      this.setState(
+        {
+          message: "Successfully deleted ",
+          addressName: this.state.addressName,
+          submitted: true
+        },
+        this.fetchAddress()
+      );
     });
   };
 
@@ -57,11 +60,7 @@ class DeleteAddressTable extends React.Component {
       });
   };
 
-  componentWillMount() {
-    this.fetchAddress();
-  }
-
-  componentWillUpdate() {
+  componentDidMount() {
     this.fetchAddress();
   }
 
