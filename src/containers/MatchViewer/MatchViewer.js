@@ -1,10 +1,7 @@
 import React from 'react'
-import axios from 'axios'
-import { Form, Button, Card } from 'react-bootstrap'
 import './MatchViewer.css'
 import ShowMatch from '../../components/Matches/ShowMatch'
-
-const URL = "https://team-football-api.herokuapp.com/"
+import BrowsePlayer from '../../components/AnonymousBrowse/BrowsePlayer';
 
 class MatchViewer extends React.Component {
 
@@ -57,6 +54,7 @@ class MatchViewer extends React.Component {
             .filter(d => this.state.teamInput === '' || d.includes(this.state.teamInput))
             .map((d, index) => <li key={index}>{d}</li>);
 
+            /*
         const matches = this.state.matches
             .filter(d => d.homeTeam === this.state.team || d.awayTeam === this.state.team )
             .map((d) => <ShowMatch 
@@ -65,9 +63,15 @@ class MatchViewer extends React.Component {
                             result= {d.result}
                             role={sessionStorage.getItem('role')}
             />)
+            */
 
         return (
-            <div>
+            <div className="container" id="frontPage">
+                <div className="row">
+                <div className="col-6">
+                    <BrowsePlayer></BrowsePlayer>
+                </div>
+                <div className="col-6">
                 <h2> MatchViewer </h2>
                     <input
                         type="text"
@@ -90,6 +94,8 @@ class MatchViewer extends React.Component {
                     result={[3,0]}
                     role={sessionStorage.getItem('role')}
                     />
+                    </div>
+                    </div>
             </div>
         )
     }

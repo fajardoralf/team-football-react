@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Form, Button } from "react-bootstrap";
 
 class Login extends Component {
   constructor(props) {
@@ -44,7 +43,7 @@ class Login extends Component {
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <input
-                  class="form-control"
+                  className="form-control"
                   type="username"
                   placeholder="Username"
                   value={this.state.username}
@@ -53,7 +52,7 @@ class Login extends Component {
               <li className="nav-item">
                 <form onSubmit={this.handleSubmit.bind(this)}>
                   <input
-                    class="form-control"
+                    className="form-control"
                     type="password"
                     placeholder="Password"
                     onChange={this.handleChangePassword.bind(this)}

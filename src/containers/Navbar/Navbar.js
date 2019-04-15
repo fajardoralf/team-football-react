@@ -45,7 +45,9 @@ class PageNavbar extends React.Component {
   render() {
 
     return (
+
       <div>
+        
         <div className='loggedIn'>
 
           {(sessionStorage.getItem('username') === null) ?
