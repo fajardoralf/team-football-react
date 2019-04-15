@@ -9,9 +9,12 @@ class DeleteMatchPositionTable extends React.Component {
     super(props);
     this.state = {
       match: [],
-      matchInfo: [],
       matchPosition: "",
-      id: "",
+      id: 1,
+      season: "",
+      home_team: "",
+      away_team: "",
+      location: "",
       message: "",
       submitted: false,
       mounted: true
@@ -34,10 +37,8 @@ class DeleteMatchPositionTable extends React.Component {
         id: event.target.value,
         matchPosition: event.target.selectedOptions[0].text
       },
-      this.fetchMatch()
+      this.fetchMatchInfo
     );
-
-    this.fetchMatchInfo();
   };
 
   fetchMatch = () => {
@@ -51,19 +52,19 @@ class DeleteMatchPositionTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           return {
-            key: data.goal_type_id,
-            value: data.goal_type_id,
-            text: data.type
+            key: data.match_id,
+            value: data.match_id,
+            text: data.match_date
           };
         });
-        this.setState({ matchPositions: data });
+        this.setState({ match: data });
       })
       .catch(err => {
         console.log("Axios error: ", err);
       });
   };
 
-  fetchMatch = () => {
+  fetchMatchInfo = () => {
     axios
       .get(URL + this.state.id, {
         headers: {
@@ -72,26 +73,23 @@ class DeleteMatchPositionTable extends React.Component {
         }
       })
       .then(res => {
-        let data = res.data.map(data => {
-          return {
-            match_date: data.match_date,
-            value: data.goal_type_id,
-            text: data.type
-          };
+        this.setState({
+          season: res.data.season_id,
+          home_team: res.data.home_team.team_name,
+          away_team: res.data.away_team.team_name,
+          location: res.data.location.name
         });
-        this.setState({ matchInfo: data });
-      })
-      .catch(err => {
-        console.log("Axios error: ", err);
       });
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchMatch();
+    this.fetchMatchInfo();
   }
 
   render() {
     let title = "Delete Match";
+    const { home_team, away_team, season, location } = this.state;
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -99,7 +97,7 @@ class DeleteMatchPositionTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm}>
             <FormGroup>
-              <Form.Label>Match</Form.Label>
+              <Form.Label>Date</Form.Label>
               <Form.Control onChange={this.handleChange} as="select">
                 {this.state.match.map(data => {
                   return (
@@ -109,6 +107,12 @@ class DeleteMatchPositionTable extends React.Component {
                   );
                 })}
               </Form.Control>
+              <Form.Label>Season</Form.Label>
+              <h6>{season}</h6>
+              <Form.Label>Location</Form.Label>
+              <h6>{location}</h6>
+              <Form.Label>Match Between</Form.Label>
+              <h6>{home_team + " vs " + away_team}</h6>
             </FormGroup>
 
             <div

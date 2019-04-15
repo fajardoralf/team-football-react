@@ -104,9 +104,12 @@ class DeletePlayerTable extends React.Component {
                   );
                 })}
               </Form.Control>
-              <h1>{data && data.team.team_name}</h1>
-              <h1>{data && data.number}</h1>
-              <h1>{data && data.normal_position}</h1>
+              <Form.Label>Team</Form.Label>
+              <h6>{data && data.team.team_name}</h6>
+              <Form.Label>Number</Form.Label>
+              <h6>{data && data.number}</h6>
+              <Form.Label>Position</Form.Label>
+              <h6>{data && data.normal_position}</h6>
             </FormGroup>
 
             <div
