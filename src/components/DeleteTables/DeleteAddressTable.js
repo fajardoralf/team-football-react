@@ -3,6 +3,7 @@ import { Form, Button, Card, FormGroup } from "react-bootstrap";
 import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/address/";
+const personURL = "https://team-football-api.herokuapp.com/person/";
 
 class DeleteAddressTable extends React.Component {
   constructor(props) {
@@ -10,7 +11,9 @@ class DeleteAddressTable extends React.Component {
     this.state = {
       address: [],
       addressName: "",
-      id: "",
+      first_name: "",
+      last_name: "",
+      id: 1,
       message: "",
       submitted: false
     };
@@ -31,10 +34,13 @@ class DeleteAddressTable extends React.Component {
   };
 
   handleChange = event => {
-    this.setState({
-      id: event.target.value,
-      addressName: event.target.selectedOptions[0].text
-    });
+    this.setState(
+      {
+        id: event.target.value,
+        addressName: event.target.selectedOptions[0].text
+      },
+      this.fetchPerson
+    );
   };
 
   fetchAddress = () => {
@@ -60,14 +66,35 @@ class DeleteAddressTable extends React.Component {
       });
   };
 
+  fetchPerson = () => {
+    axios
+      .get(personURL + this.state.id, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({
+          first_name: res.data.first_name,
+          last_name: res.data.last_name
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
   componentDidMount() {
     this.fetchAddress();
+    this.fetchPerson();
   }
 
   componentWillUnmount() {}
 
   render() {
     let title = "Delete Address";
+    const { first_name, last_name } = this.state;
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -85,6 +112,8 @@ class DeleteAddressTable extends React.Component {
                   );
                 })}
               </Form.Control>
+              <Form.Label>Belongs to</Form.Label>
+              <h6>{first_name + " " + last_name}</h6>
             </FormGroup>
 
             <div

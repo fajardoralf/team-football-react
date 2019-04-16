@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import Table from 'react-bootstrap/Table'
+import Table from "react-bootstrap/Table";
 
-const URL = "https://team-football-api.herokuapp.com/playernameandteam/"
+const URL = "https://team-football-api.herokuapp.com/playernameandteam/";
 
 class BrowsePlayer extends React.Component {
   constructor(props) {
@@ -13,9 +13,7 @@ class BrowsePlayer extends React.Component {
   }
 
   componentDidMount() {
-    axios
-      .get(URL)
-      .then(json => this.setState({ players: json.data }));
+    axios.get(URL).then(json => this.setState({ players: json.data }));
   }
 
   render() {
@@ -38,8 +36,8 @@ class BrowsePlayer extends React.Component {
               </tr>
             );
           })}
-  </tbody>
-  </Table>
+        </tbody>
+      </Table>
     );
   }
 }

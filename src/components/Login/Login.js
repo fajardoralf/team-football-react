@@ -10,7 +10,7 @@ class Login extends Component {
     };
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   handleSubmit() {
     var _this = this;
@@ -29,18 +29,17 @@ class Login extends Component {
 
   handleLogout(event) {
     this.setState({
-      user: '',
-      passworrd: ''
-    })
-    sessionStorage.clear()
+      user: "",
+      passworrd: ""
+    });
+    sessionStorage.clear();
   }
 
   render() {
     return (
       <div id="form">
         <div className="navbar-collapse collapse w-100 order-3 dual-collapsed">
-
-          {(sessionStorage.getItem('username') === null) ?
+          {sessionStorage.getItem("username") === null ? (
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <input
@@ -48,7 +47,8 @@ class Login extends Component {
                   type="username"
                   placeholder="Username"
                   value={this.state.username}
-                  onChange={this.handleChangeUsername.bind(this)} />
+                  onChange={this.handleChangeUsername.bind(this)}
+                />
               </li>
               <li className="nav-item">
                 <form onSubmit={this.handleSubmit.bind(this)}>
@@ -62,27 +62,40 @@ class Login extends Component {
                 </form>
               </li>
               <li className="nav-item">
-                <a className='nav-link text-nowrap' href='/' onClick={this.handleSubmit.bind(this)} id="button">Log in</a>
+                <a
+                  className="nav-link text-nowrap"
+                  href="/"
+                  onClick={this.handleSubmit.bind(this)}
+                  id="button"
+                >
+                  Log in
+                </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-nowrap" href="/signup">Sign up</a>
+                <a className="nav-link text-nowrap" href="/signup">
+                  Sign up
+                </a>
               </li>
             </ul>
-
-            :
+          ) : (
             <ul className="navbar-nav mr-auto">
               <li className="navbar-text">
-                Hello {sessionStorage.getItem('username')}!
+                Hello {sessionStorage.getItem("username")}!
               </li>
               <li className="nav-item">
-                <a className="nav-link text-nowrap" href="/" onClick={this.handleLogout.bind(this)} id="button">Log out</a>
+                <a
+                  className="nav-link text-nowrap text-danger"
+                  href="/"
+                  onClick={this.handleLogout.bind(this)}
+                  id="button"
+                >
+                  Log out
+                </a>
               </li>
-              
             </ul>
-          }
-
+          )}
         </div>
-      </div >
+      </div>
     );
   }
 }

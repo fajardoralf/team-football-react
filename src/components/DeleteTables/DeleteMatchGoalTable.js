@@ -3,17 +3,25 @@ import { Form, Button, Card, FormGroup } from "react-bootstrap";
 import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/matchgoal/";
+const playerURL = "https://team-football-api.herokuapp.com/player/";
+const matchURL = "https://team-football-api.herokuapp.com/match/";
 
 class DeleteMatchGoal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      goalTypes: [],
-      goalType: "",
-      id: "",
+      matchGoals: [],
+      player: [],
+      home_team: "",
+      away_team: "",
+      team: "",
+      date: "",
+      matchGoal: "",
+      location: "",
+      id: 10,
+      match_id: 1,
       message: "",
-      submitted: false,
-      mounted: true
+      submitted: false
     };
   }
 
@@ -26,49 +34,104 @@ class DeleteMatchGoal extends React.Component {
           contactName: this.state.goalType,
           submitted: true
         },
-        this.fetchMatchGoal()
+        () => {
+          this.fetchMatchGoal();
+          this.fetchPlayer();
+          this.fetchMatch();
+        }
       );
     });
   };
 
   handleChange = event => {
-    this.setState({
-      id: event.target.value,
-      goalType: event.target.selectedOptions[0].text
-    });
+    this.setState(
+      {
+        id: event.target.value,
+        matchGoal: event.target.selectedOptions[0].text,
+        match_id: event.target.selectedOptions[0].getAttribute("match_id")
+      },
+      () => {
+        this.fetchMatchGoal();
+        this.fetchPlayer();
+        this.fetchMatch();
+      }
+    );
   };
 
   fetchMatchGoal = () => {
-    if (this.state.mounted) {
-      axios
-        .get(URL, {
-          headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*"
-          }
-        })
-        .then(res => {
-          let data = res.data.map(data => {
-            return {
-              key: data.goal_type_id,
-              value: data.goal_type_id,
-              text: data.type
-            };
-          });
-          this.setState({ goalTypes: data });
-        })
-        .catch(err => {
-          console.log("Axios error: ", err);
+    axios
+      .get(URL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        let data = res.data.map(data => {
+          return {
+            key: data.goal_type_id,
+            value: data.player_id,
+            match_id: data.match_id,
+            text: data.description
+          };
         });
-    }
+        this.setState({ matchGoals: data, id: data.player_id });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
   };
 
-  componentWillMount() {
+  fetchPlayer = () => {
+    axios
+      .get(playerURL + this.state.id, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({ player: res });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  fetchMatch() {
+    axios
+      .get(matchURL + this.state.match_id, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        console.log(res);
+        this.setState({
+          home_team: res.data.home_team.team_name,
+          away_team: res.data.away_team.team_name,
+          location: res.data.location.name,
+          date: res.data.match_date
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  }
+
+  componentDidMount() {
     this.fetchMatchGoal();
+    this.fetchPlayer();
+    this.fetchMatch();
   }
 
   render() {
     let title = "Delete Match Goal";
+    const { data } = this.state.player;
+
+    const { home_team, away_team, location } = this.state;
+
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -78,14 +141,35 @@ class DeleteMatchGoal extends React.Component {
             <FormGroup>
               <Form.Label>Match Goal</Form.Label>
               <Form.Control onChange={this.handleChange} as="select">
-                {this.state.goalTypes.map(data => {
+                {this.state.matchGoals.map(data => {
                   return (
-                    <option key={data.key} value={data.value}>
+                    <option
+                      key={data.key}
+                      value={data.value}
+                      match_id={data.match_id}
+                    >
                       {data.text}
                     </option>
                   );
                 })}
               </Form.Control>
+              <Form.Label>Date</Form.Label>
+              <h6>{this.state.date}</h6>
+              <Form.Label>Team</Form.Label>
+              <h6>{data && data.team.team_name}</h6>
+              <Form.Label>Player</Form.Label>
+              <h6>
+                {data &&
+                  data.person.first_name +
+                    " " +
+                    data.person.last_name +
+                    " " +
+                    data.number}
+              </h6>
+              <Form.Label>Location</Form.Label>
+              <h6>{location}</h6>
+              <Form.Label>Match Between</Form.Label>
+              <h6>{home_team + " vs " + away_team}</h6>
             </FormGroup>
 
             <div
