@@ -84,7 +84,7 @@ class Login extends Component {
               </li>
               <li className="nav-item">
                 <a
-                  className="nav-link text-nowrap"
+                  className="nav-link text-nowrap text-danger"
                   href="/"
                   onClick={this.handleLogout.bind(this)}
                   id="button"
