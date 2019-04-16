@@ -145,21 +145,15 @@ class MatchViewer extends React.Component {
               />
 
               <ul>{teams}</ul>
-              <h4>
-                {" "}
-                {this.state.team ? (
-                  <div>Show matches for {this.state.team}</div>
-                ) : (
-                  <div>Select a team to show matches for above</div>
-                )}
-              </h4>
-              <ShowMatch
-                homeTeam="Liverpool"
-                awayTeam="Arsenal"
-                result={[3, 0]}
-                role={sessionStorage.getItem("role")}
-              />
             </form>
+            <h4>
+              {(this.state.team) ?
+                <div>Show matches for  {this.state.team}</div>
+                :
+                <div>Select a team to show matches for above</div>
+              }
+            </h4>
+            <div className="row">{matches}</div>
           </div>
           <div className="col-lg-6">
             <h1>Players</h1>
@@ -167,17 +161,7 @@ class MatchViewer extends React.Component {
           </div>
         </div>
 
-        {/*
-                <ul>{teams}</ul>
-                <h4>
-                    {(this.state.team) ?
-                        <div>Show matches for  {this.state.team}</div>
-                        :
-                        <div>Select a team to show matches for above</div>
-                    }
-                </h4>
-                <div className="row">{matches}</div>
-                */}
+
       </div>
     );
   }
