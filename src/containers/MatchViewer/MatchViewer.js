@@ -128,7 +128,7 @@ class MatchViewer extends React.Component {
     return (
       <div className="container" id="frontPage">
         <div className="row">
-          <div className="col-sm-4 col-md-6">
+          <div className="col-lg-6">
             <form onSubmit={this.handleFormTeam.bind(this)}>
               <h2> MatchViewer </h2>
               <input
@@ -161,8 +161,7 @@ class MatchViewer extends React.Component {
               />
             </form>
           </div>
-          <div class="w-100 d-none d-md-block" />
-          <div className="col-sm-4 col-md-6">
+          <div className="col-lg-6">
             <h1>Players</h1>
             <BrowsePlayer />
           </div>
