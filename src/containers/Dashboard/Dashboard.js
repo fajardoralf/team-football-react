@@ -246,71 +246,72 @@ class Dashboard extends React.Component {
                 </ul>
               </div>
             ) : (
-              <ul className="list-group text-center">
+                <ul className="list-group text-center">
 
-                <div onClick={this.setStatus.bind(this, 15)}>
-                  <li className="list-group-item" id="button">
-                    Update Info
+                  <div onClick={this.setStatus.bind(this, 15)}>
+                    <li className="list-group-item" id="button">
+                      Update Info
                   </li>
-                </div>
-                <div onClick={this.setStatus.bind(this, 16)}>
-                  <li className="list-group-item" id="button">
-                    Manage Watchlist
+                  </div>
+                  <div onClick={this.setStatus.bind(this, 16)}>
+                    <li className="list-group-item" id="button">
+                      Manage Watchlist
                   </li>
-                </div>
-                <div onClick={this.setStatus.bind(this, 17)}>
-                  <li className="list-group-item" id="button">
-                    BONUS: Submit Correction
+                  </div>
+                  <div onClick={this.setStatus.bind(this, 17)}>
+                    <li className="list-group-item" id="button">
+                      BONUS: Submit Correction
                   </li>
-                </div>
+                  </div>
 
-              </ul>
-            )}
+                </ul>
+              )}
             <div className="col-8">
               {
+                {
+                  0: <div />,
+                  1: <CreatePersonTable />,
+                  2: <CreateAddressTable />,
+                  4: <CreateContactTable />,
+                  5: <CreateGoalTypeTable />,
+                  6: <CreateLocationTable />,
+                  7: <CreateMatchGoalTable />,
+                  8: <CreateMatchPositionTable />,
+                  9: <CreateMatchTable />,
+                  10: <CreateResultTable />,
+                  11: <CreateSeasonTable />,
+                  12: <CreateTeamTable />,
+                  13: <UpdatePersonTable />,
+                  14: <UpdateAddressTable />,
+                  15: <UpdateSelfTable personID="0" />,
+                  16: <ManageWatchlist />,
+                  17: <SubmitCorrection />,
+                  19: <UpdateContactTable />,
+                  20: <UpdateLocationTable />,
+                  21: <UpdateMatchGoalTable />,
+                  22: <UpdateMatchPositionTable />,
+                  23: <UpdateMatchTable />,
+                  24: <UpdateResultTable />,
+                  25: <UpdateSeasonTable />,
+                  26: <UpdateTeamTable />,
+                  27: <DeleteAddressTable />,
+                  29: <DeleteContactTable />,
+                  30: <DeleteGoalTypeTable />,
+                  31: <DeleteLocationTable />,
+                  32: <DeleteMatchGoalTable />,
+                  33: <DeleteMatchPositionTable />,
+                  34: <DeleteMatchTable />,
+                  35: <DeletePersonTable />,
+                  36: <DeleteTeamTable />,
+                  37: <DeleteUserTable />,
+                  38: <CreatePlayerTable />,
+                  39: <UpdatePlayerTable />,
+                  40: <DeletePlayerTable />,
+                  41: <UpdateUserTable />
+                }[this.state.status]
+              }
 
-                0: <div />,
-                1: <CreatePersonTable />,
-                2: <CreateAddressTable />,
-                4: <CreateContactTable />,
-                5: <CreateGoalTypeTable />,
-                6: <CreateLocationTable />,
-                7: <CreateMatchGoalTable />,
-                8: <CreateMatchPositionTable />,
-                9: <CreateMatchTable />,
-                10: <CreateResultTable />,
-                11: <CreateSeasonTable />,
-                12: <CreateTeamTable />,
-                13: <UpdatePersonTable />,
-                14: <UpdateAddressTable />,
-                15: <UpdateSelfTable personID="0" />,
-                16: <ManageWatchlist />,
-                17: <SubmitCorrection />,
-                19: <UpdateContactTable />,
-                20: <UpdateLocationTable />,
-                21: <UpdateMatchGoalTable />,
-                22: <UpdateMatchPositionTable />,
-                23: <UpdateMatchTable />,
-                24: <UpdateResultTable />,
-                25: <UpdateSeasonTable />,
-                26: <UpdateTeamTable />,
-                27: <DeleteAddressTable />,
-                29: <DeleteContactTable />,
-                30: <DeleteGoalTypeTable />,
-                31: <DeleteLocationTable />,
-                32: <DeleteMatchGoalTable />,
-                33: <DeleteMatchPositionTable />,
-                34: <DeleteMatchTable />,
-                35: <DeletePersonTable />,
-                36: <DeleteTeamTable />,
-                37: <DeleteUserTable />,
-                38: <CreatePlayerTable />,
-                39: <UpdatePlayerTable />,
-                40: <DeletePlayerTable />,
-                41: <UpdateUserTable />
-              }[this.state.status]
-            }
-
+            </div>
           </div>
         </div>
       </div>
