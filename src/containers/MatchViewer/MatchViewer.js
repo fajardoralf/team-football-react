@@ -156,12 +156,7 @@ class MatchViewer extends React.Component {
                   <div>Select a team to show matches for above</div>
                 )}
               </h4>
-              <ShowMatch
-                homeTeam="Liverpool"
-                awayTeam="Arsenal"
-                result={[3, 0]}
-                role={sessionStorage.getItem("role")}
-              />
+              {matches}
             </form>
           </div>
         </div>
