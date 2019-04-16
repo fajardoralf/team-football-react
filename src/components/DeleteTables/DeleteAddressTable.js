@@ -10,6 +10,8 @@ class DeleteAddressTable extends React.Component {
     super(props);
     this.state = {
       address: [],
+      address_id: "",
+
       addressName: "",
       first_name: "",
       last_name: "",
@@ -37,7 +39,8 @@ class DeleteAddressTable extends React.Component {
     this.setState(
       {
         id: event.target.value,
-        addressName: event.target.selectedOptions[0].text
+        addressName: event.target.selectedOptions[0].text,
+        address_id: event.target.selectedOptions[0].getAttribute("address_id")
       },
       this.fetchPerson
     );

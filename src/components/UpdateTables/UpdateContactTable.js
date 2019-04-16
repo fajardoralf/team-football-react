@@ -3,15 +3,23 @@ import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/contact/";
+const personURL = "https://team-football-api.herokuapp.com/person/";
 
 class UpdateContactTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      contactId: "",
-      personId: "",
+      contact: [],
+      person: [],
+      first_name: "",
+      last_name: "",
+      contact_name: "",
+      contactId: 1,
+      personId: 1,
       contactType: "",
+      new_contactType: "",
       contactDetail: "",
+      new_contactDetail: "",
       message: "",
       submitted: false
     };
@@ -21,27 +29,35 @@ class UpdateContactTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL + this.state.contactId, {
-        contact_id: this.state.contactId,
-        person_id: this.state.personId,
-        contact_type: this.state.contactType,
-        contact_detail: this.state.contactDetail,
-        message: "Successfully Updated ",
-        submitted: true
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+      .post(
+        URL + this.state.contactId,
+        {
+          contact_id: this.state.contactId,
+          person_id: this.state.personId,
+          contact_type:
+            this.state.new_contactType !== ""
+              ? this.state.new_contactType
+              : this.state.contactType,
+          contact_detail:
+            this.state.new_contactDetail !== ""
+              ? this.state.new_contactDetail
+              : this.state.contactDetail,
+          message: "Successfully Updated ",
+          submitted: true
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
         }
-      }
-    )
-    .then(res => {
-      console.log("response: ", res);
-    })
-    .catch(err => {
-      console.log("Axios error: ", err);
-    });
+      )
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
     this.setState({
       contactId: "",
       personId: "",
@@ -50,67 +66,132 @@ class UpdateContactTable extends React.Component {
     });
   }
 
-  setContactId(event) {
-    this.setState({ 
-      contactId: event.target.value
-    });
-  }
+  setContactId = event => {
+    console.log(event.target.selectedOptions[0].getAttribute("contact_detail"));
+    this.setState(
+      {
+        contactId: event.target.value,
+        personId: event.target.selectedOptions[0].getAttribute("person_id"),
+        contactType: event.target.selectedOptions[0].getAttribute(
+          "contact_type"
+        ),
+        contactDetail: event.target.selectedOptions[0].getAttribute(
+          "contact_detail"
+        )
+      },
+      this.fetchPersons
+    );
+  };
 
-  setPersonId(event) {
-    this.setState({ 
+  setPersonId = event => {
+    this.setState({
       personId: event.target.value
     });
-  }
+  };
 
-  setContactType(event) {
+  setContactType = event => {
     this.setState({
       contactType: event.target.value
     });
-  }
+  };
 
-  setContactDetail(event) {
+  setContactDetail = event => {
     this.setState({
       contactDetail: event.target.value
     });
+  };
+
+  fetchContacts = () => {
+    axios
+      .get(URL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({
+          contactType: res.data[0].contact_type,
+          contactDetail: res.data[0].contact_detail
+        });
+        let data = res.data.map(data => {
+          return {
+            key: data.contact_id,
+            value: data.contact_id,
+            text: data.contact_detail,
+            type: data.contact_type,
+            person_id: data.person_id
+          };
+        });
+        this.setState({ contact: data });
+      });
+  };
+
+  fetchPersons = () => {
+    axios
+      .get(personURL + this.state.personId, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({
+          first_name: res.data.first_name,
+          last_name: res.data.last_name
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  componentDidMount() {
+    this.fetchContacts();
+    this.fetchPersons();
   }
-
   render() {
-    let title = "Update Contact"
-
+    let title = "Update Contact";
+    const { contact, first_name, last_name, personId } = this.state;
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
-          <Form.Group controlId="updateContactForm">
-              <Form.Label>Contact ID</Form.Label>
-              <Form.Control
-                type="contactId"
-                placeholder="Contact ID"
-                value={this.state.contactId}
-                onChange={this.setContactId.bind(this)}
-              />
+            <Form.Group controlId="updateContactForm">
+              <Form.Label>Contact</Form.Label>
+              <Form.Control onChange={this.setContactId} as="select">
+                {contact.map(data => {
+                  return (
+                    <option
+                      key={data.key}
+                      value={data.value}
+                      person_id={data.person_id}
+                      contact_detail={data.text}
+                      contact_type={data.type}
+                    >
+                      {data.text + " (" + data.type + ")"}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="updateContactForm">
-              <Form.Label>Person ID</Form.Label>
-              <Form.Control
-                type="personId"
-                placeholder="Person ID"
-                value={this.state.personId}
-                onChange={this.setPersonId.bind(this)}
-              />
+              <Form.Label>Belongs to</Form.Label>
+              <Form.Control onChange={this.handlePersonId} as="select">
+                <option key={personId}>{first_name + " " + last_name}</option>
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="updateContactForm">
               <Form.Label>Contact Type</Form.Label>
               <Form.Control
                 type="contactType"
-                placeholder="Contact Type"
-                value={this.state.contactType}
-                onChange={this.setContactType.bind(this)}
+                placeholder={this.state.contactType}
+                value={this.state.new_contactType}
+                onChange={this.setContactType}
               />
             </Form.Group>
 
@@ -118,9 +199,9 @@ class UpdateContactTable extends React.Component {
               <Form.Label>Contact Detail</Form.Label>
               <Form.Control
                 type="contactDetail"
-                placeholder="Contact Detail"
-                value={this.state.contactDetail}
-                onChange={this.setContactDetail.bind(this)}
+                placeholder={this.state.contactDetail}
+                value={this.state.new_contactDetail}
+                onChange={this.setContactDetail}
               />
             </Form.Group>
             <div
