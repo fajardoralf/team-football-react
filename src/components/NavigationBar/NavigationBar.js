@@ -54,7 +54,6 @@ class NavigationBar extends React.Component {
           <span className="navbar-text" />
         </div>
         <Login />
-        <div id="google_translate_element" />
       </nav>
     );
   }
