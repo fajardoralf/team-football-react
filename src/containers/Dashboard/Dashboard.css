@@ -10,6 +10,7 @@
   vertical-align: middle;
   padding: 5%;
   text-align: center;
+  outline: none;
 }
 
 .Collapsible__trigger {
