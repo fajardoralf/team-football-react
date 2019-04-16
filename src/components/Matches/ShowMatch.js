@@ -20,9 +20,9 @@ class ShowMatch extends React.Component {
 
         return (
             <Card className="match">
-                <div>{this.state.homeTeam} - {this.state.awayTeam} </div>
+                <div class="team">{this.state.homeTeam} - {this.state.awayTeam} </div>
                 {(this.state.role) ?
-                    <div> {this.state.result[0]} - {this.state.result[1]} </div>
+                    <div class="result"> {this.state.result[0]} - {this.state.result[1]} </div>
                     :
                      (this.winner !== 'tie') ? <div>Winner: {winner} team! Log in to see score</div> 
                      :
