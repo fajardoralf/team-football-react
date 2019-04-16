@@ -148,30 +148,19 @@ class MatchViewer extends React.Component {
               />
 
               <ul>{teams}</ul>
-              <h4>
-                {" "}
-                {this.state.team ? (
-                  <div>Show matches for {this.state.team}</div>
-                ) : (
-                  <div>Select a team to show matches for above</div>
-                )}
-              </h4>
-              {matches}
             </form>
+            <h4>
+              {(this.state.team) ?
+                <div>Show matches for  {this.state.team}</div>
+                :
+                <div>Select a team to show matches for above</div>
+              }
+            </h4>
+            <div className="row">{matches}</div>
           </div>
         </div>
 
-        {/*
-                <ul>{teams}</ul>
-                <h4>
-                    {(this.state.team) ?
-                        <div>Show matches for  {this.state.team}</div>
-                        :
-                        <div>Select a team to show matches for above</div>
-                    }
-                </h4>
-                <div className="row">{matches}</div>
-                */}
+
       </div>
     );
   }
