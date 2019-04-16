@@ -1,5 +1,7 @@
 import React from "react";
 import Login from "../Login/Login";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 class NavigationBar extends React.Component {
   constructor(props) {
@@ -9,6 +11,26 @@ class NavigationBar extends React.Component {
   }
 
   render() {
+    return (
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar.Brand href="/">Football Manager</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+            <Nav.Link href="/teams">Teams</Nav.Link>
+            <Nav.Link href="/about">About</Nav.Link>
+          </Nav>
+          <Nav className="mr-auto">
+            <Login />
+          </Nav>
+          <div className="translate" id="google_translate_element" />
+        </Navbar.Collapse>
+      </Navbar>
+    );
+  }
+  /*
     return (
       <nav
         className="navbar navbar-expand-lg navbar-dark bg-dark"
@@ -30,7 +52,7 @@ class NavigationBar extends React.Component {
         </button>
         <div className="collapse navbar-collapse" id="navbarText">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
+            <li className="nav-item">
               <a className="nav-link" href="/">
                 Home <span className="sr-only">(current)</span>
               </a>
@@ -57,5 +79,6 @@ class NavigationBar extends React.Component {
       </nav>
     );
   }
+  */
 }
 export default NavigationBar;
