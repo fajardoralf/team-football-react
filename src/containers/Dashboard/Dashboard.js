@@ -185,6 +185,11 @@ class Dashboard extends React.Component {
                         Update Player
                       </li>
                     </div>
+                    <div onClick={this.setStatus.bind(this, 41)}>
+                      <li className="list-group-item" id="button">
+                        Update User
+                      </li>
+                    </div>
                   </Collapsible>
                   <Collapsible trigger="Delete">
                     <div onClick={this.setStatus.bind(this, 27)}>
