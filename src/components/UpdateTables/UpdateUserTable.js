@@ -10,6 +10,7 @@ class UpdateUser extends React.Component {
 
     this.state = {
       user_id: 1,
+      password: "",
       new_password: "",
       new_role: false,
       username: "",
@@ -69,7 +70,8 @@ class UpdateUser extends React.Component {
       this.setState({
         users: json.data,
         username: json.data[0].username,
-        user_id: json.data[0].user_id
+        user_id: json.data[0].user_id,
+        password: json.data.password
       })
     );
   }
