@@ -75,8 +75,11 @@ class ManageWatchlist extends React.Component {
             user_id: this.state.personId,
             player_id: this.getPlayerId(this.state.playerInput)
         }).then(res => {
-            if (res.status === 202) {
+            if (res.status === 201) {
                 console.log("success")
+                this.setState({
+                    playerWatchList: [...this.state.playerWatchList, res.data]
+                })
             }
         })
     }
@@ -87,12 +90,39 @@ class ManageWatchlist extends React.Component {
             user_id: this.state.personId,
             team_id: this.getTeamId(this.state.teamInput)
         }).then(res => {
-            if (res.status === 202) {
+            if (res.status === 201) {
                 console.log("success")
+                this.setState({
+                    teamWatchList: [...this.state.teamWatchList, res.data]
+                })
             }
         })
     }
 
+    removePlayer = (id, event) => {
+        event.preventDefault()
+        axios.delete(URL + 'watchlistplayer/' + id, {}).then(res => {
+            if (res.status === 200) {
+                this.setState({
+                    playerInput: '',
+                    playerWatchList: this.state.playerWatchList.filter(d => d.watchlist_player_id !== id)
+                })
+            }
+        })
+    }
+
+    removeTeam = (id) => {
+        axios.delete(URL + 'watchlistteam/' + id, {
+            watchlist_team_id: id
+        }).then(res => {
+            if (res.status === 200) {
+                this.setState({
+                    teamInput: '',
+                    teamWatchList: this.state.teamWatchList.filter(d => d.watchlist_team_id !== id)
+                })
+            }
+        })
+    }
 
 
     componentWillMount() {
@@ -145,7 +175,7 @@ class ManageWatchlist extends React.Component {
         const players = playerList
             .filter(d => {
 
-                return playerInput === '' || (d.person.first_name + ' ' + d.person.last_name).includes(playerInput)
+                return playerInput === '' || (d.person.first_name + ' ' + d.person.last_name).toLocaleLowerCase().includes(playerInput.toLocaleLowerCase())
             })
             .map((d, index) =>
                 <li
@@ -154,7 +184,7 @@ class ManageWatchlist extends React.Component {
                     {d.person.first_name + ' ' + d.person.last_name}
                 </li>);
         const teams = teamList
-            .filter(d => teamInput === '' || d.team_name.includes(teamInput))
+            .filter(d => teamInput === '' || d.team_name.toLocaleLowerCase().includes(teamInput.toLocaleLowerCase()))
             .map((d, index) => <li onClick={this.onClickTeam.bind(this, d.team_name)} key={index}>{d.team_name}</li>);
 
 
@@ -163,22 +193,29 @@ class ManageWatchlist extends React.Component {
 
         const playerWatch = playerWatchList
             .filter(d => d.user_id === personId)
-            .map(d => this.getPlayer(d.player_id))
-            .map((d, index) =>
-                <li key={index}>
-                    {d.person.first_name + ' ' + d.person.last_name}
-                    <Button variant="outline-danger">Remove</Button>
-                </li>
-            )
+            .map((d, index) => {
+                let player = this.getPlayer(d.player_id)
+                return (<li key={index}>
+                    {player.person.first_name + ' ' + player.person.last_name}
+                    <Button
+                        variant="outline-danger"
+                        size="sm" style={{ marginLeft: '10px' }}
+                        onClick={e => this.removePlayer(d.watchlist_player_id, e)}>Remove</Button>
+                </li>)
+            })
 
         const teamWatch = teamWatchList
             .filter(d => d.user_id = personId)
-            .map(d => this.getTeam(d.team_id))
-            .map((d, index) =>
-                <li key={index}>
-                    {d.team_name}
-                    <Button variant="outline-danger">Remove</Button>
-                </li>)
+            .map((d, index) =>{
+                let team =this.getTeam(d.team_id)
+                return (<li key={index}>
+                    {team.team_name}
+                    <Button 
+                        variant="outline-danger" 
+                        size="sm" style={{ marginLeft: '10px' }}
+                        onClick={e => this.removeTeam(d.watchlist_team_id, e)}>Remove</Button>
+            </li>)
+            })
         return (
             <div>
                 <h3 className='text-center'>{title}</h3><br />
