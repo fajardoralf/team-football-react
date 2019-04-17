@@ -78,6 +78,7 @@ class ManageWatchlist extends React.Component {
             if (res.status === 201) {
                 console.log("success")
                 this.setState({
+                    playerInput: '',
                     playerWatchList: [...this.state.playerWatchList, res.data]
                 })
             }
@@ -93,6 +94,7 @@ class ManageWatchlist extends React.Component {
             if (res.status === 201) {
                 console.log("success")
                 this.setState({
+                    teamInput: '',
                     teamWatchList: [...this.state.teamWatchList, res.data]
                 })
             }
@@ -104,7 +106,6 @@ class ManageWatchlist extends React.Component {
         axios.delete(URL + 'watchlistplayer/' + id, {}).then(res => {
             if (res.status === 200) {
                 this.setState({
-                    playerInput: '',
                     playerWatchList: this.state.playerWatchList.filter(d => d.watchlist_player_id !== id)
                 })
             }
@@ -117,7 +118,6 @@ class ManageWatchlist extends React.Component {
         }).then(res => {
             if (res.status === 200) {
                 this.setState({
-                    teamInput: '',
                     teamWatchList: this.state.teamWatchList.filter(d => d.watchlist_team_id !== id)
                 })
             }
