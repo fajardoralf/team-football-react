@@ -36,7 +36,7 @@ class UpdateUser extends React.Component {
     for (let user of this.state.users) {
       if ("" + user.user_id === id) return user.username;
     }
-    return "test";
+    return "unknown";
   }
 
   setNewPassword(e) {
@@ -77,7 +77,8 @@ class UpdateUser extends React.Component {
   render() {
     const title = "Update user info";
 
-    const userids = this.state.users.map(u => <option>{u.user_id}</option>);
+    const userids = this.state.users.map(u =>
+        <option value={u.user_id}>{u.username}</option>)
 
     return (
       <Card bg="light" text="black">
