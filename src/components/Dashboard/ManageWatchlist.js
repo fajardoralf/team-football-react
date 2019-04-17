@@ -41,18 +41,38 @@ class ManageWatchlist extends React.Component {
         })
     }
     getPlayerId(name) {
-        return 0
+        for (let player of this.state.playerList) {
+            if (player.person && ((player.person.first_name + ' ' + player.person.last_name)) === name) return player.player_id
+        }
+        return -1
+    }
+
+    getPlayer(id) {
+        for (let player of this.state.playerList) {
+            if (player.player_id === id) return player
+        }
+        return { person: {} }
     }
 
     getTeamId(name) {
-        return 0
+        for (let team of this.state.teamList) {
+            if (team.team_name === name) return team.team_id
+        }
+        return -1
+    }
+
+    getTeam(id){
+        for (let team of this.state.teamList){
+            if (team.team_id === id) return team
+        }
+        return "Unknown Team"
     }
 
     handleFormPlayer(e) {
         // Submit to database
         e.preventDefault()
         axios.post(URL + 'watchlistplayer', {
-            person_id: this.state.personId,
+            user_id: this.state.personId,
             player_id: this.getPlayerId(this.state.playerInput)
         }).then(res => {
             if (res.status === 202) {
@@ -62,8 +82,9 @@ class ManageWatchlist extends React.Component {
     }
     handleFormTeam(e) {
         // Submit to database
+        e.preventDefault()
         axios.post(URL + 'watchlistteam', {
-            person_id: this.state.personId,
+            user_id: this.state.personId,
             team_id: this.getTeamId(this.state.teamInput)
         }).then(res => {
             if (res.status === 202) {
@@ -96,6 +117,17 @@ class ManageWatchlist extends React.Component {
                 teamList: res.data
             })
         })
+        axios.get(URL + 'watchlistplayer').then(res => {
+            this.setState({
+                playerWatchList: res.data
+            })
+        })
+
+        axios.get(URL + 'watchlistteam').then(res => {
+            this.setState({
+                teamWatchList: res.data
+            })
+        })
     }
 
     render() {
@@ -107,70 +139,109 @@ class ManageWatchlist extends React.Component {
             })
             .map((d, index) =>
                 <li
-                    onClick={this.onClickPlayer.bind(this, (d.person.first_name + ' ' + d.person.last_name ))}
+                    onClick={this.onClickPlayer.bind(this, (d.person.first_name + ' ' + d.person.last_name))}
                     key={index}>
-                    {d.person.first_name  + ' ' + d.person.last_name}
+                    {d.person.first_name + ' ' + d.person.last_name}
                 </li>);
         const teams = this.state.teamList
             .filter(d => this.state.teamInput === '' || d.team_name.includes(this.state.teamInput))
             .map((d, index) => <li onClick={this.onClickTeam.bind(this, d.team_name)} key={index}>{d.team_name}</li>);
 
+
         const players10 = (players.length > 10) ? players.slice(0, 10) : players
-        const teams10 = (teams.length > 10) ? teams.slice(0, 10): teams
+        const teams10 = (teams.length > 10) ? teams.slice(0, 10) : teams
+
+        const playerWatch = this.state.playerWatchList
+            .filter(d => d.user_id === this.state.personId)
+            .map(d => this.getPlayer(d.player_id))
+            .map((d, index) =>
+                <li key={index}>
+                    {d.person.first_name + ' ' + d.person.last_name}
+                    <Button variant="outline-danger">Remove</Button>
+                </li>
+            )
+        
+        const teamWatch = this.state.teamWatchList
+            .filter(d => d.user_id = this.state.personId)
+            .map(d => this.getTeam(d.team_id))
+            .map((d, index) => 
+                <li key={index}>
+                    {d.team_name}
+                    <Button variant="outline-danger">Remove</Button>
+                </li>)
         return (
             <div>
                 <h3 className='text-center'>{title}</h3><br />
-                <div>
-                    <Card bg="light" text="black" style={{ width: "18rem" }}>
-                        <Card.Body>
-                            <h4>Add Player</h4>
-                            <div>
-                                <Form onSubmit={this.handleFormPlayer.bind(this)}>
-                                    <Form.Group controlId="watchlistAddPlayer">
-                                        <Form.Control
-                                            type="player"
-                                            placeholder="Player Name"
-                                            value={this.state.playerInput}
-                                            onChange={this.onChangeHandlerPlayer.bind(this)}
-                                        />
-                                    </Form.Group>
-                                    <ul>{players10}</ul>
-                                    <Button variant="dark" type="Submit">
-                                        Add
+                <div className="row">
+
+                    <div className='col'>
+                        <Card bg="light" text="black" style={{ width: "18rem" }}>
+                            <Card.Body>
+                                <h4>Add Player</h4>
+                                <div>
+                                    <Form onSubmit={this.handleFormPlayer.bind(this)}>
+                                        <Form.Group controlId="watchlistAddPlayer">
+                                            <Form.Control
+                                                type="player"
+                                                placeholder="Player Name"
+                                                value={this.state.playerInput}
+                                                onChange={this.onChangeHandlerPlayer.bind(this)}
+                                            />
+                                        </Form.Group>
+                                        <ul>{players10}</ul>
+                                        <Button variant="dark" type="Submit">
+                                            Add
                                     </Button>
-                                </Form>
+                                    </Form>
 
-                            </div>
-                        </Card.Body>
-                    </Card>
-                </div>
-                <div>
-                    <Card bg="light" text="black" style={{ width: "18rem" }}>
-                        <Card.Body>
-                            <h4>Add Team</h4>
-                            <div>
-                                <Form onSubmit={this.handleFormTeam.bind(this)}>
-                                    <Form.Group controlId="watchlistAddTeam">
-                                        <Form.Control
-                                            type="team"
-                                            placeholder="Team Name"
-                                            value={this.state.teamInput}
-                                            onChange={this.onChangeHandlerTeam.bind(this)}
-                                        />
-                                    </Form.Group>
-                                    <ul>{teams10}</ul>
-                                    <Button variant="dark" type="Submit">
-                                        Add
+                                </div>
+                            </Card.Body>
+                        </Card>
+                        <Card bg="light" text="black" style={{ width: "18rem" }}>
+                            <Card.Body>
+                                <h4>Add Team</h4>
+                                <div>
+                                    <Form onSubmit={this.handleFormTeam.bind(this)}>
+                                        <Form.Group controlId="watchlistAddTeam">
+                                            <Form.Control
+                                                type="team"
+                                                placeholder="Team Name"
+                                                value={this.state.teamInput}
+                                                onChange={this.onChangeHandlerTeam.bind(this)}
+                                            />
+                                        </Form.Group>
+                                        <ul>{teams10}</ul>
+                                        <Button variant="dark" type="Submit">
+                                            Add
                                     </Button>
-                                </Form>
+                                    </Form>
 
-                            </div>
-                        </Card.Body>
-                    </Card>
+                                </div>
+                            </Card.Body>
+                        </Card>
+
+                    </div>
+                    <div className="col">
+                        <Card>
+                            <Card.Body>
+                                <h4>Players</h4>
+                                <ul>
+                                    {playerWatch}
+                                </ul>
+                            </Card.Body>
+                        </Card>
+                        <Card>
+                            <Card.Body>
+                                <h4>Teams</h4>
+                                <ul>
+                                    {teamWatch}
+                                </ul>
+                            </Card.Body>
+                        </Card>
+                    </div>
+
 
                 </div>
-
-
             </div>
         )
     }
