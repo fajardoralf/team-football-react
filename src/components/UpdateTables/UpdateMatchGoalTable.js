@@ -4,14 +4,24 @@ import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/matchgoal/";
 
+const matchURL = "https://team-football-api.herokuapp.com/match/";
+const playerURL = "https://team-football-api.herokuapp.com/player/";
+const goalTypeURL = "https://team-football-api.herokuapp.com/goaltype/";
+
+let matchGoalURL = "https://team-football-api.herokuapp.com/matchgoal/";
+
 class UpdateMatchGoalTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      goalId: "",
+      player: [],
+      match: [],
+      goalType: [],
+      matchGoal: [],
       playerId: "",
       goalTypeId: "",
-      matchId: "",
+      matchId: 0,
+      matchGoalId: 0,
       description: "",
       message: "",
       submitted: false
@@ -22,69 +32,182 @@ class UpdateMatchGoalTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL + this.state.goalId, {
-        goal_id: this.state.goalId,
-        player_id: this.state.playerId,
-        goal_type_id: this.state.goalTypeId,
-        match_id: this.state.matchId,
-        description: this.state.description,
-        message: "Successfully Updated",
-        submitted: true
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+      .put(
+        URL + this.state.goalId,
+        {
+          goal_id: this.state.goalId,
+          player_id: this.state.playerId,
+          goal_type_id: this.state.goalTypeId,
+          match_id: this.state.matchId,
+          description:
+            this.state.description !== ""
+              ? this.state.new_description
+              : this.state.description,
+          message: "Successfully Updated",
+          submitted: true
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
         }
-      }
-    )
-    .then(res => {
-      console.log("response: ", res);
-    })
-    .catch(err => {
-      console.log("Axios error: ", err);
-    });
+      )
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
     this.setState({
-      goalId: "",
       playerId: "",
       goalTypeId: "",
       matchId: "",
+      matchGoalId: "",
       description: ""
     });
   }
 
-  setGoalId(event) {
-    this.setState({ 
+  setGoalId = event => {
+    this.setState({
       goalId: event.target.value
     });
-  }
+  };
 
-  setPlayerId(event) {
-    this.setState({ 
+  setPlayerId = event => {
+    this.setState({
       playerId: event.target.value
     });
-  }
+  };
 
-  setGoalTypeId(event) {
-    this.setState({ 
+  setGoalTypeId = event => {
+    this.setState({
       goalTypeId: event.target.value
     });
-  }
+  };
 
-  setMatchId(event) {
-      this.setState({
-          matchId: event.target.value
-      })
-  }
+  setMatchId = event => {
+    this.setState({
+      matchId: event.target.value
+    });
+  };
 
-  setDescription(event) {
-      this.setState({
-          description: event.target.value
+  setMatchGoalId = event => {
+    this.setState({
+      matchGoalId: event.target.value
+    });
+  };
+
+  setDescription = event => {
+    this.setState({
+      new_description: event.target.value
+    });
+  };
+
+  //fetchMatch = () => {}
+  fetchMatch = () => {
+    axios
+      .get(matchURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
       })
+      .then(res => {
+        this.setState({ matchId: res.data[0].match_id });
+        let data = res.data.map(data => {
+          return {
+            key: data.match_id,
+            date: data.match_date,
+            home_team: data.home_team.team_name,
+            away_team: data.away_team.team_name
+          };
+        });
+        this.setState({ match: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  fetchMatchGoal = () => {
+    axios
+      .get(matchGoalURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({ matchGoalId: res.data[0].match_goal_id });
+        let data = res.data.map(data => {
+          return {
+            key: data.match_goal_id,
+            foreginkey: data.match_id,
+            description: data.description
+          };
+        });
+        this.setState({ matchGoal: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  //fetchGoalType = () => {}
+  fetchGoalType = () => {
+    axios
+      .get(goalTypeURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        console.log(res);
+        let data = res.data.map(data => {
+          return {
+            key: data.goal_type_id,
+            type: data.type
+          };
+        });
+        this.setState({
+          goalType: data
+        });
+      });
+  };
+  //fetchPlayer = () => {}
+  fetchPlayer = () => {
+    axios
+      .get(playerURL, {
+        header: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        let data = res.data.map(data => {
+          return {
+            key: data.player_id,
+            first_name: data.person.first_name,
+            last_name: data.person.last_name
+          };
+        });
+        this.setState({ player: data });
+      });
+  };
+
+  componentDidMount() {
+    this.fetchMatch();
+    this.fetchGoalType();
+    this.fetchPlayer();
+    this.fetchMatchGoal();
   }
 
   render() {
-    let title = "Update Match Goal"
+    const title = "Update Match Goal";
+
+    const { match, goalType, player, matchId, matchGoal } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -92,55 +215,76 @@ class UpdateMatchGoalTable extends React.Component {
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
             <Form.Group controlId="updateMatchGoalForm">
-              <Form.Label>Goal ID</Form.Label>
+              <Form.Label>Match</Form.Label>
               <Form.Control
-                type="goalId"
-                placeholder="Goal ID"
-                value={this.state.goalId}
-                onChange={this.setGoalId.bind(this)}
-              />
+                value={matchId}
+                onChange={this.setMatchId}
+                as="select"
+              >
+                {match.map(data => {
+                  return (
+                    <option
+                      key={data.key}
+                      value={data.match_id}
+                      date={data.match_date}
+                      home_team={data.home_team.team_name}
+                      away_team={data.away_team.team_name}
+                    >
+                      {data.date +
+                        "-" +
+                        data.home_team +
+                        " Vs. " +
+                        data.away_team}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="updateMatchGoalForm">
-              <Form.Label>Player ID</Form.Label>
-              <Form.Control
-                type="playerId"
-                placeholder="Player ID"
-                value={this.state.playerId}
-                onChange={this.setPlayerId.bind(this)}
-              />
+              <Form.Label>Player</Form.Label>
+              <Form.Control onChange={this.setPlayerId} as="select">
+                {player.map(data => {
+                  return (
+                    <option
+                      key={data.key}
+                      value={data.key}
+                      first_name={data.first_name}
+                      last_name={data.last_name}
+                    >
+                      {data.first_name + " " + data.last_name}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="updateMatchGoalForm">
-              <Form.Label>Goal Type ID</Form.Label>
-              <Form.Control
-                type="goalTypeId"
-                placeholder="Goal Type ID"
-                value={this.state.goalTypeId}
-                onChange={this.setGoalTypeId.bind(this)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="updateMatchGoalForm">
-              <Form.Label>Match ID</Form.Label>
-              <Form.Control
-                type="matchId"
-                placeholder="Match ID"
-                value={this.state.matchId}
-                onChange={this.setMatchId.bind(this)}
-              />
+              <Form.Label>Goal Type</Form.Label>
+              <Form.Control onChange={this.setGoalTypeId} as="select">
+                {goalType.map(data => {
+                  return (
+                    <option key={data.key} value={data.key}>
+                      {data.type}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="updateMatchGoalForm">
               <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="description"
-                placeholder="Description"
-                value={this.state.description}
-                onChange={this.setDescription.bind(this)}
-              />
+              <Form.Control onChange={this.setDescription} as="select">
+                {matchGoal.map(data => {
+                  return (
+                    <option key={data.key} value={data.key}>
+                      {data.description}
+                    </option>
+                  );
+                })}
+              </Form.Control>
+              {this.state.description}
             </Form.Group>
             <div
               style={{
