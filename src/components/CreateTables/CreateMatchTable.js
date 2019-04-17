@@ -2,7 +2,9 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/match/";
+const teamURL = "https://team-football-api.herokuapp.com/team/";
+const seasonURL = "https://team-football-api.herokuapp.com/season/";
+const locationURL = "https://team-football-api.herokuapp.com/location/";
 
 class CreateMatchTable extends React.Component {
   constructor(props) {
@@ -14,23 +16,91 @@ class CreateMatchTable extends React.Component {
       season_id: "",
       location_id: "",
       message: "",
-      submitted: false
+      submitted: false,
+      match: [],
+      season: [],
+      location: []
     };
   }
+
+  fetchTeamId = () => {
+    axios
+      .get(teamURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        let data = res.data.map(data => {
+          return {
+            home_team: data.team_name,
+            away_team: data.team_name
+          };
+        });
+        this.setState({ match: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  fetchSeasonId = () => {
+    axios
+      .get(seasonURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        let data = res.data.map(data => {
+          return {
+            season_name: data.name,
+            season_start: data.start_date,
+            season_end: data.end_date,
+          };
+        });
+        this.setState({ season: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  fetchLocationId = () => {
+    axios
+      .get(locationURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        let data = res.data.map(data => {
+          return {
+            location_name: data.name
+          };
+        });
+        this.setState({ location: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
 
   handleForm(event) {
     event.preventDefault();
 
-    axios
-      .post(URL, {
-        matchDate: this.state.matchDate,
-        homeTeam_id: this.state.homeTeam_id,
-        awayTeam_id: this.state.awayTeam_id,
-        season_id: this.state.season_id,
-        location_id: this.state.location_id,
-        message: "Successfully created ",
-        submitted: true
-      })
+    axios.post(URL, {
+      matchDate: this.state.matchDate,
+      homeTeam_id: this.state.homeTeam_id,
+      awayTeam_id: this.state.awayTeam_id,
+      season_id: this.state.season_id,
+      location_id: this.state.location_id,
+      message: "Successfully created ",
+      submitted: true
+    });
     this.setState({
       matchDate: "",
       homeTeam_id: "",
@@ -41,7 +111,7 @@ class CreateMatchTable extends React.Component {
   }
 
   setMatchDate(event) {
-    this.setState({ 
+    this.setState({
       matchDate: event.target.value
     });
   }
@@ -59,19 +129,25 @@ class CreateMatchTable extends React.Component {
   }
 
   setSeason_id(event) {
-    this.setState({ 
+    this.setState({
       season_id: event.target.value
     });
   }
 
   setLocation_id(event) {
-      this.setState({
-          location_id: event.target.value
-      })
+    this.setState({
+      location_id: event.target.value
+    });
+  }
+
+  componentDidMount() {
+    this.fetchTeamId();
+    this.fetchSeasonId();
+    this.fetchLocationId();
   }
 
   render() {
-    let title = "Create Match"
+    let title = "Create Match";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -79,11 +155,10 @@ class CreateMatchTable extends React.Component {
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
             <Form.Group controlId="createMatchForm">
               <Form.Label>Match Date</Form.Label>
               <Form.Control
-                type="match Date"
+                type="match_date"
                 placeholder="Match Date"
                 value={this.state.matchDate}
                 onChange={this.setMatchDate.bind(this)}
@@ -93,41 +168,69 @@ class CreateMatchTable extends React.Component {
             <Form.Group controlId="createMatchForm">
               <Form.Label>Home Team ID</Form.Label>
               <Form.Control
-                type="homeTeam_id"
-                placeholder="Home Team ID"
-                value={this.state.homeTeam_id}
                 onChange={this.setHomeTeam_id.bind(this)}
-              />
+                as="select"
+              >
+                {this.state.match.map(data => {
+                  return (
+                    <option key={data.home_team} 
+                    value={data.home_team}>
+                      {data.home_team}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="createMatchForm">
               <Form.Label>Away Team ID</Form.Label>
               <Form.Control
-                type="awayTeam_id"
-                placeholder="Away Team ID"
-                value={this.state.awayTeam_id}
                 onChange={this.setAwayTeam_id.bind(this)}
-              />
+                as="select"
+              >
+                {this.state.match.map(data => {
+                  return (
+                    <option key={data.away_team} 
+                    value={data.away_team}>
+                      {data.away_team}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="createMatchForm">
               <Form.Label>Season ID</Form.Label>
-              <Form.Control
-                type="season_id"
-                placeholder="Season ID"
-                value={this.state.season_id}
-                onChange={this.setSeason_id.bind(this)}
-              />
+              <Form.Control onChange={this.setSeason_id.bind(this)} as="select">
+                {this.state.season.map(data => {
+                  return (
+                    <option 
+                    key={data.season_id} 
+                    value={data.season_id}
+
+                    >
+                      {data.season_name + ": " + data.season_start + "-" + data.season_end}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="createMatchForm">
               <Form.Label>Location ID</Form.Label>
               <Form.Control
-                type="location_id"
-                placeholder="Location ID"
-                value={this.state.location_id}
                 onChange={this.setLocation_id.bind(this)}
-              />
+                as="select"
+              >
+                {this.state.location.map(data => {
+                  return (
+                    <option key={data.location_id} 
+                    value={data.location_name}>
+                      {data.location_name}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
             <div
               style={{
