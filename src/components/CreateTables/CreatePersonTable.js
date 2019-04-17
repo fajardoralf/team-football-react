@@ -2,12 +2,15 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/person";
+const URL = "https://team-football-api.herokuapp.com/person/";
+
+const addressURL = "https://team-football-api.herokuapp.com/address/";
 
 class CreatePersonTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      address: [],
       address_id: "",
       firstName: "",
       lastName: "",
@@ -17,9 +20,38 @@ class CreatePersonTable extends React.Component {
     };
   }
 
+  fetchAddress = () => {
+    axios
+      .get(addressURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({
+          address_id: res.data[0].address_id
+        });
+        let data = res.data.map(data => {
+          return {
+            key: data.address_id,
+            address_name: data.address_line_1,
+            postalcode: data.postal_code,
+            city: data.city,
+            country: data.country
+          };
+        });
+        this.setState({
+          address: data
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
   handleForm = event => {
     event.preventDefault();
-
     axios
       .post(
         URL,
@@ -27,9 +59,7 @@ class CreatePersonTable extends React.Component {
           address_id: this.state.address_id,
           first_name: this.state.firstName,
           last_name: this.state.lastName,
-          date_of_birth: this.state.dateOfBirth,
-          message: "Successfully created ",
-          submitted: true
+          date_of_birth: this.state.dateOfBirth
         },
         {
           headers: {
@@ -52,45 +82,59 @@ class CreatePersonTable extends React.Component {
     });
   };
 
-  setAddress_id(event) {
+  setAddressId = event => {
+    console.log(event.target.value);
     this.setState({
       address_id: event.target.value
     });
-  }
+  };
 
-  setFirstName(event) {
+  setFirstName = event => {
     this.setState({
       firstName: event.target.value
     });
-  }
-  setLastName(event) {
+  };
+  setLastName = event => {
     this.setState({
       lastName: event.target.value
     });
-  }
-  setDateOfBirth(event) {
+  };
+  setDateOfBirth = event => {
     this.setState({
       dateOfBirth: event.target.value
     });
+  };
+
+  componentDidMount() {
+    this.fetchAddress();
   }
 
   render() {
     let title = "Create Person";
-
+    const { address } = this.state;
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "30rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm}>
             <Form.Group controlId="addPersonForm">
-              <Form.Label>Address ID</Form.Label>
-              <Form.Control
-                type="address_id"
-                placeholder="Address ID"
-                value={this.state.address_id}
-                onChange={this.setAddress_id.bind(this)}
-              />
+              <Form.Label>Address</Form.Label>
+              <Form.Control onChange={this.setAddressId} as="select">
+                {address.map(data => {
+                  return (
+                    <option key={data.key} value={data.key}>
+                      {data.address_name +
+                        ", " +
+                        data.postalcode +
+                        ", " +
+                        data.city +
+                        ", " +
+                        data.country}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="addPersonForm">

@@ -200,7 +200,7 @@ class UpdateLocationTable extends React.Component {
     } = this.state;
 
     return (
-      <Card bg="light" text="black" style={{ width: "22rem" }}>
+      <Card bg="light" text="black" style={{ width: "30rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
@@ -243,7 +243,13 @@ class UpdateLocationTable extends React.Component {
                 {address.map(data => {
                   return (
                     <option key={data.key} value={data.key}>
-                      {data.address_line}
+                      {data.address_line +
+                        ", " +
+                        data.postalCode +
+                        ", " +
+                        data.city +
+                        ", " +
+                        data.country}
                     </option>
                   );
                 })}
