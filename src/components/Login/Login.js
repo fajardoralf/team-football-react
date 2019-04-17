@@ -14,10 +14,13 @@ class Login extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   handleSubmit() {
     var _this = this;
+    _this.setState({
+      username: _this.state.username
+    })
     sessionStorage.setItem("username", _this.state.username);
     sessionStorage.setItem("password", _this.state.password);
     sessionStorage.setItem("role", _this.state.role); //admin, user, undefined == anonymous
@@ -41,35 +44,51 @@ class Login extends Component {
 
   render() {
     return (
-      <Form inline onSubmit={this.handleSubmit.bind(this)}>
-        <InputGroup>
-          <FormControl
-            type="username"
-            placeholder="Username"
-            className="mr-sm-2"
-            value={this.state.username}
-            onChange={this.handleChangeUsername.bind(this)}
-          />
-          <FormControl
-            type="text"
-            placeholder="Password"
-            className="mr-sm-2"
-            onChange={this.handleChangePassword.bind(this)}
-            onSubmit={this.handleSubmit.bind(this)}
-          />
+      <div>
+        {sessionStorage.getItem("username") === null ? (
+          <Form inline onSubmit={this.handleSubmit.bind(this)}>
+            <InputGroup>
+              <FormControl
+                type="username"
+                placeholder="Username"
+                className="mr-sm-2"
+                value={this.state.username}
+                onChange={this.handleChangeUsername.bind(this)}
+              />
+              <FormControl
+                type="password"
+                placeholder="Password"
+                className="mr-sm-2"
+                onChange={this.handleChangePassword.bind(this)}
+                onSubmit={this.handleSubmit.bind(this)}
+              />
+              <Button
+                type="submit"
+                variant="outline-light"
+                onClick={this.handleSubmit.bind(this)}
+                id="button"
+                ahref="/"
+              >
+                Login
+              </Button>
+              <Button variant="outline-light" id="button" href="/signup">
+                Sign Up
+          </Button>
+            </InputGroup>
+          </Form>
+        )
+          :
           <Button
+            className="text-nowrap"
             variant="outline-light"
-            onClick={this.handleSubmit.bind(this)}
+            onClick={this.handleLogout.bind(this)}
             id="button"
             ahref="/"
           >
-            Login
+            Log out
           </Button>
-          <Button variant="outline-light" id="button" ahref="/signup">
-            Sign Up
-          </Button>
-        </InputGroup>
-      </Form>
+        }
+      </div>
       /*
       <div id="form">
         <div className="navbar-collapse collapse w-100 order-3 dual-collapsed">

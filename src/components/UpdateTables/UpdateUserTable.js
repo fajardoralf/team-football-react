@@ -76,7 +76,7 @@ class UpdateUser extends React.Component {
         const title = "Update user info"
 
         const userids = this.state.users.map(u =>
-            <option>{u.user_id}</option>)
+            <option value={u.user_id}>{u.username}</option>)
 
         return (
             <Card bg="light" text="black">
@@ -84,7 +84,7 @@ class UpdateUser extends React.Component {
                     <h3 className="text-center">{title}</h3>
                     <form onSubmit={this.handleForm.bind(this)}>
                         <div className="form-group" controlId="updateUserForm">
-                            <label for="userID">User ID</label>
+                            <label for="userID">User</label>
                             <select
                                 id="userID"
                                 type="number"
@@ -96,7 +96,7 @@ class UpdateUser extends React.Component {
                             </select>
                         </div>
                         <div className="form-group" controlId="updateUserForm">
-                            <label for="new_username" >Username</label>
+                            <label for="new_username" >Change Username</label>
                             <input
                                 id="new_username"
                                 type="text"

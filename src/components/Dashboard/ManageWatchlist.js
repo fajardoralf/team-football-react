@@ -9,7 +9,7 @@ class ManageWatchlist extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            personId: '',
+            personId: 1,
             playerWatchList: [],
             teamWatchList: [],
             playerList: [],
@@ -50,6 +50,7 @@ class ManageWatchlist extends React.Component {
 
     handleFormPlayer(e) {
         // Submit to database
+        e.preventDefault()
         axios.post(URL + 'watchlistplayer', {
             person_id: this.state.personId,
             player_id: this.getPlayerId(this.state.playerInput)
@@ -106,7 +107,7 @@ class ManageWatchlist extends React.Component {
             })
             .map((d, index) =>
                 <li
-                    onClick={this.onClickPlayer.bind(this, ((d.person.length > 0 ? d.person[0].first_name : '') + ' ' + (d.person.length > 0 ? d.person[0].last_name : '')))}
+                    onClick={this.onClickPlayer.bind(this, (d.person.first_name + ' ' + d.person.last_name ))}
                     key={index}>
                     {d.person.first_name  + ' ' + d.person.last_name}
                 </li>);
