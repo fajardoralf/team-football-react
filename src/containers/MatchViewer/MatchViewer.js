@@ -104,8 +104,8 @@ class MatchViewer extends React.Component {
     const teams = teamList
       .filter(
         d =>
-          teamInput === "" ||
-          d.team_name.includes(teamInput)
+          teamInput.toLocaleLowerCase() === "" ||
+          d.team_name.toLocaleLowerCase().includes(teamInput.toLocaleLowerCase())
       )
       .map((d, index) => (
         <li onClick={this.setTeam.bind(this, d.team_name)} key={index}>
