@@ -5,8 +5,8 @@ import axios from "axios";
 const URL = "https://team-football-api.herokuapp.com/matchgoal/";
 
 const playerURL = "https://team-football-api.herokuapp.com/player/";
-
 const goalTypeURL = "https://team-football-api.herokuapp.com/goaltype/";
+const matchURL = "https://team-football-api.herokuapp.com/match/";
 
 class CreateMatchGoalTable extends React.Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class CreateMatchGoalTable extends React.Component {
     this.state = {
       player: [],
       goalType: [],
+      match: [],
       playerId: "",
       goalTypeId: "",
       matchId: "",
@@ -30,6 +31,7 @@ class CreateMatchGoalTable extends React.Component {
         }
       })
       .then(res => {
+        this.setState({ playerId: res.data[0].player_id });
         let data = res.data.map(data => {
           return {
             key: data.player_id,
@@ -50,7 +52,7 @@ class CreateMatchGoalTable extends React.Component {
         }
       })
       .then(res => {
-        console.log(res);
+        this.setState({ goalTypeId: res.data[0].goal_type_id });
         let data = res.data.map(data => {
           return {
             key: data.goal_type_id,
@@ -63,7 +65,32 @@ class CreateMatchGoalTable extends React.Component {
       });
   };
 
-  handleForm(event) {
+  fetchMatch = () => {
+    axios
+      .get(matchURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({ matchId: res.data[0].match_id });
+        let data = res.data.map(data => {
+          return {
+            key: data.match_id,
+            date: data.match_date,
+            home_team: data.home_team.team_name,
+            away_team: data.away_team.team_name
+          };
+        });
+        this.setState({ match: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  handleForm = event => {
     event.preventDefault();
 
     axios
@@ -96,7 +123,7 @@ class CreateMatchGoalTable extends React.Component {
       matchId: "",
       description: ""
     });
-  }
+  };
 
   setPlayerId = event => {
     this.setState({
@@ -125,11 +152,12 @@ class CreateMatchGoalTable extends React.Component {
   componentDidMount() {
     this.fetchPlayer();
     this.fetchGoalType();
+    this.fetchMatch();
   }
 
   render() {
     let title = "Create Match Goal";
-    const { player, goalType } = this.state;
+    const { player, goalType, match } = this.state;
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -168,13 +196,16 @@ class CreateMatchGoalTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="createMatchGoalForm">
-              <Form.Label>Match ID</Form.Label>
-              <Form.Control
-                type="matchId"
-                placeholder="Match ID"
-                value={this.state.matchId}
-                onChange={this.setMatchId.bind(this)}
-              />
+              <Form.Label>Match</Form.Label>
+              <Form.Control onChange={this.setMatchId} as="select">
+                {match.map(data => {
+                  return (
+                    <option key={data.key} value={data.key}>
+                      {data.date}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="createMatchGoalForm">
