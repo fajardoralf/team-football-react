@@ -180,24 +180,7 @@ class CreatePlayerTable extends React.Component {
                 })}
               </Form.Control>
             </Form.Group>
-            {/*<Form.Group controlId="updateAddressForm">
-              <Form.Label>Address</Form.Label>
-              <Form.Control onChange={this.handleAddressId} as="select">
-                {address.map(data => {
-                  return (
-                    <option
-                      key={data.key}
-                      value={data.value}
-                      postalcode={data.postalcode}
-                      city={data.city}
-                      country={data.country}
-                    >
-                      {data.text}
-                    </option>
-                  );
-                })}
-              </Form.Control>
-              </Form.Group>*/}
+            
             <Form.Group controlId="addPlayerForm">
               <Form.Label>Team ID</Form.Label>
               <Form.Control onChange={this.handleTeamId} as="select">
