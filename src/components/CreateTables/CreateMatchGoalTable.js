@@ -15,9 +15,13 @@ class CreateMatchGoalTable extends React.Component {
       player: [],
       goalType: [],
       match: [],
+      filtered_player: [],
+      player_team_id: "",
       playerId: "",
       goalTypeId: "",
       matchId: "",
+      home_team_id: 1,
+      away_team_id: 2,
       description: ""
     };
   }
@@ -36,7 +40,8 @@ class CreateMatchGoalTable extends React.Component {
           return {
             key: data.player_id,
             first_name: data.person.first_name,
-            last_name: data.person.last_name
+            last_name: data.person.last_name,
+            team_id: data.team_id
           };
         });
         this.setState({ player: data });
@@ -80,9 +85,12 @@ class CreateMatchGoalTable extends React.Component {
             key: data.match_id,
             date: data.match_date,
             home_team: data.home_team.team_name,
-            away_team: data.away_team.team_name
+            home_team_id: data.home_team.team_id,
+            away_team: data.away_team.team_name,
+            away_team_id: data.away_team.team_id
           };
         });
+
         this.setState({ match: data });
       })
       .catch(err => {
@@ -138,9 +146,18 @@ class CreateMatchGoalTable extends React.Component {
   };
 
   setMatchId = event => {
-    this.setState({
-      matchId: event.target.value
-    });
+    this.setState(
+      {
+        matchId: event.target.value,
+        home_team_id: event.target.selectedOptions[0].getAttribute(
+          "home_team_id"
+        ),
+        away_team_id: event.target.selectedOptions[0].getAttribute(
+          "away_team_id"
+        )
+      },
+      this.fetchPlayer()
+    );
   };
 
   setDescription = event => {
@@ -157,7 +174,15 @@ class CreateMatchGoalTable extends React.Component {
 
   render() {
     let title = "Create Match Goal";
-    const { player, goalType, match } = this.state;
+    const {
+      player,
+      filtered_player,
+      goalType,
+      match,
+      home_team_id,
+      away_team_id
+    } = this.state;
+
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -167,18 +192,24 @@ class CreateMatchGoalTable extends React.Component {
             <Form.Group controlId="createMatchGoalForm">
               <Form.Label>Player</Form.Label>
               <Form.Control onChange={this.setPlayerId} as="select">
-                {player.map(data => {
-                  return (
-                    <option
-                      key={data.key}
-                      value={data.key}
-                      first_name={data.first_name}
-                      last_name={data.last_name}
-                    >
-                      {data.first_name + " " + data.last_name}
-                    </option>
-                  );
-                })}
+                {player
+                  .filter(
+                    player =>
+                      player.team_id === home_team_id ||
+                      player.team_id === away_team_id
+                  )
+                  .map(data => {
+                    return (
+                      <option
+                        key={data.key}
+                        value={data.key}
+                        first_name={data.first_name}
+                        last_name={data.last_name}
+                      >
+                        {data.first_name + " " + data.last_name}
+                      </option>
+                    );
+                  })}
               </Form.Control>
             </Form.Group>
 
@@ -200,7 +231,12 @@ class CreateMatchGoalTable extends React.Component {
               <Form.Control onChange={this.setMatchId} as="select">
                 {match.map(data => {
                   return (
-                    <option key={data.key} value={data.key}>
+                    <option
+                      key={data.key}
+                      value={data.key}
+                      home_team_id={home_team_id}
+                      away_team_id={away_team_id}
+                    >
                       {data.date}
                     </option>
                   );
