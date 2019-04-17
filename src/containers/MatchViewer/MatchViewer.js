@@ -3,6 +3,8 @@ import "./MatchViewer.css";
 import ShowMatch from "../../components/Matches/ShowMatch";
 import BrowsePlayer from "../../components/AnonymousBrowse/BrowsePlayer";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const URL = "https://team-football-api.herokuapp.com/";
 
@@ -129,29 +131,33 @@ class MatchViewer extends React.Component {
       <div className="container" id="frontPage">
         <div className="row">
           <div className="col-lg-6">
-            <form onSubmit={this.handleFormTeam.bind(this)}>
-              <h2> MatchViewer </h2>
-              <input
+            <Form onSubmit={this.handleFormTeam.bind(this)}>
+              <h2> Match Viewer </h2>
+              <Form.Control
+                id="matchViewerField"
                 type="text"
                 placeholder="Team Name"
                 value={this.state.teamInput}
                 onChange={this.onChangeHandlerTeam.bind(this)}
               />
 
-              <input
+              <Button
+                className="bg-dark"
                 type="button"
                 value="Choose"
                 onClick={this.handleFormTeam.bind(this)}
-              />
+              >
+                Choose
+              </Button>
 
               <ul>{teams}</ul>
-            </form>
+            </Form>
             <h4>
-              {(this.state.team) ?
-                <div>Show matches for  {this.state.team}</div>
-                :
+              {this.state.team ? (
+                <div>Show matches for {this.state.team}</div>
+              ) : (
                 <div>Select a team to show matches for above</div>
-              }
+              )}
             </h4>
             <div className="row">{matches}</div>
           </div>
@@ -160,8 +166,6 @@ class MatchViewer extends React.Component {
             <BrowsePlayer />
           </div>
         </div>
-
-
       </div>
     );
   }
