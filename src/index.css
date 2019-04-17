@@ -46,6 +46,14 @@ text {
   margin-top: 3%;
 }
 
+#matchViewerField {
+  margin-bottom: 2%;
+}
+
+#matchViewerButton {
+  margin-bottom: 2%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

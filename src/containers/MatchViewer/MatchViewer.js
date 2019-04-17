@@ -142,6 +142,7 @@ class MatchViewer extends React.Component {
               />
 
               <Button
+                id="matchViewerButton"
                 className="bg-dark"
                 type="button"
                 value="Choose"
