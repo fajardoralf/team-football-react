@@ -38,7 +38,7 @@ import DeleteTeamTable from "../../components/DeleteTables/DeleteTeamTable";
 import DeleteUserTable from "../../components/DeleteTables/DeleteUsersTable";
 import UpdatePlayerTable from "../../components/UpdateTables/UpdatePlayerTable";
 import DeletePlayerTable from "../../components/DeleteTables/DeletePlayerTable";
-import UpdateUserTable from "../../components/UpdateTables/UpdateUserTable"
+import UpdateUserTable from "../../components/UpdateTables/UpdateUserTable";
 
 import Collapsible from "react-collapsible";
 
@@ -65,7 +65,7 @@ class Dashboard extends React.Component {
           <h1 className="text-center">Dashboard</h1>
           <div className="row">
             {sessionStorage.getItem("role") ? (
-              <div className="col-4">
+              <div className="col-sm-4">
                 <ul className="list-group text-center">
                   <Collapsible trigger="Create" id="button">
                     <div onClick={this.setStatus.bind(this, 1)}>
@@ -251,27 +251,25 @@ class Dashboard extends React.Component {
                 </ul>
               </div>
             ) : (
-                <ul className="list-group text-center">
-
-                  <div onClick={this.setStatus.bind(this, 15)}>
-                    <li className="list-group-item" id="button">
-                      Update Info
+              <ul className="list-group text-center">
+                <div onClick={this.setStatus.bind(this, 15)}>
+                  <li className="list-group-item" id="button">
+                    Update Info
                   </li>
-                  </div>
-                  <div onClick={this.setStatus.bind(this, 16)}>
-                    <li className="list-group-item" id="button">
-                      Manage Watchlist
+                </div>
+                <div onClick={this.setStatus.bind(this, 16)}>
+                  <li className="list-group-item" id="button">
+                    Manage Watchlist
                   </li>
-                  </div>
-                  <div onClick={this.setStatus.bind(this, 17)}>
-                    <li className="list-group-item" id="button">
-                      BONUS: Submit Correction
+                </div>
+                <div onClick={this.setStatus.bind(this, 17)}>
+                  <li className="list-group-item" id="button">
+                    BONUS: Submit Correction
                   </li>
-                  </div>
-
-                </ul>
-              )}
-            <div className="col-8">
+                </div>
+              </ul>
+            )}
+            <div className="col">
               {
                 {
                   0: <div />,
@@ -315,7 +313,6 @@ class Dashboard extends React.Component {
                   41: <UpdateUserTable />
                 }[this.state.status]
               }
-
             </div>
           </div>
         </div>
