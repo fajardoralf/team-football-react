@@ -6,6 +6,8 @@ const URL = "https://team-football-api.herokuapp.com/match/";
 
 const resultURL = "https://team-football-api.herokuapp.com/resultmatch/";
 
+const seasonURL = "https://team-football-api.herokuapp.com/season/";
+
 class DeleteMatchPositionTable extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,10 @@ class DeleteMatchPositionTable extends React.Component {
       match: [],
       matchPosition: "",
       id: 1,
-      season: "",
+      season: "1",
+      season_start: "",
+      season_end: "",
+      season_name: "",
       home_team: "",
       home_team_id: "",
       away_team: "",
@@ -46,6 +51,26 @@ class DeleteMatchPositionTable extends React.Component {
       },
       this.fetchMatchInfo
     );
+  };
+
+  fetchSeason = () => {
+    axios
+      .get(seasonURL + this.state.season, {
+        header: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({
+          season_start: res.data.start_date,
+          season_end: res.data.end_date,
+          season_name: res.data.name
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
   };
 
   fetchMatch = () => {
@@ -90,7 +115,8 @@ class DeleteMatchPositionTable extends React.Component {
             away_team_id: res.data.away_team.team_id,
             location: res.data.location.name
           },
-          this.fetchResult
+          this.fetchResult,
+          this.fetchSeason
         );
       });
   };
@@ -115,6 +141,7 @@ class DeleteMatchPositionTable extends React.Component {
     this.fetchMatch();
     this.fetchMatchInfo();
     this.fetchResult();
+    this.fetchSeason();
   }
 
   render() {
@@ -123,6 +150,9 @@ class DeleteMatchPositionTable extends React.Component {
       home_team,
       away_team,
       season,
+      season_start,
+      season_end,
+      season_name,
       location,
       score_home,
       score_away
@@ -145,7 +175,7 @@ class DeleteMatchPositionTable extends React.Component {
                 })}
               </Form.Control>
               <Form.Label>Season</Form.Label>
-              <h6>{season}</h6>
+              <h6>{season_name + " " + season_start + "/" + season_end}</h6>
               <Form.Label>Location</Form.Label>
               <h6>{location}</h6>
               <Form.Label>Match Between</Form.Label>
