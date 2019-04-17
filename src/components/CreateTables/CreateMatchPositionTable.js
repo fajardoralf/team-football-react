@@ -13,6 +13,12 @@ class CreateMatchPositionTable extends React.Component {
     this.state = {
       player: [],
       match: [],
+      positionName: [
+        { key: 1, value: "GoalKeeper" },
+        { key: 2, value: "Defender" },
+        { key: 3, value: "Midfielder" },
+        { key: 4, value: "Forward" }
+      ],
       player_id: "",
       match_id: "",
       position: "",
@@ -30,7 +36,7 @@ class CreateMatchPositionTable extends React.Component {
         }
       })
       .then(res => {
-        this.setState({ playerId: res.data[0].player_id });
+        this.setState({ player_id: res.data[0].player_id });
         let data = res.data.map(data => {
           return {
             key: data.player_id,
@@ -51,7 +57,7 @@ class CreateMatchPositionTable extends React.Component {
         }
       })
       .then(res => {
-        this.setState({ matchId: res.data[0].match_id });
+        this.setState({ match_id: res.data[0].match_id });
         let data = res.data.map(data => {
           return {
             key: data.match_id,
@@ -73,9 +79,7 @@ class CreateMatchPositionTable extends React.Component {
     axios.post(URL, {
       player_id: this.state.player_id,
       match_id: this.state.match_id,
-      position: this.state.position,
-      message: "Successfully created ",
-      submitted: true
+      position: this.state.position
     });
     this.setState({
       player_id: "",
@@ -84,32 +88,33 @@ class CreateMatchPositionTable extends React.Component {
     });
   }
 
-  setPlayer_id(event) {
+  setPlayer_id = event => {
     this.setState({
       player_id: event.target.value
     });
-  }
+  };
 
-  setMatch_id(event) {
+  setMatch_id = event => {
     this.setState({
       match_id: event.target.value
     });
-  }
+  };
 
-  setPosition(event) {
+  setPosition = event => {
     this.setState({
       position: event.target.value
     });
-  }
+  };
 
   componentDidMount() {
     this.fetchMatch();
     this.fetchPlayer();
+    this.setState({ position: this.state.positionName[0].value });
   }
 
   render() {
     let title = "Create Match-Position";
-    const { player, match } = this.state;
+    const { player, match, positionName } = this.state;
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -149,12 +154,15 @@ class CreateMatchPositionTable extends React.Component {
 
             <Form.Group controlId="createMatchPositionForm">
               <Form.Label>Position</Form.Label>
-              <Form.Control
-                type="position"
-                placeholder="Position"
-                value={this.state.position}
-                onChange={this.setPosition.bind(this)}
-              />
+              <Form.Control onChange={this.setPosition} as="select">
+                {positionName.map(data => {
+                  return (
+                    <option key={data.key} value={data.value}>
+                      {data.value}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
             <div
               style={{
