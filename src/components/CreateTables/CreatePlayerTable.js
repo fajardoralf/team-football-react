@@ -1,13 +1,18 @@
 import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
+import { Last } from "react-bootstrap/PageItem";
 
 const URL = "https://team-football-api.herokuapp.com/player";
+const personURL = "https://team-football-api.herokuapp.com/person"
+const teamURL = "https://team-football-api.herokuapp.com/team"
 
 class CreatePlayerTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      persons: [],
+      teams: [],
       person_id: "",
       team_id: "",
       normal_position: "",
@@ -74,8 +79,84 @@ class CreatePlayerTable extends React.Component {
     });
   }
 
+  fetchPerson = () => {
+    axios
+      .get(personURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        let data = res.data.map(data => {
+          this.setState({
+            first_name: res.data.first_name,
+            last_name: res.data.last_name,
+           
+          });
+          return {
+            key: data.person_id,
+            value: data.person_id,
+            text: data.first_name,
+            last_name: data.last_name,
+          };
+        });
+        this.setState({ persons: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  fetchTeam = () => {
+    axios
+      .get(teamURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        let data = res.data.map(data => {
+          this.setState({
+            team_name: res.data.team_name,
+          });
+          return {
+            key: data.team_id,
+            value: data.team_id,
+            text: data.team_name,
+          };
+        });
+        this.setState({ teams: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  handlePersonId = event => {
+    this.setState({
+      personID: event.target.value,
+
+    });
+  };
+
+  handleTeamId = event => {
+    this.setState({
+      teamID: event.target.value,
+
+    });
+  };
+
+  componentDidMount() {
+    this.fetchPerson();
+    this.fetchTeam();
+  }
+
   render() {
     let title = "Create Player";
+    const { persons } = this.state;
+    const { teams } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -85,22 +166,36 @@ class CreatePlayerTable extends React.Component {
           <Form onSubmit={this.handleForm}>
             <Form.Group controlId="addPlayerForm">
               <Form.Label>Person ID</Form.Label>
-              <Form.Control
-                type="person_id"
-                placeholder="Person ID"
-                value={this.state.person_id}
-                onChange={this.setPerson_id.bind(this)}
-              />
+              <Form.Control onChange={this.handlePersonId} as="select">
+              {persons.map(data => {
+                  return (
+                    <option
+                      key={data.key}
+                      value={data.value}
+                      last_name={data.last_name}
+                    >
+                      {data.text + " " + data.last_name}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
-
+            
             <Form.Group controlId="addPlayerForm">
               <Form.Label>Team ID</Form.Label>
-              <Form.Control
-                type="team_id"
-                placeholder="Team ID"
-                value={this.state.team_id}
-                onChange={this.setTeam_id.bind(this)}
-              />
+              <Form.Control onChange={this.handleTeamId} as="select">
+              {teams.map(data => {
+                  return (
+                    <option
+                      key={data.key}
+                      value={data.value}
+                      team_name={data.team_name}
+                    >
+                      {data.text}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="addPlayerForm">
