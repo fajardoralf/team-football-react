@@ -34,8 +34,8 @@ class CreateMatchTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           return {
-            home_team_id: data.team_id,
-            away_team_id: data.team_id
+            home_team: data.team_name,
+            away_team: data.team_name
           };
         });
         this.setState({ match: data });
@@ -56,7 +56,9 @@ class CreateMatchTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           return {
-            season_id: data.season_id
+            season_name: data.name,
+            season_start: data.start_date,
+            season_end: data.end_date,
           };
         });
         this.setState({ season: data });
@@ -77,7 +79,7 @@ class CreateMatchTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           return {
-            location_id: data.location_id
+            location_name: data.name
           };
         });
         this.setState({ location: data });
@@ -171,8 +173,9 @@ class CreateMatchTable extends React.Component {
               >
                 {this.state.match.map(data => {
                   return (
-                    <option key={data.home_team_id} value={data.home_team_id}>
-                      {data.home_team_id}
+                    <option key={data.home_team} 
+                    value={data.home_team}>
+                      {data.home_team}
                     </option>
                   );
                 })}
@@ -187,8 +190,9 @@ class CreateMatchTable extends React.Component {
               >
                 {this.state.match.map(data => {
                   return (
-                    <option key={data.away_team_id} value={data.away_team_id}>
-                      {data.away_team_id}
+                    <option key={data.away_team} 
+                    value={data.away_team}>
+                      {data.away_team}
                     </option>
                   );
                 })}
@@ -200,8 +204,12 @@ class CreateMatchTable extends React.Component {
               <Form.Control onChange={this.setSeason_id.bind(this)} as="select">
                 {this.state.season.map(data => {
                   return (
-                    <option key={data.season_id} value={data.season_id}>
-                      {data.season_id}
+                    <option 
+                    key={data.season_id} 
+                    value={data.season_id}
+
+                    >
+                      {data.season_name + ": " + data.season_start + "-" + data.season_end}
                     </option>
                   );
                 })}
@@ -216,8 +224,9 @@ class CreateMatchTable extends React.Component {
               >
                 {this.state.location.map(data => {
                   return (
-                    <option key={data.location_id} value={data.location_id}>
-                      {data.location_id}
+                    <option key={data.location_id} 
+                    value={data.location_name}>
+                      {data.location_name}
                     </option>
                   );
                 })}
