@@ -65,12 +65,6 @@ class MatchViewer extends React.Component {
     return -1;
   }
 
-  getTeamName(id) {
-    for (let team of this.state.teamList) {
-      if (team.team_id === id) return team.team_name;
-    }
-    return "Unknown";
-  }
 
   getResult(match) {
     let res = [0, 0];
@@ -99,11 +93,19 @@ class MatchViewer extends React.Component {
   }
 
   render() {
-    const teams = this.state.teamList
+    const {
+      teamList,
+      teamInput,
+      matches,
+      team_id,
+      team
+    } = this.state
+
+    const teams = teamList
       .filter(
         d =>
-          this.state.teamInput === "" ||
-          d.team_name.includes(this.state.teamInput)
+          teamInput === "" ||
+          d.team_name.includes(teamInput)
       )
       .map((d, index) => (
         <li onClick={this.setTeam.bind(this, d.team_name)} key={index}>
@@ -111,22 +113,21 @@ class MatchViewer extends React.Component {
         </li>
       ));
 
-    const matches = this.state.matches
+    const showMatches = matches
       .filter(
         d =>
-          d.home_team_id === this.state.team_id ||
-          d.away_team_id === this.state.team_id
+          d.home_team_id === team_id ||
+          d.away_team_id === team_id
       )
       .map(d => (
         <ShowMatch
           key={d.match_id}
-          homeTeam={this.getTeamName(d.home_team_id)}
-          awayTeam={this.getTeamName(d.away_team_id)}
+          homeTeam={d.home_team.team_name}
+          awayTeam={d.away_team.team_name}
           result={this.getResult(d)}
           role={sessionStorage.getItem("role")}
         />
       ));
-
     return (
       <div className="container" id="frontPage">
         <div className="row">
@@ -137,7 +138,7 @@ class MatchViewer extends React.Component {
                 id="matchViewerField"
                 type="text"
                 placeholder="Team Name"
-                value={this.state.teamInput}
+                value={teamInput}
                 onChange={this.onChangeHandlerTeam.bind(this)}
               />
 
@@ -153,13 +154,13 @@ class MatchViewer extends React.Component {
               <ul>{teams}</ul>
             </Form>
             <h4>
-              {this.state.team ? (
-                <div>Show matches for {this.state.team}</div>
+              {team ? (
+                <div>Show matches for {team}</div>
               ) : (
                 <div>Select a team to show matches for above</div>
               )}
             </h4>
-            <div className="row">{matches}</div>
+            <div className="row">{showMatches}</div>
           </div>
           <div className="col-lg-6">
             <h1>Players</h1>

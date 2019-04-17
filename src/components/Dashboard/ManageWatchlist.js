@@ -131,11 +131,21 @@ class ManageWatchlist extends React.Component {
     }
 
     render() {
+
+        const {personId,
+            playerInput,
+            teamInput,
+            playerList,
+            playerWatchList,
+            teamWatchList,
+            teamList
+         } = this.state
+         
         const title = "Manage Watchlist"
-        const players = this.state.playerList
+        const players = playerList
             .filter(d => {
 
-                return this.state.playerInput === '' || (d.person.first_name + ' ' + d.person.last_name).includes(this.state.playerInput)
+                return playerInput === '' || (d.person.first_name + ' ' + d.person.last_name).includes(playerInput)
             })
             .map((d, index) =>
                 <li
@@ -143,16 +153,16 @@ class ManageWatchlist extends React.Component {
                     key={index}>
                     {d.person.first_name + ' ' + d.person.last_name}
                 </li>);
-        const teams = this.state.teamList
-            .filter(d => this.state.teamInput === '' || d.team_name.includes(this.state.teamInput))
+        const teams = teamList
+            .filter(d => teamInput === '' || d.team_name.includes(teamInput))
             .map((d, index) => <li onClick={this.onClickTeam.bind(this, d.team_name)} key={index}>{d.team_name}</li>);
 
 
         const players10 = (players.length > 10) ? players.slice(0, 10) : players
         const teams10 = (teams.length > 10) ? teams.slice(0, 10) : teams
 
-        const playerWatch = this.state.playerWatchList
-            .filter(d => d.user_id === this.state.personId)
+        const playerWatch = playerWatchList
+            .filter(d => d.user_id === personId)
             .map(d => this.getPlayer(d.player_id))
             .map((d, index) =>
                 <li key={index}>
@@ -161,8 +171,8 @@ class ManageWatchlist extends React.Component {
                 </li>
             )
         
-        const teamWatch = this.state.teamWatchList
-            .filter(d => d.user_id = this.state.personId)
+        const teamWatch = teamWatchList
+            .filter(d => d.user_id = personId)
             .map(d => this.getTeam(d.team_id))
             .map((d, index) => 
                 <li key={index}>
@@ -184,7 +194,7 @@ class ManageWatchlist extends React.Component {
                                             <Form.Control
                                                 type="player"
                                                 placeholder="Player Name"
-                                                value={this.state.playerInput}
+                                                value={playerInput}
                                                 onChange={this.onChangeHandlerPlayer.bind(this)}
                                             />
                                         </Form.Group>
@@ -206,7 +216,7 @@ class ManageWatchlist extends React.Component {
                                             <Form.Control
                                                 type="team"
                                                 placeholder="Team Name"
-                                                value={this.state.teamInput}
+                                                value={teamInput}
                                                 onChange={this.onChangeHandlerTeam.bind(this)}
                                             />
                                         </Form.Group>

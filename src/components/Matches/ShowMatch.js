@@ -16,15 +16,20 @@ class ShowMatch extends React.Component {
     }
 
     render() {
-        let winner = (this.state.result[0] > this.state.result[1]) ? "home" : (this.state.result[0] === this.state.result[1] ? "tie" : "away")
+        const {result,
+            homeTeam,
+            awayTeam,
+            role
+        } = this.state
+        let winner = (result[0] > result[1]) ? homeTeam : (result[0] === result[1] ? "tie" : awayTeam)
 
         return (
             <Card className="match">
-                <div class="team">{this.state.homeTeam} - {this.state.awayTeam} </div>
-                {(this.state.role) ?
-                    <div class="result"> {this.state.result[0]} - {this.state.result[1]} </div>
+                <div class="team">{homeTeam} - {awayTeam} </div>
+                {(role) ?
+                    <div class="result"> {result[0]} - {result[1]} </div>
                     :
-                     (this.winner !== 'tie') ? <div>Winner: {winner} team! Log in to see score</div> 
+                     (this.winner !== 'tie') ? <div>Winner: {winner}! Log in to see score</div> 
                      :
                      <div>Tie! Log in to see the score</div> 
                 }
