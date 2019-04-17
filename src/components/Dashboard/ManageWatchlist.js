@@ -61,8 +61,8 @@ class ManageWatchlist extends React.Component {
         return -1
     }
 
-    getTeam(id){
-        for (let team of this.state.teamList){
+    getTeam(id) {
+        for (let team of this.state.teamList) {
             if (team.team_id === id) return team
         }
         return "Unknown Team"
@@ -132,15 +132,15 @@ class ManageWatchlist extends React.Component {
 
     render() {
 
-        const {personId,
+        const { personId,
             playerInput,
             teamInput,
             playerList,
             playerWatchList,
             teamWatchList,
             teamList
-         } = this.state
-         
+        } = this.state
+
         const title = "Manage Watchlist"
         const players = playerList
             .filter(d => {
@@ -170,11 +170,11 @@ class ManageWatchlist extends React.Component {
                     <Button variant="outline-danger">Remove</Button>
                 </li>
             )
-        
+
         const teamWatch = teamWatchList
             .filter(d => d.user_id = personId)
             .map(d => this.getTeam(d.team_id))
-            .map((d, index) => 
+            .map((d, index) =>
                 <li key={index}>
                     {d.team_name}
                     <Button variant="outline-danger">Remove</Button>
