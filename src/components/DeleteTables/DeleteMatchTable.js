@@ -149,7 +149,6 @@ class DeleteMatchPositionTable extends React.Component {
     const {
       home_team,
       away_team,
-      season,
       season_start,
       season_end,
       season_name,

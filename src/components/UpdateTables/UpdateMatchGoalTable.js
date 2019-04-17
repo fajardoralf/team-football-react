@@ -164,7 +164,6 @@ class UpdateMatchGoalTable extends React.Component {
         }
       })
       .then(res => {
-        console.log(res);
         let data = res.data.map(data => {
           return {
             key: data.goal_type_id,

@@ -20,8 +20,10 @@ class CreateMatchGoalTable extends React.Component {
       playerId: "",
       goalTypeId: "",
       matchId: "",
-      home_team_id: 1,
-      away_team_id: 2,
+      home_team: "",
+      home_team_id: 0,
+      away_team: "",
+      away_team_id: 0,
       description: ""
     };
   }
@@ -79,7 +81,13 @@ class CreateMatchGoalTable extends React.Component {
         }
       })
       .then(res => {
-        this.setState({ matchId: res.data[0].match_id });
+        this.setState({
+          matchId: res.data[0].match_id,
+          home_team_id: res.data[0].home_team.team_id,
+          away_team_id: res.data[0].away_team.team_id,
+          home_team: res.data[0].home_team.team_name,
+          away_team: res.data[0].away_team.team_name
+        });
         let data = res.data.map(data => {
           return {
             key: data.match_id,
@@ -108,9 +116,7 @@ class CreateMatchGoalTable extends React.Component {
           player_id: this.state.playerId,
           goal_type_id: this.state.goalTypeId,
           match_id: this.state.matchId,
-          description: this.state.description,
-          message: "Successfully created ",
-          submitted: true
+          description: this.state.description
         },
         {
           headers: {
@@ -146,18 +152,17 @@ class CreateMatchGoalTable extends React.Component {
   };
 
   setMatchId = event => {
-    this.setState(
-      {
-        matchId: event.target.value,
-        home_team_id: event.target.selectedOptions[0].getAttribute(
-          "home_team_id"
-        ),
-        away_team_id: event.target.selectedOptions[0].getAttribute(
-          "away_team_id"
-        )
-      },
-      this.fetchPlayer()
-    );
+    this.setState({
+      matchId: event.target.value,
+      home_team_id: +event.target.selectedOptions[0].getAttribute(
+        "home_team_id"
+      ),
+      away_team_id: +event.target.selectedOptions[0].getAttribute(
+        "away_team_id"
+      ),
+      home_team: event.target.selectedOptions[0].getAttribute("home_team"),
+      away_team: event.target.selectedOptions[0].getAttribute("away_team")
+    });
   };
 
   setDescription = event => {
@@ -176,15 +181,16 @@ class CreateMatchGoalTable extends React.Component {
     let title = "Create Match Goal";
     const {
       player,
-      filtered_player,
       goalType,
       match,
+      home_team,
       home_team_id,
+      away_team,
       away_team_id
     } = this.state;
 
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "28rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
@@ -234,14 +240,17 @@ class CreateMatchGoalTable extends React.Component {
                     <option
                       key={data.key}
                       value={data.key}
-                      home_team_id={home_team_id}
-                      away_team_id={away_team_id}
+                      home_team={data.home_team}
+                      away_team={data.away_team}
+                      home_team_id={data.home_team_id}
+                      away_team_id={data.away_team_id}
                     >
-                      {data.date}
+                      {data.date + " " + data.home_team_id + data.away_team_id}
                     </option>
                   );
                 })}
               </Form.Control>
+              {home_team + " vs " + away_team}
             </Form.Group>
 
             <Form.Group controlId="createMatchGoalForm">

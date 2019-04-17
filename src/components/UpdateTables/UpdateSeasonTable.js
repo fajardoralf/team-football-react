@@ -22,28 +22,28 @@ class UpdateSeasonTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL + this.state.seasonId, {
-        seasons_id: this.state.seasonId,
-        start_date: this.state.startDate,
-        end_date: this.state.endDate,
-        name: this.state.name,
-        description: this.state.description,
-        message: "Successfully Updated",
-        submitted: true
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+      .post(
+        URL + this.state.seasonId,
+        {
+          seasons_id: this.state.seasonId,
+          start_date: this.state.startDate,
+          end_date: this.state.endDate,
+          name: this.state.name,
+          description: this.state.description
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
         }
-      }
-    )
-    .then(res => {
-      console.log("response: ", res);
-    })
-    .catch(err => {
-      console.log("Axios error: ", err);
-    });
+      )
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
     this.setState({
       seasonId: "",
       startDate: "",
@@ -54,13 +54,13 @@ class UpdateSeasonTable extends React.Component {
   }
 
   setSeasonId(event) {
-    this.setState({ 
+    this.setState({
       seasonId: event.target.value
     });
   }
 
   setStartDate(event) {
-    this.setState({ 
+    this.setState({
       startDate: event.target.value
     });
   }
@@ -78,13 +78,13 @@ class UpdateSeasonTable extends React.Component {
   }
 
   setDescription(event) {
-    this.setState({ 
+    this.setState({
       description: event.target.value
     });
   }
 
   render() {
-    let title = "Update Season"
+    let title = "Update Season";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -92,7 +92,6 @@ class UpdateSeasonTable extends React.Component {
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
             <Form.Group controlId="updateSeasonForm">
               <Form.Label>Season ID</Form.Label>
               <Form.Control

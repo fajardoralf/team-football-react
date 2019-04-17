@@ -5,8 +5,7 @@ import axios from "axios";
 const URL = "https://team-football-api.herokuapp.com/matchposition/";
 const matchURL = "https://team-football-api.herokuapp.com/match/";
 const playerURL = "https://team-football-api.herokuapp.com/player/";
-const matchpositionURL =
-  "https://team-football-api.herokuapp.com/matchposition/";
+
 class CreateMatchPositionTable extends React.Component {
   constructor(props) {
     super(props);
@@ -57,6 +56,7 @@ class CreateMatchPositionTable extends React.Component {
         }
       })
       .then(res => {
+        console.log(res.data[0].match_id);
         this.setState({ match_id: res.data[0].match_id });
         let data = res.data.map(data => {
           return {
@@ -73,34 +73,38 @@ class CreateMatchPositionTable extends React.Component {
       });
   };
 
-  handleForm(event) {
+  handleForm = event => {
     event.preventDefault();
-
-    axios.post(URL, {
-      player_id: this.state.player_id,
-      match_id: this.state.match_id,
-      position: this.state.position
-    });
-    this.setState({
-      player_id: "",
-      match_id: "",
-      position: ""
-    });
-  }
+    axios
+      .post(URL, {
+        player_id: this.state.player_id,
+        match_id: this.state.match_id,
+        position: this.state.position
+      })
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
 
   setPlayer_id = event => {
+    console.log(event.target.value);
     this.setState({
       player_id: event.target.value
     });
   };
 
   setMatch_id = event => {
+    console.log(event.target.value);
     this.setState({
       match_id: event.target.value
     });
   };
 
   setPosition = event => {
+    console.log(event.target.value);
     this.setState({
       position: event.target.value
     });
@@ -120,10 +124,10 @@ class CreateMatchPositionTable extends React.Component {
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
-          <Form onSubmit={this.handleForm.bind(this)}>
+          <Form onSubmit={this.handleForm}>
             <Form.Group controlId="createMatchPositionForm">
               <Form.Label>Player</Form.Label>
-              <Form.Control onChange={this.setPlayerId} as="select">
+              <Form.Control onChange={this.setPlayer_id} as="select">
                 {player.map(data => {
                   return (
                     <option
@@ -141,7 +145,7 @@ class CreateMatchPositionTable extends React.Component {
 
             <Form.Group controlId="createMatchPositionForm">
               <Form.Label>Match</Form.Label>
-              <Form.Control onChange={this.setMatchId} as="select">
+              <Form.Control onChange={this.setMatch_id} as="select">
                 {match.map(data => {
                   return (
                     <option key={data.key} value={data.key}>

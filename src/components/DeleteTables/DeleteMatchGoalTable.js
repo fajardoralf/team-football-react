@@ -135,8 +135,8 @@ class DeleteMatchGoal extends React.Component {
       })
       .then(res => {
         this.setState({
-          score_home: res.data[0].score,
-          score_away: res.data[1].score
+          score_home: res.data[0].score && res.data[0].score,
+          score_away: res.data[1].score && res.data[1].score
         });
       })
       .catch(err => {
