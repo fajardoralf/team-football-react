@@ -3,11 +3,13 @@ import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/result/";
+const teamURL = "https://team-football-api.herokuapp.com/team"
 
 class CreateResultTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      teams: [],
       team_id: "",
       score: "",
       result: "",
@@ -52,8 +54,46 @@ class CreateResultTable extends React.Component {
       })
   }
 
+  fetchTeam = () => {
+    axios
+      .get(teamURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        let data = res.data.map(data => {
+          this.setState({
+            team_name: res.data.team_name,
+          });
+          return {
+            key: data.team_id,
+            value: data.team_id,
+            text: data.team_name,
+          };
+        });
+        this.setState({ teams: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  handleTeamId = event => {
+    this.setState({
+      teamID: event.target.value,
+
+    });
+  };
+
+  componentDidMount() {
+    this.fetchTeam();
+  }
+
   render() {
     let title = "Create Result"
+    const { teams } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -64,12 +104,19 @@ class CreateResultTable extends React.Component {
 
             <Form.Group controlId="createResultForm">
               <Form.Label>Team ID</Form.Label>
-              <Form.Control
-                type="team_id"
-                placeholder="Team ID"
-                value={this.state.team_id}
-                onChange={this.setTeam_id.bind(this)}
-              />
+              <Form.Control onChange={this.handleTeamId} as="select">
+              {teams.map(data => {
+                  return (
+                    <option
+                      key={data.key}
+                      value={data.value}
+                      team_name={data.team_name}
+                    >
+                      {data.text}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="createResultForm">
