@@ -8,11 +8,16 @@ class UpdateAddressTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addressId: "",
+      address: [],
+      addressId: 1,
       addressLine1: "",
-      postalCode: "",
+      new_address: "",
+      postalcode: "",
+      new_postalCode: "",
       city: "",
+      new_city: "",
       country: "",
+      new_country: "",
       message: "",
       submitted: false
     };
@@ -22,70 +27,113 @@ class UpdateAddressTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL + this.state.addressId, {
-        address_id: this.state.addressId,
-        address_line_1: this.state.addressLine1,
-        postal_code: this.state.postalCode,
-        city: this.state.postalCode,
-        country: this.state.country,
-        message: "Successfully Updated",
-        submitted: true
-      },
-      {
+      .put(
+        URL + this.state.addressId,
+        {
+          address_id: this.state.addressId,
+          address_line_1:
+            this.state.new_address !== ""
+              ? this.state.new_address
+              : this.state.addressLine1,
+          postal_code:
+            this.state.new_postalCode !== ""
+              ? this.state.new_postalCode
+              : this.state.postalcode,
+          city:
+            this.state.new_city !== "" ? this.state.new_city : this.state.city,
+          country:
+            this.state.new_country !== ""
+              ? this.state.new_country
+              : this.state.country
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
+        }
+      )
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  }
+
+  fetchAddress = () => {
+    axios
+      .get(URL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*"
         }
-      }
-    )
-    .then(res => {
-      console.log("response: ", res);
-    })
-    .catch(err => {
-      console.log("Axios error: ", err);
-    });
-    this.setState({
-        addressId: "",
-        addressLine1: "",
-        postalCode: "",
-        city: "",
-        country: ""
-    });
-  }
-
-  handleAddressId(event) {
-      this.setState({
-          addressId: event.target.value
       })
-  }
+      .then(res => {
+        let data = res.data.map(data => {
+          this.setState({
+            addressLine1: res.data[0].address_line_1,
+            postalcode: res.data[0].postal_code,
+            city: res.data[0].city,
+            country: res.data[0].country
+          });
+          return {
+            key: data.address_id,
+            value: data.address_id,
+            text: data.address_line_1,
+            postalcode: data.postal_code,
+            city: data.city,
+            country: data.country
+          };
+        });
+        this.setState({ address: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
 
-  setAddressLine1(event) {
-    this.setState({ 
-      addressLine1: event.target.value
+  handleAddressId = event => {
+    this.setState({
+      addressId: event.target.value,
+      addressLine1: event.target.selectedOptions[0].text,
+      postalcode: event.target.selectedOptions[0].getAttribute("postalCode"),
+      city: event.target.selectedOptions[0].getAttribute("city"),
+      country: event.target.selectedOptions[0].getAttribute("country")
     });
-  }
+  };
 
-  setPostalCode(event) {
-    this.setState({ 
-      postalCode: event.target.value
+  setAddressLine1 = event => {
+    this.setState({
+      new_address: event.target.value
     });
-  }
+  };
 
-  setCity(event) {
-    this.setState({ 
-      city: event.target.value
+  setPostalCode = event => {
+    this.setState({
+      new_postalCode: event.target.value
     });
-  }
+  };
 
-  setCountry(event) {
-    this.setState({ 
-      country: event.target.value
+  setCity = event => {
+    this.setState({
+      new_city: event.target.value
     });
+  };
+
+  setCountry = event => {
+    this.setState({
+      new_country: event.target.value
+    });
+  };
+
+  componentDidMount() {
+    this.fetchAddress();
   }
 
   render() {
     const title = "Update Address";
-
+    const { address } = this.state;
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -93,22 +141,31 @@ class UpdateAddressTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
             <Form.Group controlId="updateAddressForm">
-              <Form.Label>Where Address ID is:</Form.Label>
-              <Form.Control
-                type="addressId"
-                placeholder="Address ID"
-                value={this.state.addressId}
-                onChange={this.handleAddressId.bind(this)}
-              />
+              <Form.Label>Address</Form.Label>
+              <Form.Control onChange={this.handleAddressId} as="select">
+                {address.map(data => {
+                  return (
+                    <option
+                      key={data.key}
+                      value={data.value}
+                      postalcode={data.postalcode}
+                      city={data.city}
+                      country={data.country}
+                    >
+                      {data.text}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="updateAddressForm">
               <Form.Label>Address Line 1</Form.Label>
               <Form.Control
                 type="addressLine1"
-                placeholder="Address Line 1"
-                value={this.state.addressLine1}
-                onChange={this.setAddressLine1.bind(this)}
+                placeholder={this.state.addressLine1}
+                value={this.state.new_address}
+                onChange={this.setAddressLine1}
               />
             </Form.Group>
 
@@ -116,9 +173,9 @@ class UpdateAddressTable extends React.Component {
               <Form.Label>Postal Code</Form.Label>
               <Form.Control
                 type="postalCode"
-                placeholder="Postal Code"
-                value={this.state.postalCode}
-                onChange={this.setPostalCode.bind(this)}
+                placeholder={this.state.postalcode}
+                value={this.state.new_postalCode}
+                onChange={this.setPostalCode}
               />
             </Form.Group>
 
@@ -126,9 +183,9 @@ class UpdateAddressTable extends React.Component {
               <Form.Label>City</Form.Label>
               <Form.Control
                 type="city"
-                placeholder="City"
-                value={this.state.city}
-                onChange={this.setCity.bind(this)}
+                placeholder={this.state.city}
+                value={this.state.new_city}
+                onChange={this.setCity}
               />
             </Form.Group>
 
@@ -136,9 +193,9 @@ class UpdateAddressTable extends React.Component {
               <Form.Label>Country</Form.Label>
               <Form.Control
                 type="country"
-                placeholder="Country"
-                value={this.state.country}
-                onChange={this.setCountry.bind(this)}
+                placeholder={this.state.country}
+                value={this.state.new_country}
+                onChange={this.setCountry}
               />
             </Form.Group>
             <div

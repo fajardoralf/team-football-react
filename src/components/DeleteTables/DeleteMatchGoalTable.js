@@ -5,6 +5,7 @@ import axios from "axios";
 const URL = "https://team-football-api.herokuapp.com/matchgoal/";
 const playerURL = "https://team-football-api.herokuapp.com/player/";
 const matchURL = "https://team-football-api.herokuapp.com/match/";
+const resultURL = "https://team-football-api.herokuapp.com/resultmatch/";
 
 class DeleteMatchGoal extends React.Component {
   constructor(props) {
@@ -13,7 +14,9 @@ class DeleteMatchGoal extends React.Component {
       matchGoals: [],
       player: [],
       home_team: "",
+      score_home: "",
       away_team: "",
+      score_away: "",
       team: "",
       date: "",
       matchGoal: "",
@@ -54,6 +57,7 @@ class DeleteMatchGoal extends React.Component {
         this.fetchMatchGoal();
         this.fetchPlayer();
         this.fetchMatch();
+        this.fetchResult();
       }
     );
   };
@@ -109,6 +113,7 @@ class DeleteMatchGoal extends React.Component {
       .then(res => {
         console.log(res);
         this.setState({
+          match_id: res.data.match_id,
           home_team: res.data.home_team.team_name,
           away_team: res.data.away_team.team_name,
           location: res.data.location.name,
@@ -120,17 +125,43 @@ class DeleteMatchGoal extends React.Component {
       });
   }
 
+  fetchResult = () => {
+    axios
+      .get(resultURL + this.state.match_id, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({
+          score_home: res.data[0].score,
+          score_away: res.data[1].score
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
   componentDidMount() {
     this.fetchMatchGoal();
     this.fetchPlayer();
     this.fetchMatch();
+    this.fetchResult();
   }
 
   render() {
     let title = "Delete Match Goal";
     const { data } = this.state.player;
 
-    const { home_team, away_team, location } = this.state;
+    const {
+      home_team,
+      away_team,
+      location,
+      score_home,
+      score_away
+    } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -169,7 +200,15 @@ class DeleteMatchGoal extends React.Component {
               <Form.Label>Location</Form.Label>
               <h6>{location}</h6>
               <Form.Label>Match Between</Form.Label>
-              <h6>{home_team + " vs " + away_team}</h6>
+              <h6>
+                {home_team +
+                  " " +
+                  score_home +
+                  " vs " +
+                  score_away +
+                  " " +
+                  away_team}
+              </h6>
             </FormGroup>
 
             <div
