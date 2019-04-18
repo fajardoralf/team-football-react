@@ -5,7 +5,6 @@ import axios from "axios";
 const URL = "https://team-football-api.herokuapp.com/location/";
 
 const addressURL = "https://team-football-api.herokuapp.com/address/";
-
 class UpdateLocationTable extends React.Component {
   constructor(props) {
     super(props);
@@ -211,8 +210,8 @@ class UpdateLocationTable extends React.Component {
                 {location.map(data => {
                   return (
                     <option
-                      key={data.locationId}
-                      value={data.locationId}
+                      key={data.key}
+                      value={data.key}
                       name={data.name}
                       description={data.description}
                       addressid={data.addressid}

@@ -166,7 +166,6 @@ class UpdateMatchGoalTable extends React.Component {
       });
   };
 
-  //fetchGoalType = () => {}
   fetchGoalType = () => {
     axios
       .get(goalTypeURL, {
@@ -187,7 +186,7 @@ class UpdateMatchGoalTable extends React.Component {
         });
       });
   };
-  //fetchPlayer = () => {}
+
   fetchPlayer = () => {
     axios
       .get(playerURL, {
@@ -202,7 +201,8 @@ class UpdateMatchGoalTable extends React.Component {
             key: data.player_id,
             first_name: data.person.first_name,
             last_name: data.person.last_name,
-            team_id: data.team_id
+            team_id: data.team_id,
+            team_name: data.team.team_name
           };
         });
         this.setState({ player: data });
@@ -228,8 +228,6 @@ class UpdateMatchGoalTable extends React.Component {
       home_team_id,
       away_team_id
     } = this.state;
-
-    console.log(match);
 
     return (
       <Card bg="light" text="black" style={{ width: "30rem" }}>
@@ -283,7 +281,12 @@ class UpdateMatchGoalTable extends React.Component {
                         first_name={data.first_name}
                         last_name={data.last_name}
                       >
-                        {data.first_name + " " + data.last_name}
+                        {data.first_name +
+                          " " +
+                          data.last_name +
+                          " (" +
+                          data.team_name +
+                          ") "}
                       </option>
                     );
                   })}

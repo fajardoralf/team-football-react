@@ -43,6 +43,7 @@ class DeleteMatchGoal extends React.Component {
           this.fetchMatch();
         }
       );
+      console.log(res);
     });
   };
 
@@ -73,7 +74,7 @@ class DeleteMatchGoal extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           return {
-            key: data.goal_type_id,
+            key: data.goal_id,
             value: data.player_id,
             match_id: data.match_id,
             text: data.description
@@ -111,7 +112,6 @@ class DeleteMatchGoal extends React.Component {
         }
       })
       .then(res => {
-        console.log(res);
         this.setState({
           match_id: res.data.match_id,
           home_team: res.data.home_team.team_name,

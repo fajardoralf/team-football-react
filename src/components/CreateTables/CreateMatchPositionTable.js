@@ -20,6 +20,10 @@ class CreateMatchPositionTable extends React.Component {
       ],
       player_id: "",
       match_id: "",
+      home_team: "",
+      home_team_id: "",
+      away_team: "",
+      away_team_id: "",
       position: "",
       message: "",
       submitted: false
@@ -40,7 +44,9 @@ class CreateMatchPositionTable extends React.Component {
           return {
             key: data.player_id,
             first_name: data.person.first_name,
-            last_name: data.person.last_name
+            last_name: data.person.last_name,
+            team_id: data.team.team_id,
+            team_name: data.team.team_name
           };
         });
         this.setState({ player: data });
@@ -57,13 +63,22 @@ class CreateMatchPositionTable extends React.Component {
       })
       .then(res => {
         console.log(res.data[0].match_id);
-        this.setState({ match_id: res.data[0].match_id });
+        this.setState({
+          position: this.state.positionName[0].value,
+          match_id: res.data[0].match_id,
+          home_team: res.data[0].home_team.team_name,
+          home_team_id: res.data[0].home_team.team_id,
+          away_team: res.data[0].away_team.team_name,
+          away_team_id: res.data[0].away_team.team_id
+        });
         let data = res.data.map(data => {
           return {
             key: data.match_id,
             date: data.match_date,
             home_team: data.home_team.team_name,
-            away_team: data.away_team.team_name
+            home_team_id: data.home_team.team_id,
+            away_team: data.away_team.team_name,
+            away_team_id: data.away_team.team_id
           };
         });
         this.setState({ match: data });
@@ -97,14 +112,20 @@ class CreateMatchPositionTable extends React.Component {
   };
 
   setMatch_id = event => {
-    console.log(event.target.value);
     this.setState({
-      match_id: event.target.value
+      match_id: event.target.value,
+      home_team: event.target.selectedOptions[0].getAttribute("home_team"),
+      home_team_id: +event.target.selectedOptions[0].getAttribute(
+        "home_team_id"
+      ),
+      away_team: event.target.selectedOptions[0].getAttribute("away_team"),
+      away_team_id: +event.target.selectedOptions[0].getAttribute(
+        "away_team_id"
+      )
     });
   };
 
   setPosition = event => {
-    console.log(event.target.value);
     this.setState({
       position: event.target.value
     });
@@ -113,14 +134,22 @@ class CreateMatchPositionTable extends React.Component {
   componentDidMount() {
     this.fetchMatch();
     this.fetchPlayer();
-    this.setState({ position: this.state.positionName[0].value });
   }
 
   render() {
     let title = "Create Match-Position";
-    const { player, match, positionName } = this.state;
+    const {
+      player,
+      match,
+      positionName,
+      home_team,
+      home_team_id,
+      away_team,
+      away_team_id
+    } = this.state;
+
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "30rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
@@ -128,18 +157,30 @@ class CreateMatchPositionTable extends React.Component {
             <Form.Group controlId="createMatchPositionForm">
               <Form.Label>Player</Form.Label>
               <Form.Control onChange={this.setPlayer_id} as="select">
-                {player.map(data => {
-                  return (
-                    <option
-                      key={data.key}
-                      value={data.key}
-                      first_name={data.first_name}
-                      last_name={data.last_name}
-                    >
-                      {data.first_name + " " + data.last_name}
-                    </option>
-                  );
-                })}
+                {player
+                  .filter(
+                    player =>
+                      player.team_id === home_team_id ||
+                      player.team_id === away_team_id
+                  )
+
+                  .map(data => {
+                    return (
+                      <option
+                        key={data.key}
+                        value={data.key}
+                        first_name={data.first_name}
+                        last_name={data.last_name}
+                      >
+                        {data.first_name +
+                          " " +
+                          data.last_name +
+                          " (" +
+                          data.team_name +
+                          ") "}
+                      </option>
+                    );
+                  })}
               </Form.Control>
             </Form.Group>
 
@@ -148,12 +189,21 @@ class CreateMatchPositionTable extends React.Component {
               <Form.Control onChange={this.setMatch_id} as="select">
                 {match.map(data => {
                   return (
-                    <option key={data.key} value={data.key}>
+                    <option
+                      key={data.key}
+                      value={data.key}
+                      home_team={data.home_team}
+                      home_team_id={data.home_team_id}
+                      away_team={data.away_team}
+                      away_team_id={data.away_team_id}
+                    >
                       {data.date}
                     </option>
                   );
                 })}
               </Form.Control>
+
+              {home_team + " vs " + away_team}
             </Form.Group>
 
             <Form.Group controlId="createMatchPositionForm">
