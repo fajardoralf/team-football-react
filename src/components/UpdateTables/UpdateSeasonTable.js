@@ -99,10 +99,14 @@ class UpdateSeasonTable extends React.Component {
   setSeasonId = event => {
     this.setState({
       seasonId: event.target.value,
-      startDate: event.target.selectedOptions[0].getAttribute("start_date"),
-      endDate: event.target.selectedOptions[0].getAttribute("end_date"),
-      description: event.target.selectedOptions[0].getAttribute("description"),
-      name: event.target.selectedOptions[0].getAttribute("name")
+      current_startDate: event.target.selectedOptions[0].getAttribute(
+        "start_date"
+      ),
+      current_endDate: event.target.selectedOptions[0].getAttribute("end_date"),
+      current_description: event.target.selectedOptions[0].getAttribute(
+        "description"
+      ),
+      current_name: event.target.selectedOptions[0].getAttribute("name")
     });
   };
 

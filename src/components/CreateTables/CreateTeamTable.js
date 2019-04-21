@@ -22,40 +22,22 @@ class CreateTeamTable extends React.Component {
     };
   }
 
-  handleForm(event) {
+  handleForm = event => {
     event.preventDefault();
 
-    axios
-      .post(URL, {
-        team_name: this.state.team_name,
-        coach_id: this.state.coach_id,
-        owner_id: this.state.owner_id,
-        location_id: this.state.location_id,
-        message: "Successfully created "
-      })
+    axios.post(URL, {
+      team_name: this.state.team_name,
+      coach_id: this.state.coach_id,
+      owner_id: this.state.owner_id,
+      location_id: this.state.location_id
+    });
     this.setState({
       team_name: "",
       coach_id: "",
       owner_id: "",
       location_id: ""
     });
-  }
-
-  setCoach_id(event) {
-    this.setState({
-      coach_id: event.target.value
-    });
-  }
-  setOwner_id(event) {
-    this.setState({
-      owner_id: event.target.value
-    });
-  }
-  setLocation_id(event) {
-    this.setState({ 
-      location_id: event.target.value
-    });
-  }
+  };
 
   fetchCoach = () => {
     axios
@@ -69,13 +51,13 @@ class CreateTeamTable extends React.Component {
         let data = res.data.map(data => {
           this.setState({
             first_name: res.data.person && res.data.person.first_name,
-            last_name: res.data.person && res.data.person.last_name,
+            last_name: res.data.person && res.data.person.last_name
           });
           return {
             key: data.coach_id,
             value: data.coach_id,
             text: data.person.first_name,
-            last_name: data.person.last_name,
+            last_name: data.person.last_name
           };
         });
         this.setState({ coaches: data });
@@ -97,16 +79,16 @@ class CreateTeamTable extends React.Component {
         let data = res.data.map(data => {
           this.setState({
             first_name: res.data.person && res.data.person.first_name,
-            last_name: res.data.person && res.data.person.last_name,
+            last_name: res.data.person && res.data.person.last_name
           });
           return {
             key: data.owner_id,
             value: data.owner_id,
             text: data.person.first_name,
-            last_name: data.person.last_name,
+            last_name: data.person.last_name
           };
         });
-        this.setState({ owners  : data });
+        this.setState({ owners: data });
       })
       .catch(err => {
         console.log("Axios error: ", err);
@@ -124,12 +106,12 @@ class CreateTeamTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           this.setState({
-            name: res.data.name,
+            name: res.data.name
           });
           return {
             key: data.location_id,
             value: data.location_id,
-            text: data.name,
+            text: data.name
           };
         });
         this.setState({ locations: data });
@@ -144,59 +126,54 @@ class CreateTeamTable extends React.Component {
     this.fetchOwner();
     this.fetchLocation();
   }
-  
+
   handleCoachId = event => {
     this.setState({
-      coachID: event.target.value,
-
+      coach_id: event.target.value
     });
   };
 
   handleOwnerId = event => {
     this.setState({
-      coachID: event.target.value,
-
+      owner_id: event.target.value
     });
   };
 
   handleLocationId = event => {
     this.setState({
-      coachID: event.target.value,
-
+      location_id: event.target.value
     });
   };
   setTeamName = event => {
     this.setState({
-      teamName: event.target.value
+      team_name: event.target.value
     });
   };
 
   render() {
-    let title = "Create Team"
-    const { coaches } = this.state;
-    const { owners } = this.state;
-    const { locations } = this.state;
+    let title = "Create Team";
+    const { coaches, owners, locations } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
-          <Form onSubmit={this.handleForm.bind(this)}>
-          <Form.Group controlId="addPersonForm">
+          <Form onSubmit={this.handleForm}>
+            <Form.Group controlId="addPersonForm">
               <Form.Label>Team Name</Form.Label>
               <Form.Control
                 type="teamName"
                 placeholder="Team Name"
                 value={this.state.team_name}
-                onChange={this.setTeamName.bind(this)}
+                onChange={this.setTeamName}
               />
             </Form.Group>
 
             <Form.Group controlId="createTeamForm">
               <Form.Label>Coach ID</Form.Label>
               <Form.Control onChange={this.handleCoachId} as="select">
-              {coaches.map(data => {
+                {coaches.map(data => {
                   return (
                     <option
                       key={data.key}
@@ -213,7 +190,7 @@ class CreateTeamTable extends React.Component {
             <Form.Group controlId="createTeamForm">
               <Form.Label>Owner ID</Form.Label>
               <Form.Control onChange={this.handleOwnerId} as="select">
-              {owners.map(data => {
+                {owners.map(data => {
                   return (
                     <option
                       key={data.key}
@@ -230,12 +207,9 @@ class CreateTeamTable extends React.Component {
             <Form.Group controlId="createTeamForm">
               <Form.Label>Location ID</Form.Label>
               <Form.Control onChange={this.handleLocationId} as="select">
-              {locations.map(data => {
+                {locations.map(data => {
                   return (
-                    <option
-                      key={data.key}
-                      value={data.value}
-                    >
+                    <option key={data.key} value={data.value}>
                       {data.text}
                     </option>
                   );
@@ -253,9 +227,7 @@ class CreateTeamTable extends React.Component {
                 Create
               </Button>
 
-              <div className="text-center">
-                {this.state.message}
-              </div>
+              <div className="text-center">{this.state.message}</div>
             </div>
           </Form>
         </Card.Body>

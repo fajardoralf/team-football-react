@@ -73,6 +73,7 @@ class CreateContactTable extends React.Component {
   }
 
   setPersonId = event => {
+    console.log(event.target.value);
     this.setState({
       personId: event.target.value
     });
@@ -110,7 +111,7 @@ class CreateContactTable extends React.Component {
                   return (
                     <option
                       key={data.key}
-                      value={data.value}
+                      value={data.key}
                       first_name={data.first_name}
                       last_name={data.last_name}
                     >

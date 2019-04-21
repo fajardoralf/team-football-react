@@ -17,7 +17,7 @@ class CreateSeasonTable extends React.Component {
     };
   }
 
-  handleForm(event) {
+  handleForm = event => {
     event.preventDefault();
 
     axios
@@ -25,59 +25,57 @@ class CreateSeasonTable extends React.Component {
         start_date: this.state.startDate,
         end_date: this.state.endDate,
         name: this.state.name,
-        description: this.state.description,
-        message: "Successfully created ",
-        submitted: true
+        description: this.state.description
       })
+      .then(res => console.log(res));
     this.setState({
       startDate: "",
       endDate: "",
       name: "",
       description: ""
     });
-  }
+  };
 
-  setStartDate(event) {
-    this.setState({ 
+  setStartDate = event => {
+    this.setState({
       startDate: event.target.value
     });
-  }
+  };
 
-  setEndDate(event) {
+  setEndDate = event => {
     this.setState({
       endDate: event.target.value
     });
-  }
+  };
 
-  setName(event) {
+  setName = event => {
     this.setState({
       name: event.target.value
     });
-  }
+  };
 
-  setDescription(event) {
-    this.setState({ 
+  setDescription = event => {
+    this.setState({
       description: event.target.value
     });
-  }
+  };
 
   render() {
-    let title = "Create Season"
+    let title = "Create Season";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
-          <Form onSubmit={this.handleForm.bind(this)}>
-
+          <Form onSubmit={this.handleForm}>
             <Form.Group controlId="createSeasonForm">
               <Form.Label>Start Date</Form.Label>
               <Form.Control
                 type="startDate"
-                placeholder="YYYY-MM-DD"
+                placeholder="YYYY"
                 value={this.state.startDate}
-                onChange={this.setStartDate.bind(this)}
+                onChange={this.setStartDate}
               />
             </Form.Group>
 
@@ -85,9 +83,9 @@ class CreateSeasonTable extends React.Component {
               <Form.Label>End Date</Form.Label>
               <Form.Control
                 type="endDate"
-                placeholder="YYYY-MM-DD"
+                placeholder="YYYY"
                 value={this.state.endDate}
-                onChange={this.setEndDate.bind(this)}
+                onChange={this.setEndDate}
               />
             </Form.Group>
 
@@ -97,7 +95,7 @@ class CreateSeasonTable extends React.Component {
                 type="name"
                 placeholder="Name"
                 value={this.state.name}
-                onChange={this.setName.bind(this)}
+                onChange={this.setName}
               />
             </Form.Group>
 
@@ -107,7 +105,7 @@ class CreateSeasonTable extends React.Component {
                 type="description"
                 placeholder="Description"
                 value={this.state.description}
-                onChange={this.setDescription.bind(this)}
+                onChange={this.setDescription}
               />
             </Form.Group>
             <div
