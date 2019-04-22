@@ -144,7 +144,7 @@ class CreateMatchPositionTable extends React.Component {
 
   render() {
     let title = "Create Match-Position";
-    const { player, match, match_id, positionName } = this.state;
+    const { player, match, match_id, positionName, home_team, away_team } = this.state;
 
     const filteredPlayer = player
       .filter(p => {

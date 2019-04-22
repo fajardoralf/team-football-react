@@ -190,6 +190,8 @@ class CreateMatchGoalTable extends React.Component {
       match,
       matchId,
       home_team_id,
+      home_team,
+      away_team,
       away_team_id
     } = this.state;
 
