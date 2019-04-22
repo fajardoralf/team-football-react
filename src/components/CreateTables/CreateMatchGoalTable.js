@@ -15,7 +15,6 @@ class CreateMatchGoalTable extends React.Component {
       player: [],
       goalType: [],
       match: [],
-      filtered_player: [],
       player_team_id: "",
       playerId: "",
       goalTypeId: "",
@@ -83,6 +82,7 @@ class CreateMatchGoalTable extends React.Component {
         let data = res.data.map(data => {
           return {
             key: data.match_id,
+            match_id: data.match_id,
             date: data.match_date,
             home_team: data.home_team.team_name,
             home_team_id: data.home_team.team_id,
@@ -146,17 +146,14 @@ class CreateMatchGoalTable extends React.Component {
   };
 
   setMatchId = event => {
+
+    let m = this.getMatchById(event.target.value)
     this.setState(
       {
         matchId: event.target.value,
-        home_team_id: event.target.selectedOptions[0].getAttribute(
-          "home_team_id"
-        ),
-        away_team_id: event.target.selectedOptions[0].getAttribute(
-          "away_team_id"
-        )
+        home_team_id: m.home_team_id,
+        away_team_id: m.away_team_id  
       },
-      this.fetchPlayer()
     );
   };
 
@@ -172,16 +169,29 @@ class CreateMatchGoalTable extends React.Component {
     this.fetchMatch();
   }
 
+  getMatchById = id => {
+    for (let m of this.state.match){
+      if (id === m.match_id) return m
+    }
+    return {}
+  }
+
   render() {
     let title = "Create Match Goal";
     const {
       player,
-      filtered_player,
       goalType,
       match,
+      matchId,
       home_team_id,
       away_team_id
     } = this.state;
+
+    const filteredPlayer = player
+    .filter(p => {
+      let m = this.getMatchById(parseInt(matchId))
+      return p.team_id === m.home_team_id || p.team_id === m.away_team_id
+    })
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -192,12 +202,7 @@ class CreateMatchGoalTable extends React.Component {
             <Form.Group controlId="createMatchGoalForm">
               <Form.Label>Player</Form.Label>
               <Form.Control onChange={this.setPlayerId} as="select">
-                {player
-                  .filter(
-                    player =>
-                      player.team_id === home_team_id ||
-                      player.team_id === away_team_id
-                  )
+                {filteredPlayer
                   .map(data => {
                     return (
                       <option
@@ -233,7 +238,7 @@ class CreateMatchGoalTable extends React.Component {
                   return (
                     <option
                       key={data.key}
-                      value={data.key}
+                      value={data.match_id}
                       home_team_id={home_team_id}
                       away_team_id={away_team_id}
                     >

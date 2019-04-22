@@ -41,7 +41,8 @@ class CreateMatchPositionTable extends React.Component {
           return {
             key: data.player_id,
             first_name: data.person.first_name,
-            last_name: data.person.last_name
+            last_name: data.person.last_name,
+            team_id: data.team_id
           };
         });
         this.setState({ player: data });
@@ -63,7 +64,9 @@ class CreateMatchPositionTable extends React.Component {
             key: data.match_id,
             date: data.match_date,
             home_team: data.home_team.team_name,
-            away_team: data.away_team.team_name
+            home_team_id: data.home_team_id,
+            away_team: data.away_team.team_name,
+            away_team_id: data.away_team_id
           };
         });
         this.setState({ match: data });
@@ -106,6 +109,12 @@ class CreateMatchPositionTable extends React.Component {
     });
   };
 
+  getMatchById = id => {
+    for (let m of this.state.match){
+      if (id === m.key) return m
+    }
+  }
+
   componentDidMount() {
     this.fetchMatch();
     this.fetchPlayer();
@@ -114,7 +123,14 @@ class CreateMatchPositionTable extends React.Component {
 
   render() {
     let title = "Create Match-Position";
-    const { player, match, positionName } = this.state;
+    const { player, match, match_id, positionName } = this.state;
+
+    const filteredPlayer = player
+      .filter(p => {
+        let m = this.getMatchById(match_id)
+        return p.team_id === m.home_team_id || p.team_id === m.away_team_id
+      })
+
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
@@ -124,7 +140,7 @@ class CreateMatchPositionTable extends React.Component {
             <Form.Group controlId="createMatchPositionForm">
               <Form.Label>Player</Form.Label>
               <Form.Control onChange={this.setPlayerId} as="select">
-                {player.map(data => {
+                {filteredPlayer.map(data => {
                   return (
                     <option
                       key={data.key}
