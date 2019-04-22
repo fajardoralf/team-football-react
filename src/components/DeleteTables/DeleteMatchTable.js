@@ -130,10 +130,17 @@ class DeleteMatchPositionTable extends React.Component {
         }
       })
       .then(res => {
-        this.setState({
-          score_home: res.data[0].score,
-          score_away: res.data[1].score
-        });
+        if (res.data.length !== 0) {
+          this.setState({
+            score_home: res.data[0].score,
+            score_away: res.data[1].score
+          });
+        } else {
+          this.setState({
+            score_home: 0,
+            score_away: 0
+          });
+        }
       });
   };
 
@@ -149,7 +156,6 @@ class DeleteMatchPositionTable extends React.Component {
     const {
       home_team,
       away_team,
-      season,
       season_start,
       season_end,
       season_name,
@@ -174,6 +180,7 @@ class DeleteMatchPositionTable extends React.Component {
                   );
                 })}
               </Form.Control>
+
               <Form.Label>Season</Form.Label>
               <h6>{season_name + " " + season_start + "/" + season_end}</h6>
               <Form.Label>Location</Form.Label>

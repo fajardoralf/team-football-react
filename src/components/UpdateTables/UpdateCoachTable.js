@@ -2,14 +2,16 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
-const URL = "https://team-football-api.herokuapp.com/contact/";
+const URL = "https://team-football-api.herokuapp.com/coach/";
 const personURL = "https://team-football-api.herokuapp.com/person/";
 
-class CreateContactTable extends React.Component {
+class UpdateCoachTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       person: [],
+      coach: [],
+      coachId: "",
       personId: "",
       contactType: "",
       contactDetail: "",
@@ -17,6 +19,30 @@ class CreateContactTable extends React.Component {
       submitted: false
     };
   }
+
+  fetchCoach = () => {
+    axios
+      .get(URL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({ coachId: res.data[0].coach_id });
+        let data = res.data.map(data => {
+          return {
+            key: data.coach_id,
+            first_name: data.person.first_name,
+            last_name: data.person.last_name
+          };
+        });
+        this.setState({ coach: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
 
   fetchPerson = () => {
     axios
@@ -45,12 +71,10 @@ class CreateContactTable extends React.Component {
   handleForm(event) {
     event.preventDefault();
     axios
-      .post(
-        URL,
+      .put(
+        URL + this.state.coachId,
         {
-          person_id: this.state.personId,
-          contact_type: this.state.contactType,
-          contact_detail: this.state.contactDetail
+          person_id: this.state.personId
         },
         {
           headers: {
@@ -66,44 +90,54 @@ class CreateContactTable extends React.Component {
         console.log("Axios error: ", err);
       });
     this.setState({
-      personId: "",
-      contactType: "",
-      contactDetail: ""
+      personId: ""
     });
   }
 
   setPersonId = event => {
-    console.log(event.target.value);
     this.setState({
       personId: event.target.value
     });
   };
 
-  setContactType = event => {
+  setCoachId = event => {
     this.setState({
-      contactType: event.target.value
-    });
-  };
-
-  setContactDetail = event => {
-    this.setState({
-      contactDetail: event.target.value
+      coachId: event.target.value
     });
   };
 
   componentDidMount() {
     this.fetchPerson();
+    this.fetchCoach();
   }
 
   render() {
-    let title = "Create Contact";
-    const { person } = this.state;
+    let title = "Update Coach";
+    const { person, coach } = this.state;
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
+            <Form.Group controlId="createContactForm">
+              <Form.Label>Coach</Form.Label>
+              <Form.Control onChange={this.setCoachId} as="select">
+                {coach.map(data => {
+                  return (
+                    <option
+                      key={data.key}
+                      value={data.key}
+                      first_name={data.first_name}
+                      last_name={data.last_name}
+                    >
+                      {data.first_name + " " + data.last_name}
+                    </option>
+                  );
+                })}
+              </Form.Control>
+            </Form.Group>
+
             <Form.Group controlId="createContactForm">
               <Form.Label>Person</Form.Label>
               <Form.Control onChange={this.setPersonId} as="select">
@@ -122,25 +156,6 @@ class CreateContactTable extends React.Component {
               </Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="createContactForm">
-              <Form.Label>Contact Type</Form.Label>
-              <Form.Control
-                type="contactType"
-                placeholder="Contact Type"
-                value={this.state.contactType}
-                onChange={this.setContactType.bind(this)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="createContactForm">
-              <Form.Label>Contact Detail</Form.Label>
-              <Form.Control
-                type="contactDetail"
-                placeholder="Contact Detail"
-                value={this.state.contactDetail}
-                onChange={this.setContactDetail.bind(this)}
-              />
-            </Form.Group>
             <div
               style={{
                 display: "flex",
@@ -163,4 +178,4 @@ class CreateContactTable extends React.Component {
   }
 }
 
-export default CreateContactTable;
+export default UpdateCoachTable;

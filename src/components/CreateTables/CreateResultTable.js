@@ -3,16 +3,26 @@ import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/result/";
-const teamURL = "https://team-football-api.herokuapp.com/team"
+const teamURL = "https://team-football-api.herokuapp.com/team";
+const matchURL = "https://team-football-api.herokuapp.com/match";
 
 class CreateResultTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       teams: [],
+      match: [],
       team_id: "",
+      match_id: "",
+      home_team_id: "",
+      away_team_id: "",
       score: "",
       result: "",
+      results: [
+        { key: 1, value: "Win" },
+        { key: 2, value: "Lose" },
+        { key: 3, value: "Draw" }
+      ],
       message: "",
       submitted: false
     };
@@ -26,32 +36,14 @@ class CreateResultTable extends React.Component {
         team_id: this.state.team_id,
         score: this.state.score,
         result: this.state.result,
-        message: "Successfully created ",
-        submitted: true
+        match_id: this.state.match_id
       })
-    this.setState({
-        team_id: "",
-        score: "",
-        result: ""
-    });
-  }
-
-  setTeam_id(event) {
-    this.setState({ 
-        team_id: event.target.value
-    });
-  }
-
-  setScore(event) {
-    this.setState({ 
-        score: event.target.value
-    });
-  }
-
-  setResult(event) {
-      this.setState({
-          result: event.target.value
+      .then(res => {
+        console.log(res);
       })
+      .catch(err => {
+        console.log("Axios err", err);
+      });
   }
 
   fetchTeam = () => {
@@ -66,11 +58,12 @@ class CreateResultTable extends React.Component {
         let data = res.data.map(data => {
           this.setState({
             team_name: res.data.team_name,
+            result: this.state.results[0].value
           });
           return {
             key: data.team_id,
             value: data.team_id,
-            text: data.team_name,
+            text: data.team_name
           };
         });
         this.setState({ teams: data });
@@ -80,63 +73,145 @@ class CreateResultTable extends React.Component {
       });
   };
 
-  handleTeamId = event => {
-    this.setState({
-      teamID: event.target.value,
+  fetchMatch = () => {
+    axios
+      .get(matchURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        console.log(res.data[0].away_team.team_id);
+        this.setState({
+          match_id: res.data[0].match_id,
+          home_team_id: res.data[0].home_team.team_id,
+          away_team_id: res.data[0].away_team.team_id
+        });
+        let data = res.data.map(data => {
+          return {
+            key: data.match_id,
+            text: data.match_date,
+            home_team: data.home_team.team_name,
+            home_team_id: data.home_team.team_id,
+            away_team: data.away_team.team_name,
+            away_team_id: data.away_team.team_id
+          };
+        });
+        this.setState({ match: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
 
+  handleTeamId = event => {
+    console.log(event.target.value);
+    this.setState(
+      {
+        team_id: event.target.value
+      },
+      this.fetchTeam()
+    );
+  };
+
+  setScore = event => {
+    this.setState({
+      score: event.target.value
     });
+  };
+
+  setResult = event => {
+    this.setState({
+      result: event.target.value
+    });
+  };
+
+  handleMatchId = event => {
+    console.log(event.target.selectedOptions[0].getAttribute("away_team_id"));
+    this.setState(
+      {
+        match_id: event.target.value,
+        home_team_id: +event.target.selectedOptions[0].getAttribute(
+          "home_team_id"
+        ),
+        away_team_id: +event.target.selectedOptions[0].getAttribute(
+          "away_team_id"
+        )
+      },
+      this.fetchTeam()
+    );
   };
 
   componentDidMount() {
     this.fetchTeam();
+    this.fetchMatch();
   }
 
   render() {
-    let title = "Create Result"
-    const { teams } = this.state;
+    let title = "Create Result";
+    const { teams, results, match, home_team_id, away_team_id } = this.state;
 
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
             <Form.Group controlId="createResultForm">
               <Form.Label>Team ID</Form.Label>
               <Form.Control onChange={this.handleTeamId} as="select">
-              {teams.map(data => {
-                  return (
-                    <option
-                      key={data.key}
-                      value={data.value}
-                      team_name={data.team_name}
-                    >
-                      {data.text}
-                    </option>
-                  );
-                })}
+                {teams
+                  .filter(
+                    team =>
+                      team.value === home_team_id || team.value === away_team_id
+                  )
+                  .map(data => {
+                    return (
+                      <option
+                        key={data.key}
+                        value={data.value}
+                        team_name={data.team_name}
+                      >
+                        {data.text}
+                      </option>
+                    );
+                  })}
               </Form.Control>
             </Form.Group>
 
+            <Form.Label>Match</Form.Label>
+            <Form.Control onChange={this.handleMatchId} as="select">
+              {match.map(data => {
+                return (
+                  <option
+                    key={data.key}
+                    value={data.key}
+                    home_team_id={data.home_team_id}
+                    away_team_id={data.away_team_id}
+                  >
+                    {data.home_team + " vs " + data.away_team}
+                  </option>
+                );
+              })}
+            </Form.Control>
+
             <Form.Group controlId="createResultForm">
               <Form.Label>Score</Form.Label>
-              <Form.Control
-                type="score"
-                placeholder="Score"
-                value={this.state.score}
-                onChange={this.setScore.bind(this)}
-              />
+              <Form.Control type="number" onChange={this.setScore} />
             </Form.Group>
 
             <Form.Group controlId="createResultForm">
               <Form.Label>Result</Form.Label>
-              <Form.Control
-                type="result"
-                placeholder="Result"
-                value={this.state.result}
-                onChange={this.setResult.bind(this)}
-              />
+              <Form.Control as="select" onChange={this.setResult}>
+                {results.map(data => {
+                  return (
+                    <option key={data.key} value={data.key}>
+                      {data.value}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <div
@@ -154,7 +229,6 @@ class CreateResultTable extends React.Component {
                 {this.state.message}
                 {this.state.submitted ? this.state.address_line_1 : ""}
               </div>
-              
             </div>
           </Form>
         </Card.Body>

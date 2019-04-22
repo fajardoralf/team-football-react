@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
+const URL = "https://team-football-api.herokuapp.com/match/";
 const teamURL = "https://team-football-api.herokuapp.com/team/";
 const seasonURL = "https://team-football-api.herokuapp.com/season/";
 const locationURL = "https://team-football-api.herokuapp.com/location/";
@@ -11,10 +12,10 @@ class CreateMatchTable extends React.Component {
     super(props);
     this.state = {
       matchDate: "",
-      homeTeam_id: "",
-      awayTeam_id: "",
-      season_id: "",
-      location_id: "",
+      homeTeam_id: "1",
+      awayTeam_id: "1",
+      season_id: "1",
+      location_id: "1",
       message: "",
       submitted: false,
       match: [],
@@ -34,6 +35,7 @@ class CreateMatchTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           return {
+            key: data.team_id,
             home_team: data.team_name,
             away_team: data.team_name
           };
@@ -56,9 +58,10 @@ class CreateMatchTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           return {
+            key: data.season_id,
             season_name: data.name,
             season_start: data.start_date,
-            season_end: data.end_date,
+            season_end: data.end_date
           };
         });
         this.setState({ season: data });
@@ -79,6 +82,7 @@ class CreateMatchTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           return {
+            key: data.location_id,
             location_name: data.name
           };
         });
@@ -89,18 +93,32 @@ class CreateMatchTable extends React.Component {
       });
   };
 
-  handleForm(event) {
+  handleForm = event => {
     event.preventDefault();
 
-    axios.post(URL, {
-      matchDate: this.state.matchDate,
-      homeTeam_id: this.state.homeTeam_id,
-      awayTeam_id: this.state.awayTeam_id,
-      season_id: this.state.season_id,
-      location_id: this.state.location_id,
-      message: "Successfully created ",
-      submitted: true
-    });
+    axios
+      .post(
+        URL,
+        {
+          match_date: this.state.matchDate,
+          home_team_id: this.state.homeTeam_id,
+          away_team_id: this.state.awayTeam_id,
+          season_id: this.state.season_id,
+          location_id: this.state.location_id
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
+        }
+      )
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
     this.setState({
       matchDate: "",
       homeTeam_id: "",
@@ -108,37 +126,40 @@ class CreateMatchTable extends React.Component {
       season_id: "",
       location_id: ""
     });
-  }
+  };
 
-  setMatchDate(event) {
+  setMatchDate = event => {
     this.setState({
       matchDate: event.target.value
     });
-  }
+  };
 
-  setHomeTeam_id(event) {
+  setHomeTeam_id = event => {
     this.setState({
       homeTeam_id: event.target.value
     });
-  }
+  };
 
-  setAwayTeam_id(event) {
+  setAwayTeam_id = event => {
+    console.log(event.target.value);
     this.setState({
       awayTeam_id: event.target.value
     });
-  }
 
-  setSeason_id(event) {
+    console.log(this.state.awayTeam_id);
+  };
+
+  setSeason_id = event => {
     this.setState({
       season_id: event.target.value
     });
-  }
+  };
 
-  setLocation_id(event) {
+  setLocation_id = event => {
     this.setState({
       location_id: event.target.value
     });
-  }
+  };
 
   componentDidMount() {
     this.fetchTeamId();
@@ -167,14 +188,10 @@ class CreateMatchTable extends React.Component {
 
             <Form.Group controlId="createMatchForm">
               <Form.Label>Home Team ID</Form.Label>
-              <Form.Control
-                onChange={this.setHomeTeam_id.bind(this)}
-                as="select"
-              >
+              <Form.Control onChange={this.setHomeTeam_id} as="select">
                 {this.state.match.map(data => {
                   return (
-                    <option key={data.home_team} 
-                    value={data.home_team}>
+                    <option key={data.key} value={data.key}>
                       {data.home_team}
                     </option>
                   );
@@ -184,14 +201,10 @@ class CreateMatchTable extends React.Component {
 
             <Form.Group controlId="createMatchForm">
               <Form.Label>Away Team ID</Form.Label>
-              <Form.Control
-                onChange={this.setAwayTeam_id.bind(this)}
-                as="select"
-              >
+              <Form.Control onChange={this.setAwayTeam_id} as="select">
                 {this.state.match.map(data => {
                   return (
-                    <option key={data.away_team} 
-                    value={data.away_team}>
+                    <option key={data.key} value={data.key}>
                       {data.away_team}
                     </option>
                   );
@@ -201,15 +214,15 @@ class CreateMatchTable extends React.Component {
 
             <Form.Group controlId="createMatchForm">
               <Form.Label>Season ID</Form.Label>
-              <Form.Control onChange={this.setSeason_id.bind(this)} as="select">
+              <Form.Control onChange={this.setSeason_id} as="select">
                 {this.state.season.map(data => {
                   return (
-                    <option 
-                    key={data.season_id} 
-                    value={data.season_id}
-
-                    >
-                      {data.season_name + ": " + data.season_start + "-" + data.season_end}
+                    <option key={data.key} value={data.key}>
+                      {data.season_name +
+                        ": " +
+                        data.season_start +
+                        "-" +
+                        data.season_end}
                     </option>
                   );
                 })}
@@ -218,14 +231,10 @@ class CreateMatchTable extends React.Component {
 
             <Form.Group controlId="createMatchForm">
               <Form.Label>Location ID</Form.Label>
-              <Form.Control
-                onChange={this.setLocation_id.bind(this)}
-                as="select"
-              >
+              <Form.Control onChange={this.setLocation_id} as="select">
                 {this.state.location.map(data => {
                   return (
-                    <option key={data.location_id} 
-                    value={data.location_name}>
+                    <option key={data.key} value={data.key}>
                       {data.location_name}
                     </option>
                   );

@@ -8,7 +8,7 @@ const matchURL = "https://team-football-api.herokuapp.com/match/";
 const playerURL = "https://team-football-api.herokuapp.com/player/";
 const goalTypeURL = "https://team-football-api.herokuapp.com/goaltype/";
 
-let matchGoalURL = "https://team-football-api.herokuapp.com/matchgoal/";
+const matchGoalURL = "https://team-football-api.herokuapp.com/matchgoal/";
 
 class UpdateMatchGoalTable extends React.Component {
   constructor(props) {
@@ -19,6 +19,8 @@ class UpdateMatchGoalTable extends React.Component {
       goalType: [],
       matchGoal: [],
       playerId: "",
+      home_team_id: 1,
+      away_team_id: 2,
       goalTypeId: "",
       matchId: 0,
       matchGoalId: 0,
@@ -42,9 +44,7 @@ class UpdateMatchGoalTable extends React.Component {
           description:
             this.state.description !== ""
               ? this.state.new_description
-              : this.state.description,
-          message: "Successfully Updated",
-          submitted: true
+              : this.state.description
         },
         {
           headers: {
@@ -88,7 +88,13 @@ class UpdateMatchGoalTable extends React.Component {
 
   setMatchId = event => {
     this.setState({
-      matchId: event.target.value
+      matchId: event.target.value,
+      home_team_id: +event.target.selectedOptions[0].getAttribute(
+        "home_team_id"
+      ),
+      away_team_id: +event.target.selectedOptions[0].getAttribute(
+        "away_team_id"
+      )
     });
   };
 
@@ -104,7 +110,6 @@ class UpdateMatchGoalTable extends React.Component {
     });
   };
 
-  //fetchMatch = () => {}
   fetchMatch = () => {
     axios
       .get(matchURL, {
@@ -114,13 +119,20 @@ class UpdateMatchGoalTable extends React.Component {
         }
       })
       .then(res => {
-        this.setState({ matchId: res.data[0].match_id });
+        this.setState({
+          matchId: res.data[0].match_id,
+          home_team_id: res.data[0].home_team.team_id,
+          away_team_id: res.data[0].away_team.team_id
+        });
+
         let data = res.data.map(data => {
           return {
             key: data.match_id,
             date: data.match_date,
             home_team: data.home_team.team_name,
-            away_team: data.away_team.team_name
+            home_team_id: data.home_team.team_id,
+            away_team: data.away_team.team_name,
+            away_team_id: data.away_team.team_id
           };
         });
         this.setState({ match: data });
@@ -142,7 +154,7 @@ class UpdateMatchGoalTable extends React.Component {
         this.setState({ matchGoalId: res.data[0].match_goal_id });
         let data = res.data.map(data => {
           return {
-            key: data.match_goal_id,
+            key: data.goal_id,
             foreginkey: data.match_id,
             description: data.description
           };
@@ -154,7 +166,6 @@ class UpdateMatchGoalTable extends React.Component {
       });
   };
 
-  //fetchGoalType = () => {}
   fetchGoalType = () => {
     axios
       .get(goalTypeURL, {
@@ -164,7 +175,6 @@ class UpdateMatchGoalTable extends React.Component {
         }
       })
       .then(res => {
-        console.log(res);
         let data = res.data.map(data => {
           return {
             key: data.goal_type_id,
@@ -176,7 +186,7 @@ class UpdateMatchGoalTable extends React.Component {
         });
       });
   };
-  //fetchPlayer = () => {}
+
   fetchPlayer = () => {
     axios
       .get(playerURL, {
@@ -190,7 +200,9 @@ class UpdateMatchGoalTable extends React.Component {
           return {
             key: data.player_id,
             first_name: data.person.first_name,
-            last_name: data.person.last_name
+            last_name: data.person.last_name,
+            team_id: data.team_id,
+            team_name: data.team.team_name
           };
         });
         this.setState({ player: data });
@@ -207,14 +219,22 @@ class UpdateMatchGoalTable extends React.Component {
   render() {
     const title = "Update Match Goal";
 
-    const { match, goalType, player, matchId, matchGoal } = this.state;
+    const {
+      match,
+      goalType,
+      player,
+      matchId,
+      matchGoal,
+      home_team_id,
+      away_team_id
+    } = this.state;
 
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "30rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
-          <Form onSubmit={this.handleForm.bind(this)}>
+          <Form onSubmit={this.handleForm}>
             <Form.Group controlId="updateMatchGoalForm">
               <Form.Label>Match</Form.Label>
               <Form.Control
@@ -229,7 +249,9 @@ class UpdateMatchGoalTable extends React.Component {
                       value={data.match_id}
                       date={data.match_date}
                       home_team={data.home_team.team_name}
+                      home_team_id={data.home_team_id}
                       away_team={data.away_team.team_name}
+                      away_team_id={data.away_team_id}
                     >
                       {data.date +
                         "-" +
@@ -245,18 +267,29 @@ class UpdateMatchGoalTable extends React.Component {
             <Form.Group controlId="updateMatchGoalForm">
               <Form.Label>Player</Form.Label>
               <Form.Control onChange={this.setPlayerId} as="select">
-                {player.map(data => {
-                  return (
-                    <option
-                      key={data.key}
-                      value={data.key}
-                      first_name={data.first_name}
-                      last_name={data.last_name}
-                    >
-                      {data.first_name + " " + data.last_name}
-                    </option>
-                  );
-                })}
+                {player
+                  .filter(
+                    player =>
+                      player.team_id === home_team_id ||
+                      player.team_id === away_team_id
+                  )
+                  .map(data => {
+                    return (
+                      <option
+                        key={data.key}
+                        value={data.key}
+                        first_name={data.first_name}
+                        last_name={data.last_name}
+                      >
+                        {data.first_name +
+                          " " +
+                          data.last_name +
+                          " (" +
+                          data.team_name +
+                          ") "}
+                      </option>
+                    );
+                  })}
               </Form.Control>
             </Form.Group>
 

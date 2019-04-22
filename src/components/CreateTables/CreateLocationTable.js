@@ -56,10 +56,8 @@ class CreateLocationTable extends React.Component {
         URL,
         {
           address_id: this.state.addressId,
-          name: this.state.addressName,
-          description: this.state.description,
-          message: "Successfully created ",
-          submitted: true
+          name: this.state.name,
+          description: this.state.description
         },
         {
           headers: {

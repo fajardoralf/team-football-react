@@ -19,7 +19,9 @@ class CreateMatchGoalTable extends React.Component {
       playerId: "",
       goalTypeId: "",
       matchId: "",
+      home_team: "",
       home_team_id: 1,
+      away_team: "",
       away_team_id: 2,
       description: ""
     };
@@ -40,7 +42,8 @@ class CreateMatchGoalTable extends React.Component {
             key: data.player_id,
             first_name: data.person.first_name,
             last_name: data.person.last_name,
-            team_id: data.team_id
+            team_id: data.team_id,
+            team_name: data.team.team_name
           };
         });
         this.setState({ player: data });
@@ -78,7 +81,13 @@ class CreateMatchGoalTable extends React.Component {
         }
       })
       .then(res => {
-        this.setState({ matchId: res.data[0].match_id });
+        this.setState({
+          matchId: res.data[0].match_id,
+          home_team_id: res.data[0].home_team.team_id,
+          away_team_id: res.data[0].away_team.team_id,
+          home_team: res.data[0].home_team.team_name,
+          away_team: res.data[0].away_team.team_name
+        });
         let data = res.data.map(data => {
           return {
             key: data.match_id,
@@ -108,9 +117,7 @@ class CreateMatchGoalTable extends React.Component {
           player_id: this.state.playerId,
           goal_type_id: this.state.goalTypeId,
           match_id: this.state.matchId,
-          description: this.state.description,
-          message: "Successfully created ",
-          submitted: true
+          description: this.state.description
         },
         {
           headers: {
@@ -146,7 +153,6 @@ class CreateMatchGoalTable extends React.Component {
   };
 
   setMatchId = event => {
-
     let m = this.getMatchById(event.target.value)
     this.setState(
       {
@@ -192,9 +198,9 @@ class CreateMatchGoalTable extends React.Component {
       let m = this.getMatchById(parseInt(matchId))
       return p.team_id === m.home_team_id || p.team_id === m.away_team_id
     })
-
+      
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "28rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
@@ -247,6 +253,7 @@ class CreateMatchGoalTable extends React.Component {
                   );
                 })}
               </Form.Control>
+              {home_team + " vs " + away_team}
             </Form.Group>
 
             <Form.Group controlId="createMatchGoalForm">

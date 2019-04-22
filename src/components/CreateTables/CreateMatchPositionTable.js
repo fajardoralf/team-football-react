@@ -5,8 +5,7 @@ import axios from "axios";
 const URL = "https://team-football-api.herokuapp.com/matchposition/";
 const matchURL = "https://team-football-api.herokuapp.com/match/";
 const playerURL = "https://team-football-api.herokuapp.com/player/";
-const matchpositionURL =
-  "https://team-football-api.herokuapp.com/matchposition/";
+
 class CreateMatchPositionTable extends React.Component {
   constructor(props) {
     super(props);
@@ -21,6 +20,10 @@ class CreateMatchPositionTable extends React.Component {
       ],
       player_id: "",
       match_id: "",
+      home_team: "",
+      home_team_id: "",
+      away_team: "",
+      away_team_id: "",
       position: "",
       message: "",
       submitted: false
@@ -42,7 +45,8 @@ class CreateMatchPositionTable extends React.Component {
             key: data.player_id,
             first_name: data.person.first_name,
             last_name: data.person.last_name,
-            team_id: data.team_id
+            team_id: data.team_id,
+            team_name: data.team.team_name
           };
         });
         this.setState({ player: data });
@@ -58,7 +62,15 @@ class CreateMatchPositionTable extends React.Component {
         }
       })
       .then(res => {
-        this.setState({ match_id: res.data[0].match_id });
+        console.log(res.data[0].match_id);
+        this.setState({
+          position: this.state.positionName[0].value,
+          match_id: res.data[0].match_id,
+          home_team: res.data[0].home_team.team_name,
+          home_team_id: res.data[0].home_team.team_id,
+          away_team: res.data[0].away_team.team_name,
+          away_team_id: res.data[0].away_team.team_id
+        });
         let data = res.data.map(data => {
           return {
             key: data.match_id,
@@ -76,22 +88,24 @@ class CreateMatchPositionTable extends React.Component {
       });
   };
 
-  handleForm(event) {
+  handleForm = event => {
     event.preventDefault();
-
-    axios.post(URL, {
-      player_id: this.state.player_id,
-      match_id: this.state.match_id,
-      position: this.state.position
-    });
-    this.setState({
-      player_id: "",
-      match_id: "",
-      position: ""
-    });
-  }
+    axios
+      .post(URL, {
+        player_id: this.state.player_id,
+        match_id: this.state.match_id,
+        position: this.state.position
+      })
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
 
   setPlayer_id = event => {
+    console.log(event.target.value);
     this.setState({
       player_id: event.target.value
     });
@@ -99,7 +113,15 @@ class CreateMatchPositionTable extends React.Component {
 
   setMatch_id = event => {
     this.setState({
-      match_id: event.target.value
+      match_id: event.target.value,
+      home_team: event.target.selectedOptions[0].getAttribute("home_team"),
+      home_team_id: +event.target.selectedOptions[0].getAttribute(
+        "home_team_id"
+      ),
+      away_team: event.target.selectedOptions[0].getAttribute("away_team"),
+      away_team_id: +event.target.selectedOptions[0].getAttribute(
+        "away_team_id"
+      )
     });
   };
 
@@ -118,7 +140,6 @@ class CreateMatchPositionTable extends React.Component {
   componentDidMount() {
     this.fetchMatch();
     this.fetchPlayer();
-    this.setState({ position: this.state.positionName[0].value });
   }
 
   render() {
@@ -132,11 +153,11 @@ class CreateMatchPositionTable extends React.Component {
       })
 
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "30rem" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
-          <Form onSubmit={this.handleForm.bind(this)}>
+          <Form onSubmit={this.handleForm}>
             <Form.Group controlId="createMatchPositionForm">
               <Form.Label>Player</Form.Label>
               <Form.Control onChange={this.setPlayerId} as="select">
@@ -157,15 +178,24 @@ class CreateMatchPositionTable extends React.Component {
 
             <Form.Group controlId="createMatchPositionForm">
               <Form.Label>Match</Form.Label>
-              <Form.Control onChange={this.setMatchId} as="select">
+              <Form.Control onChange={this.setMatch_id} as="select">
                 {match.map(data => {
                   return (
-                    <option key={data.key} value={data.key}>
+                    <option
+                      key={data.key}
+                      value={data.key}
+                      home_team={data.home_team}
+                      home_team_id={data.home_team_id}
+                      away_team={data.away_team}
+                      away_team_id={data.away_team_id}
+                    >
                       {data.date}
                     </option>
                   );
                 })}
               </Form.Control>
+
+              {home_team + " vs " + away_team}
             </Form.Group>
 
             <Form.Group controlId="createMatchPositionForm">

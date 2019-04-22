@@ -3,6 +3,8 @@ import "./Dashboard.css";
 import CreatePersonTable from "../../components/CreateTables/CreatePersonTable";
 import CreateAddressTable from "../../components/CreateTables/CreateAddressTable";
 import CreateContactTable from "../../components/CreateTables/CreateContactTable";
+import CreateOwnerTable from "../../components/CreateTables/CreateOwnerTable";
+import CreateCoachTable from "../../components/CreateTables/CreateCoachTable";
 import CreateGoalTypeTable from "../../components/CreateTables/CreateGoalTypeTable";
 import CreateLocationTable from "../../components/CreateTables/CreateLocationTable";
 import CreateMatchGoalTable from "../../components/CreateTables/CreateMatchGoalTable";
@@ -13,6 +15,8 @@ import CreateSeasonTable from "../../components/CreateTables/CreateSeasonTable";
 import CreateTeamTable from "../../components/CreateTables/CreateTeamTable";
 import CreatePlayerTable from "../../components/CreateTables/CreatePlayerTable";
 import UpdatePersonTable from "../../components/UpdateTables/UpdatePersonTable";
+import UpdateCoachTable from "../../components/UpdateTables/UpdateCoachTable";
+import UpdateOwnerTable from "../../components/UpdateTables/UpdateOwnerTable";
 import UpdateAddressTable from "../../components/UpdateTables/UpdateAddressTable";
 import UpdateSelfTable from "../../components/UpdateTables/UpdateSelfTable";
 import ManageWatchlist from "../../components/Dashboard/ManageWatchlist";
@@ -39,6 +43,8 @@ import DeleteUserTable from "../../components/DeleteTables/DeleteUsersTable";
 import UpdatePlayerTable from "../../components/UpdateTables/UpdatePlayerTable";
 import DeletePlayerTable from "../../components/DeleteTables/DeletePlayerTable";
 import UpdateUserTable from "../../components/UpdateTables/UpdateUserTable";
+import DeleteCoachTable from "../../components/DeleteTables/DeleteCoachTable";
+import DeleteOwnerTable from "../../components/DeleteTables/DeleteOwnerTable";
 
 import Collapsible from "react-collapsible";
 
@@ -76,6 +82,16 @@ class Dashboard extends React.Component {
                     <div onClick={this.setStatus.bind(this, 2)}>
                       <li className="list-group-item" id="button">
                         Create Address
+                      </li>
+                    </div>
+                    <div onClick={this.setStatus.bind(this, 3)}>
+                      <li className="list-group-item" id="button">
+                        Create Owner
+                      </li>
+                    </div>
+                    <div onClick={this.setStatus.bind(this, 42)}>
+                      <li className="list-group-item" id="button">
+                        Create Coach
                       </li>
                     </div>
                     <div onClick={this.setStatus.bind(this, 4)}>
@@ -133,6 +149,16 @@ class Dashboard extends React.Component {
                     <div onClick={this.setStatus.bind(this, 13)}>
                       <li className="list-group-item" id="button">
                         Update Person
+                      </li>
+                    </div>
+                    <div onClick={this.setStatus.bind(this, 43)}>
+                      <li className="list-group-item" id="button">
+                        Update Owner
+                      </li>
+                    </div>
+                    <div onClick={this.setStatus.bind(this, 44)}>
+                      <li className="list-group-item" id="button">
+                        Update Coach
                       </li>
                     </div>
                     <div onClick={this.setStatus.bind(this, 14)}>
@@ -232,6 +258,16 @@ class Dashboard extends React.Component {
                         Delete Person
                       </li>
                     </div>
+                    <div onClick={this.setStatus.bind(this, 45)}>
+                      <li className="list-group-item" id="button">
+                        Delete Coach
+                      </li>
+                    </div>
+                    <div onClick={this.setStatus.bind(this, 46)}>
+                      <li className="list-group-item" id="button">
+                        Delete Owner
+                      </li>
+                    </div>
                     <div onClick={this.setStatus.bind(this, 36)}>
                       <li className="list-group-item" id="button">
                         Delete Team
@@ -275,6 +311,8 @@ class Dashboard extends React.Component {
                   0: <div />,
                   1: <CreatePersonTable />,
                   2: <CreateAddressTable />,
+                  3: <CreateOwnerTable />,
+                  42: <CreateCoachTable />,
                   4: <CreateContactTable />,
                   5: <CreateGoalTypeTable />,
                   6: <CreateLocationTable />,
@@ -285,6 +323,8 @@ class Dashboard extends React.Component {
                   11: <CreateSeasonTable />,
                   12: <CreateTeamTable />,
                   13: <UpdatePersonTable />,
+                  43: <UpdateOwnerTable />,
+                  44: <UpdateCoachTable />,
                   14: <UpdateAddressTable />,
                   15: <UpdateSelfTable personID="0" />,
                   16: <ManageWatchlist />,
@@ -310,6 +350,8 @@ class Dashboard extends React.Component {
                   38: <CreatePlayerTable />,
                   39: <UpdatePlayerTable />,
                   40: <DeletePlayerTable />,
+                  45: <DeleteCoachTable />,
+                  46: <DeleteOwnerTable />,
                   41: <UpdateUserTable />
                 }[this.state.status]
               }

@@ -1,11 +1,10 @@
 import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
-import { Last } from "react-bootstrap/PageItem";
 
 const URL = "https://team-football-api.herokuapp.com/player";
-const personURL = "https://team-football-api.herokuapp.com/person"
-const teamURL = "https://team-football-api.herokuapp.com/team"
+const personURL = "https://team-football-api.herokuapp.com/person";
+const teamURL = "https://team-football-api.herokuapp.com/team";
 
 class CreatePlayerTable extends React.Component {
   constructor(props) {
@@ -91,14 +90,13 @@ class CreatePlayerTable extends React.Component {
         let data = res.data.map(data => {
           this.setState({
             first_name: res.data.first_name,
-            last_name: res.data.last_name,
-           
+            last_name: res.data.last_name
           });
           return {
             key: data.person_id,
             value: data.person_id,
             text: data.first_name,
-            last_name: data.last_name,
+            last_name: data.last_name
           };
         });
         this.setState({ persons: data });
@@ -119,12 +117,12 @@ class CreatePlayerTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           this.setState({
-            team_name: res.data.team_name,
+            team_name: res.data.team_name
           });
           return {
             key: data.team_id,
             value: data.team_id,
-            text: data.team_name,
+            text: data.team_name
           };
         });
         this.setState({ teams: data });
@@ -136,15 +134,13 @@ class CreatePlayerTable extends React.Component {
 
   handlePersonId = event => {
     this.setState({
-      personID: event.target.value,
-
+      personID: event.target.value
     });
   };
 
   handleTeamId = event => {
     this.setState({
-      teamID: event.target.value,
-
+      teamID: event.target.value
     });
   };
 
@@ -167,7 +163,7 @@ class CreatePlayerTable extends React.Component {
             <Form.Group controlId="addPlayerForm">
               <Form.Label>Person ID</Form.Label>
               <Form.Control onChange={this.handlePersonId} as="select">
-              {persons.map(data => {
+                {persons.map(data => {
                   return (
                     <option
                       key={data.key}
@@ -180,11 +176,11 @@ class CreatePlayerTable extends React.Component {
                 })}
               </Form.Control>
             </Form.Group>
-            
+
             <Form.Group controlId="addPlayerForm">
               <Form.Label>Team ID</Form.Label>
               <Form.Control onChange={this.handleTeamId} as="select">
-              {teams.map(data => {
+                {teams.map(data => {
                   return (
                     <option
                       key={data.key}
