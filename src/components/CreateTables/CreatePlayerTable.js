@@ -14,7 +14,13 @@ class CreatePlayerTable extends React.Component {
       teams: [],
       person_id: "",
       team_id: "",
-      normal_position: "",
+      position: "",
+      normal_position: [
+        { key: 1, value: "Goalkeeper" },
+        { key: 2, value: "Defender" },
+        { key: 3, value: "Midfielder" },
+        { key: 4, value: "Forward" }
+      ],
       number: "",
       message: "",
       submitted: false
@@ -30,7 +36,7 @@ class CreatePlayerTable extends React.Component {
         {
           person_id: this.state.person_id,
           team_id: this.state.team_id,
-          normal_position: this.state.normal_position,
+          normal_position: this.state.position,
           number: this.state.number,
           message: "Successfully created ",
           submitted: true
@@ -48,35 +54,7 @@ class CreatePlayerTable extends React.Component {
       .catch(err => {
         console.log("Axios error: ", err);
       });
-    this.setState({
-      person_id: "",
-      team_id: "",
-      normal_position: "",
-      number: ""
-    });
   };
-
-  setPerson_id(event) {
-    this.setState({
-      person_id: event.target.value
-    });
-  }
-
-  setTeam_id(event) {
-    this.setState({
-      team_id: event.target.value
-    });
-  }
-  setNormal_position(event) {
-    this.setState({
-      normal_position: event.target.value
-    });
-  }
-  setNumber(event) {
-    this.setState({
-      number: event.target.value
-    });
-  }
 
   fetchPerson = () => {
     axios
@@ -89,6 +67,7 @@ class CreatePlayerTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           this.setState({
+            person_id: res.data.person_id,
             first_name: res.data.first_name,
             last_name: res.data.last_name
           });
@@ -132,15 +111,29 @@ class CreatePlayerTable extends React.Component {
       });
   };
 
-  handlePersonId = event => {
+  setPerson_id = event => {
+    console.log(event.target.value);
     this.setState({
-      personID: event.target.value
+      person_id: event.target.value
     });
   };
 
-  handleTeamId = event => {
+  setTeam_id = event => {
+    console.log(event.target.value);
     this.setState({
-      teamID: event.target.value
+      team_id: event.target.value
+    });
+  };
+  setNormal_position = event => {
+    console.log(event.target.value);
+    this.setState({
+      position: event.target.value
+    });
+  };
+  setNumber = event => {
+    console.log(event.target.value);
+    this.setState({
+      number: event.target.value
     });
   };
 
@@ -151,8 +144,7 @@ class CreatePlayerTable extends React.Component {
 
   render() {
     let title = "Create Player";
-    const { persons } = this.state;
-    const { teams } = this.state;
+    const { persons, teams, normal_position } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -162,7 +154,7 @@ class CreatePlayerTable extends React.Component {
           <Form onSubmit={this.handleForm}>
             <Form.Group controlId="addPlayerForm">
               <Form.Label>Person ID</Form.Label>
-              <Form.Control onChange={this.handlePersonId} as="select">
+              <Form.Control onChange={this.setPerson_id} as="select">
                 {persons.map(data => {
                   return (
                     <option
@@ -179,7 +171,7 @@ class CreatePlayerTable extends React.Component {
 
             <Form.Group controlId="addPlayerForm">
               <Form.Label>Team ID</Form.Label>
-              <Form.Control onChange={this.handleTeamId} as="select">
+              <Form.Control onChange={this.setTeam_id} as="select">
                 {teams.map(data => {
                   return (
                     <option
@@ -196,12 +188,11 @@ class CreatePlayerTable extends React.Component {
 
             <Form.Group controlId="addPlayerForm">
               <Form.Label>Normal Position</Form.Label>
-              <Form.Control
-                type="normal_position"
-                placeholder="Normal Position"
-                value={this.state.normal_position}
-                onChange={this.setNormal_position.bind(this)}
-              />
+              <Form.Control as="select" onChange={this.setNormal_position}>
+                {normal_position.map(data => {
+                  return <option key={data.key}>{data.value}</option>;
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="addPlayerForm">
@@ -210,7 +201,7 @@ class CreatePlayerTable extends React.Component {
                 type="number"
                 placeholder="Number"
                 value={this.state.number}
-                onChange={this.setNumber.bind(this)}
+                onChange={this.setNumber}
               />
             </Form.Group>
             <div

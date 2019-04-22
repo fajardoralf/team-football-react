@@ -9,6 +9,7 @@ class UpdateMatchTable extends React.Component {
     super(props);
     this.state = {
       matchId: "",
+      match: [],
       matchDate: "",
       homeTeam_id: "",
       awayTeam_id: "",
@@ -23,29 +24,29 @@ class UpdateMatchTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL + this.state.matchId, {
-        macth_id: this.state.matchId,
-        match_date: this.state.matchDate,
-        home_team_id: this.state.homeTeam_id,
-        away_team_id: this.state.awayTeam_id,
-        season_id: this.state.season_id,
-        location_id: this.state.location_id,
-        message: "Successfully Updated",
-        submitted: true
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+      .post(
+        URL + this.state.matchId,
+        {
+          macth_id: this.state.matchId,
+          match_date: this.state.matchDate,
+          home_team_id: this.state.homeTeam_id,
+          away_team_id: this.state.awayTeam_id,
+          season_id: this.state.season_id,
+          location_id: this.state.location_id
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
         }
-      }
-    )
-    .then(res => {
-      console.log("response: ", res);
-    })
-    .catch(err => {
-      console.log("Axios error: ", err);
-    });
+      )
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
     this.setState({
       matchId: "",
       matchDate: "",
@@ -57,13 +58,13 @@ class UpdateMatchTable extends React.Component {
   }
 
   setMatchId(event) {
-    this.setState({ 
+    this.setState({
       matchId: event.target.value
     });
   }
 
   setMatchDate(event) {
-    this.setState({ 
+    this.setState({
       matchDate: event.target.value
     });
   }
@@ -81,19 +82,57 @@ class UpdateMatchTable extends React.Component {
   }
 
   setSeason_id(event) {
-    this.setState({ 
+    this.setState({
       season_id: event.target.value
     });
   }
 
   setLocation_id(event) {
-      this.setState({
-          location_id: event.target.value
+    this.setState({
+      location_id: event.target.value
+    });
+  }
+
+  fetchMatch = () => {
+    axios
+      .get(URL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
       })
+      .then(res => {
+        this.setState({
+          match_id: res.data[0].match_id,
+          homeTeam_id: res.data[0].home_team.team_id,
+          awayTeam_id: res.data[0].away_team.team_id
+        });
+
+        let data = res.data.map(data => {
+          return {
+            key: data.match_id,
+            date: data.match_date,
+            home_team: data.home_team.team_name,
+            home_team_id: data.home_team.team_id,
+            away_team: data.away_team.team_name,
+            away_team_id: data.away_team.team_id
+          };
+        });
+        this.setState({ match: data });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
+  componentDidMount() {
+    this.fetchMatch();
   }
 
   render() {
-    let title = "Update Match"
+    let title = "Update Match";
+
+    const { match } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -101,15 +140,29 @@ class UpdateMatchTable extends React.Component {
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
             <Form.Group controlId="updateMatchForm">
-              <Form.Label>Match ID</Form.Label>
-              <Form.Control
-                type="matchId"
-                placeholder="Match ID"
-                value={this.state.matchId}
-                onChange={this.setMatchId.bind(this)}
-              />
+              <Form.Label>Match</Form.Label>
+              <Form.Control onChange={this.setMatch_id} as="select">
+                {match.map(data => {
+                  return (
+                    <option
+                      key={data.key}
+                      value={data.key}
+                      date={data.match_date}
+                      home_team={data.home_team.team_name}
+                      home_team_id={data.home_team_id}
+                      away_team={data.away_team.team_name}
+                      away_team_id={data.away_team_id}
+                    >
+                      {data.date +
+                        "-" +
+                        data.home_team +
+                        " Vs. " +
+                        data.away_team}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="updateMatchForm">

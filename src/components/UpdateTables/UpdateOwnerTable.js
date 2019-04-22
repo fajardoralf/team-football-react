@@ -164,7 +164,7 @@ class UpdateOwnerTable extends React.Component {
               }}
             >
               <Button variant="dark" type="Submit">
-                Create
+                Update
               </Button>
               <div className="text-center">
                 {this.state.message}

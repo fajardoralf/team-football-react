@@ -12,8 +12,10 @@ class UpdatePersonTable extends React.Component {
     this.state = {
       person: [],
       address: [],
+      addressess: [],
       person_id: 1,
       address_id: 1,
+      new_address_id: 1,
       address_line_1: "",
       firstName: "",
       new_firstName: "",
@@ -33,7 +35,10 @@ class UpdatePersonTable extends React.Component {
         URL + this.state.person_id,
         {
           person_id: this.state.person_id,
-          address_id: this.state.address_id,
+          address_id:
+            this.state.new_address_id !== ""
+              ? this.state.new_address_id
+              : this.state.address_id,
           first_name:
             this.state.new_firstName !== ""
               ? this.state.new_firstName
@@ -66,6 +71,7 @@ class UpdatePersonTable extends React.Component {
     this.setState(
       {
         person_id: event.target.value,
+        address_id: event.target.selectedOptions[0].getAttribute("address_id"),
         firstName: event.target.selectedOptions[0].getAttribute("first_name"),
         lastName: event.target.selectedOptions[0].getAttribute("last_name"),
         dateOfBirth: event.target.selectedOptions[0].getAttribute(
@@ -78,6 +84,11 @@ class UpdatePersonTable extends React.Component {
 
   setAddressId = event => {
     this.setState({ address_id: event.target.value });
+  };
+
+  setNewAddress = event => {
+    console.log(event.target.value);
+    this.setState({ new_address_id: event.target.value });
   };
 
   setFirstName = event => {
@@ -105,6 +116,7 @@ class UpdatePersonTable extends React.Component {
       .then(res => {
         this.setState({
           person_id: res.data[0].person_id,
+          address_id: res.data[0].address_id,
           firstName: res.data[0].first_name,
           lastName: res.data[0].last_name,
           dateOfBirth: res.data[0].date_of_birth
@@ -113,6 +125,7 @@ class UpdatePersonTable extends React.Component {
           return {
             key: data.person_id,
             value: data.person_id,
+            address_id: data.address_id,
             first_name: data.first_name,
             last_name: data.last_name,
             birth: data.date_of_birth
@@ -127,7 +140,7 @@ class UpdatePersonTable extends React.Component {
 
   fetchAddress = () => {
     axios
-      .get(addressURL + this.state.person_id, {
+      .get(addressURL + this.state.address_id, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*"
@@ -144,15 +157,43 @@ class UpdatePersonTable extends React.Component {
       });
   };
 
+  fetchAddressess = () => {
+    axios
+      .get(addressURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({
+          address_id: res.data[0].address_id
+        });
+        let data = res.data.map(data => {
+          return {
+            key: data.address_id,
+            address_line_1: data.address_line_1
+          };
+        });
+        this.setState({
+          addressess: data
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
+  };
+
   componentDidMount() {
     this.fetchPersons();
     this.fetchAddress();
+    this.fetchAddressess();
   }
 
   render() {
     const title = "Update Person";
 
-    const { person, address_line_1, address_id } = this.state;
+    const { person, address_line_1, address_id, addressess } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -168,6 +209,7 @@ class UpdatePersonTable extends React.Component {
                     <option
                       key={data.key}
                       value={data.value}
+                      address_id={data.address_id}
                       first_name={data.first_name}
                       last_name={data.last_name}
                       date_of_birth={data.birth}
@@ -180,11 +222,24 @@ class UpdatePersonTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="updatePersonForm">
-              <Form.Label>Address</Form.Label>
+              <Form.Label>Current Address</Form.Label>
               <Form.Control onChange={this.setAddressId} as="select">
                 <option key={address_id} value={address_id}>
                   {address_line_1}
                 </option>
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="updatePersonForm">
+              <Form.Label>Change to</Form.Label>
+              <Form.Control onChange={this.setNewAddress} as="select">
+                {addressess.map(data => {
+                  return (
+                    <option key={data.key} value={data.key}>
+                      {data.address_line_1}
+                    </option>
+                  );
+                })}
               </Form.Control>
             </Form.Group>
 
