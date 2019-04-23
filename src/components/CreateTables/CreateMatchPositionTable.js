@@ -45,7 +45,7 @@ class CreateMatchPositionTable extends React.Component {
             key: data.player_id,
             first_name: data.person.first_name,
             last_name: data.person.last_name,
-            team_id: data.team_id,
+            team_id: data.team.team_id,
             team_name: data.team.team_name
           };
         });
@@ -76,9 +76,9 @@ class CreateMatchPositionTable extends React.Component {
             key: data.match_id,
             date: data.match_date,
             home_team: data.home_team.team_name,
-            home_team_id: data.home_team_id,
+            home_team_id: data.home_team.team_id,
             away_team: data.away_team.team_name,
-            away_team_id: data.away_team_id
+            away_team_id: data.away_team.team_id
           };
         });
         this.setState({ match: data });
@@ -131,12 +131,6 @@ class CreateMatchPositionTable extends React.Component {
     });
   };
 
-  getMatchById = id => {
-    for (let m of this.state.match){
-      if (id === m.key) return m
-    }
-  }
-
   componentDidMount() {
     this.fetchMatch();
     this.fetchPlayer();
@@ -144,13 +138,15 @@ class CreateMatchPositionTable extends React.Component {
 
   render() {
     let title = "Create Match-Position";
-    const { player, match, match_id, positionName, home_team, away_team } = this.state;
-
-    const filteredPlayer = player
-      .filter(p => {
-        let m = this.getMatchById(match_id)
-        return p.team_id === m.home_team_id || p.team_id === m.away_team_id
-      })
+    const {
+      player,
+      match,
+      positionName,
+      home_team,
+      home_team_id,
+      away_team,
+      away_team_id
+    } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "30rem" }}>
@@ -160,19 +156,31 @@ class CreateMatchPositionTable extends React.Component {
           <Form onSubmit={this.handleForm}>
             <Form.Group controlId="createMatchPositionForm">
               <Form.Label>Player</Form.Label>
-              <Form.Control onChange={this.setPlayerId} as="select">
-                {filteredPlayer.map(data => {
-                  return (
-                    <option
-                      key={data.key}
-                      value={data.key}
-                      first_name={data.first_name}
-                      last_name={data.last_name}
-                    >
-                      {data.first_name + " " + data.last_name}
-                    </option>
-                  );
-                })}
+              <Form.Control onChange={this.setPlayer_id} as="select">
+                {player
+                  .filter(
+                    player =>
+                      player.team_id === home_team_id ||
+                      player.team_id === away_team_id
+                  )
+
+                  .map(data => {
+                    return (
+                      <option
+                        key={data.key}
+                        value={data.key}
+                        first_name={data.first_name}
+                        last_name={data.last_name}
+                      >
+                        {data.first_name +
+                          " " +
+                          data.last_name +
+                          " (" +
+                          data.team_name +
+                          ") "}
+                      </option>
+                    );
+                  })}
               </Form.Control>
             </Form.Group>
 
