@@ -27,7 +27,18 @@ class CreateSeasonTable extends React.Component {
         name: this.state.name,
         description: this.state.description
       })
-      .then(res => console.log(res));
+      .then(res => {
+        console.log(res);
+        this.setState({
+          message: "Successfully Created"
+        });
+      })
+      .catch(err => {
+        console.log("Axios error, ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
+      });
     this.setState({
       startDate: "",
       endDate: "",
@@ -118,11 +129,13 @@ class CreateSeasonTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+            </div>
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.name : ""}
-              </div>
+            <br />
+
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.name : ""}
             </div>
           </Form>
         </Card.Body>

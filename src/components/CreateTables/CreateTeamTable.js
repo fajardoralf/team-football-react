@@ -25,12 +25,25 @@ class CreateTeamTable extends React.Component {
   handleForm = event => {
     event.preventDefault();
 
-    axios.post(URL, {
-      team_name: this.state.team_name,
-      coach_id: this.state.coach_id,
-      owner_id: this.state.owner_id,
-      location_id: this.state.location_id
-    });
+    axios
+      .post(URL, {
+        team_name: this.state.team_name,
+        coach_id: this.state.coach_id,
+        owner_id: this.state.owner_id,
+        location_id: this.state.location_id
+      })
+      .then(res => {
+        console.log(res);
+        this.setState({
+          message: "Successfully Created"
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
+      });
     this.setState({
       team_name: "",
       coach_id: "",
@@ -118,6 +131,9 @@ class CreateTeamTable extends React.Component {
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
       });
   };
 
@@ -226,9 +242,10 @@ class CreateTeamTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
-
-              <div className="text-center">{this.state.message}</div>
             </div>
+            <br />
+
+            <div className="text-center">{this.state.message}</div>
           </Form>
         </Card.Body>
       </Card>

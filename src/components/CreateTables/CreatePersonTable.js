@@ -70,9 +70,15 @@ class CreatePersonTable extends React.Component {
       )
       .then(res => {
         console.log("response: ", res);
+        this.setState({
+          message: "Successfully Created"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
       });
     this.setState({
       address_id: "",
@@ -176,11 +182,13 @@ class CreatePersonTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+            </div>
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.firstName : ""}
-              </div>
+            <br />
+
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.firstName : ""}
             </div>
           </Form>
         </Card.Body>

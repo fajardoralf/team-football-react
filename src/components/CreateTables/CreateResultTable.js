@@ -40,9 +40,15 @@ class CreateResultTable extends React.Component {
       })
       .then(res => {
         console.log(res);
+        this.setState({
+          message: "Successfully Created"
+        });
       })
       .catch(err => {
         console.log("Axios err", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
       });
   }
 
@@ -128,7 +134,6 @@ class CreateResultTable extends React.Component {
   };
 
   handleMatchId = event => {
-    console.log(event.target.selectedOptions[0].getAttribute("away_team_id"));
     this.setState(
       {
         match_id: event.target.value,
@@ -224,12 +229,10 @@ class CreateResultTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
-
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.address_line_1 : ""}
-              </div>
             </div>
+            <br />
+
+            <div className="text-center">{this.state.message}</div>
           </Form>
         </Card.Body>
       </Card>

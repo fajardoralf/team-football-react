@@ -82,9 +82,15 @@ class UpdateSeasonTable extends React.Component {
       )
       .then(res => {
         console.log("response: ", res);
+        this.setState({
+          message: "Successfully Updated"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
       });
 
     this.setState({
@@ -232,11 +238,12 @@ class UpdateSeasonTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+            </div>
+            <br />
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.name : ""}
-              </div>
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.name : ""}
             </div>
           </Form>
         </Card.Body>
