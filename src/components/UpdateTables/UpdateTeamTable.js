@@ -192,7 +192,6 @@ class UpdateTeamTable extends React.Component {
           message: "Something went wrong. Please check your inputs"
         });
       });
-    this.fetchTeam();
   };
 
   setTeam_id = event => {

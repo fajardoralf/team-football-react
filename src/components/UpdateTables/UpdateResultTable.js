@@ -28,43 +28,28 @@ class UpdateResultTable extends React.Component {
     event.preventDefault();
 
     axios
-<<<<<<< HEAD
-      .post(
-        URL + this.state.matchId,
+      .put(
+        URL + matchURL,
         {
           match_id: this.state.matchId,
-          team_id: this.state.team_id,
-          score: this.state.score,
-          result: this.state.result,
-          message: "Successfully Updated",
-          submitted: true
+          team_id:
+            this.state.new_team_id !== ""
+              ? this.state.new_team_id
+              : this.state.team_id,
+          score:
+            this.state.new_score !== ""
+              ? this.state.new_score
+              : this.state.score,
+          result:
+            this.state.new_result !== ""
+              ? this.state.new_result
+              : this.state.result
         },
         {
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
             "Access-Control-Allow-Origin": "*"
           }
-=======
-      .put(URL + matchURL, {
-        match_id: this.state.matchId,
-        team_id: 
-                this.state.new_team_id !== ""
-                ? this.state.new_team_id
-                : this.state.team_id,
-        score: 
-              this.state.new_score !== ""
-              ? this.state.new_score
-              : this.state.score,
-        result: 
-              this.state.new_result !== ""
-              ? this.state.new_result
-              : this.state.result,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
->>>>>>> 1113681e704364cdb5af8eeb521d80d995a3d151
         }
       )
       .then(res => {
@@ -116,12 +101,12 @@ class UpdateResultTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           this.setState({
-            match_date: res.data.match_date,
+            match_date: res.data.match_date
           });
           return {
             key: data.match_id,
             value: data.match_id,
-            text: data.match_date,
+            text: data.match_date
           };
         });
         this.setState({ matches: data });
@@ -142,12 +127,12 @@ class UpdateResultTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           this.setState({
-            team_name: res.data.team_name,
+            team_name: res.data.team_name
           });
           return {
             key: data.team_id,
             value: data.team_id,
-            text: data.team_name,
+            text: data.team_name
           };
         });
         this.setState({ teams: data });
@@ -159,14 +144,12 @@ class UpdateResultTable extends React.Component {
 
   handleTeamId = event => {
     this.setState({
-      teamID: event.target.value,
-
+      teamID: event.target.value
     });
   };
   handleMatchId = event => {
     this.setState({
-      matchID: event.target.value,
-
+      matchID: event.target.value
     });
   };
 
@@ -176,13 +159,9 @@ class UpdateResultTable extends React.Component {
   }
 
   render() {
-<<<<<<< HEAD
     let title = "Update Result";
-=======
-    let title = "Update Result"
     const { teams } = this.state;
     const { matches } = this.state;
->>>>>>> 1113681e704364cdb5af8eeb521d80d995a3d151
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -193,7 +172,7 @@ class UpdateResultTable extends React.Component {
             <Form.Group controlId="updateResultForm">
               <Form.Label>Match ID</Form.Label>
               <Form.Control onChange={this.handleMatchId} as="select">
-              {matches.map(data => {
+                {matches.map(data => {
                   return (
                     <option
                       key={data.key}
@@ -211,7 +190,7 @@ class UpdateResultTable extends React.Component {
             <Form.Group controlId="updateResultForm">
               <Form.Label>Team ID</Form.Label>
               <Form.Control onChange={this.handleTeamId} as="select">
-              {teams.map(data => {
+                {teams.map(data => {
                   return (
                     <option
                       key={data.key}
