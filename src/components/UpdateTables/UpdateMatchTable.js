@@ -247,7 +247,7 @@ class UpdateMatchTable extends React.Component {
   render() {
     let title = "Update Match";
 
-    const { match, matchDate, season_id, location_id, homeTeam_id, awayTeam_id, homeTeam_name, awayTeam_name} = this.state;
+    const { match, matchDate, season_id, location_id, homeTeam_id, awayTeam_id} = this.state;
     const { teams } = this.state;
     const{ seasons } = this.state;
     const{ location } = this.state;
