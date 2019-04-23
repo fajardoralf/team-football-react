@@ -13,6 +13,7 @@ class UpdateResultTable extends React.Component {
       matches: [],
       teams: [],
       matchId: "",
+      new_match_id: "",
       team_id: "",
       new_team_id: "",
       score: "",
