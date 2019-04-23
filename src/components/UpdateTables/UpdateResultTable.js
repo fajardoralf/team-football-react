@@ -3,6 +3,7 @@ import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/result/";
+const resultURL = "https://team-football-api.herokuapp.com/result"
 const teamURL = "https://team-football-api.herokuapp.com/team";
 const matchURL = "https://team-football-api.herokuapp.com/match";
 
@@ -10,16 +11,14 @@ class UpdateResultTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      matches: [],
-      teams: [],
+      teams: [{}],
       matchId: "",
       new_match_id: "",
       team_id: "",
-      new_team_id: "",
       score: "",
-      new_score: "",
       result: "",
-      new_result: "",
+      results: [],
+      result_id: 1,
       message: "",
       submitted: false
     };
@@ -29,23 +28,13 @@ class UpdateResultTable extends React.Component {
     event.preventDefault();
 
     axios
-      .put(
-        URL + matchURL,
-        {
-          match_id: this.state.matchId,
-          team_id:
-            this.state.new_team_id !== ""
-              ? this.state.new_team_id
-              : this.state.team_id,
-          score:
-            this.state.new_score !== ""
-              ? this.state.new_score
-              : this.state.score,
-          result:
-            this.state.new_result !== ""
-              ? this.state.new_result
-              : this.state.result
-        },
+      .put(URL + this.state.result_id, {
+        result_id: this.state.result_id,
+        match_id: this.state.matchId,
+        team_id: this.state.team_id,
+        score: this.state.score,
+        result: this.state.result,
+      },
         {
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -60,38 +49,84 @@ class UpdateResultTable extends React.Component {
         console.log("Axios error: ", err);
       });
     this.setState({
-      match_id: "",
-      team_id: "",
-      score: "",
-      result: ""
+      submitted: true
     });
   }
 
   setMatchId(event) {
+    let r = this.getResult(parseInt(event.target.value), this.state.team_id)
     this.setState({
-      matchId: event.target.value
+      matchId: parseInt(event.target.value),
+      result_id: r.result_id,
+      score: r.score,
+      result: r.result
     });
+    //this.setResultId()
+
+
+
   }
 
-  setTeam_id(event) {
+  setTeamId(event) {
+    let r = this.getResult(this.state.matchId, parseInt(event.target.value))
     this.setState({
-      team_id: event.target.value
+      team_id: parseInt(event.target.value),
+      result_id: r.result_id,
+      score: r.score,
+      result: r.result
     });
+    //this.setResultId()
   }
 
   setScore(event) {
     this.setState({
-      score: event.target.value
+      score: parseInt(event.target.value)
     });
   }
 
   setResult(event) {
     this.setState({
       result: event.target.value
-    });
+    })
   }
 
-  fetchMatch = () => {
+  setResultId = () => {
+    for (let r of this.state.results) {
+      if (r.match_id === this.state.matchId && r.team_id === this.state.team_id) {
+        this.setState(
+          {
+            result_id: r.result_id,
+            score: r.score,
+            result: r.result
+          }
+        )
+        return;
+      }
+    }
+  }
+
+
+  fetchResult = () => {
+    axios
+      .get(resultURL, {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(res => {
+        this.setState({
+          results: res.data,
+          result_id: res.data[0].result_id,
+          matchId: res.data[0].match_id,
+          team_id: res.data[0].team_id,
+          score: res.data[0].score,
+          result: res.data[0].result
+        })
+      })
+  }
+
+  /*fetchMatch = () => {
     axios
       .get(matchURL, {
         headers: {
@@ -99,7 +134,7 @@ class UpdateResultTable extends React.Component {
           "Access-Control-Allow-Origin": "*"
         }
       })
-      .then(res => {
+      .then(res => {  
         let data = res.data.map(data => {
           this.setState({
             match_date: res.data.match_date
@@ -107,10 +142,16 @@ class UpdateResultTable extends React.Component {
           return {
             key: data.match_id,
             value: data.match_id,
-            text: data.match_date
+            text: data.match_date,
+            home_team_id: data.home_team_id,
+            away_team_id: data.away_team_id
           };
         });
-        this.setState({ matches: data });
+        this.setState({ 
+          matches: data,
+          matchId: res.data[0].match_id,
+          team_id: res.data[0].home_team_id
+         });
       })
       .catch(err => {
         console.log("Axios error: ", err);
@@ -141,28 +182,33 @@ class UpdateResultTable extends React.Component {
       .catch(err => {
         console.log("Axios error: ", err);
       });
-  };
-
-  handleTeamId = event => {
-    this.setState({
-      teamID: event.target.value
-    });
-  };
-  handleMatchId = event => {
-    this.setState({
-      matchID: event.target.value
-    });
-  };
+  }; */
 
   componentDidMount() {
-    this.fetchTeam();
-    this.fetchMatch();
+    this.fetchResult()
+  }
+
+  getMatch = (id, matches) => {
+    for (let m of matches) {
+      if (m.match_id === id) return m
+    }
+    return { home_team: '', away_team: '' }
+  }
+
+  getResult = (match, team) => {
+    for (let r of this.state.results) {
+      if (r.match_id === match && r.team_id === team) return r
+    }
+    return {}
   }
 
   render() {
-    let title = "Update Result";
-    const { teams } = this.state;
-    const { matches } = this.state;
+    let title = "Update Result"
+    const { results, matchId, team_id } = this.state;
+
+    const matches = results.map(r => r.match)
+    const match = this.getMatch(matchId, matches)
+    const teams = [match.home_team, match.away_team]
 
     return (
       <Card bg="light" text="black" style={{ width: "100%" }}>
@@ -172,16 +218,18 @@ class UpdateResultTable extends React.Component {
           <Form onSubmit={this.handleForm.bind(this)}>
             <Form.Group controlId="updateResultForm">
               <Form.Label>Match ID</Form.Label>
-              <Form.Control onChange={this.handleMatchId} as="select">
-                {matches.map(data => {
+              <Form.Control
+                value={matchId}
+                onChange={this.setMatchId.bind(this)} as="select">
+                {matches.map((data, index) => {
                   return (
                     <option
-                      key={data.key}
-                      value={data.value}
+                      key={index}
+                      value={data.match_id}
                       match_date={data.match_date}
                       onChange={this.setMatchId.bind(this)}
                     >
-                      {data.text}
+                      {data.match_date + " " + data.home_team.team_name + " : " + data.away_team.team_name}
                     </option>
                   );
                 })}
@@ -190,16 +238,17 @@ class UpdateResultTable extends React.Component {
 
             <Form.Group controlId="updateResultForm">
               <Form.Label>Team ID</Form.Label>
-              <Form.Control onChange={this.handleTeamId} as="select">
+              <Form.Control
+                value={team_id}
+                onChange={this.setTeamId.bind(this)} as="select">
                 {teams.map(data => {
                   return (
                     <option
-                      key={data.key}
-                      value={data.value}
+                      key={data.team_id}
+                      value={data.team_id}
                       team_name={data.team_name}
-                      onChange={this.setTeam_id.bind(this)}
                     >
-                      {data.text}
+                      {data.team_name}
                     </option>
                   );
                 })}
@@ -209,7 +258,7 @@ class UpdateResultTable extends React.Component {
             <Form.Group controlId="updateResultForm">
               <Form.Label>Score</Form.Label>
               <Form.Control
-                type="score"
+                type="number"
                 placeholder="Score"
                 value={this.state.score}
                 onChange={this.setScore.bind(this)}
@@ -238,8 +287,7 @@ class UpdateResultTable extends React.Component {
               </Button>
 
               <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.matchId : ""}
+                {this.state.submitted ? "Updated match" : ""}
               </div>
             </div>
           </Form>

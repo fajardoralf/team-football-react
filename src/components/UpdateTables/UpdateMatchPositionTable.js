@@ -171,8 +171,6 @@ class UpdateMatchPositionTable extends React.Component {
       away_team_id
     } = this.state;
 
-    console.log(matchPosition);
-
     return (
       <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
