@@ -21,61 +21,63 @@ class UpdateResultTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL + this.state.matchId, {
-        match_id: this.state.matchId,
-        team_id: this.state.team_id,
-        score: this.state.score,
-        result: this.state.result,
-        message: "Successfully Updated",
-        submitted: true
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+      .post(
+        URL + this.state.matchId,
+        {
+          match_id: this.state.matchId,
+          team_id: this.state.team_id,
+          score: this.state.score,
+          result: this.state.result,
+          message: "Successfully Updated",
+          submitted: true
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
         }
-      }
-    )
-    .then(res => {
-      console.log("response: ", res);
-    })
-    .catch(err => {
-      console.log("Axios error: ", err);
-    });
+      )
+      .then(res => {
+        console.log("response: ", res);
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
     this.setState({
-        match_id: "",
-        team_id: "",
-        score: "",
-        result: ""
+      match_id: "",
+      team_id: "",
+      score: "",
+      result: ""
     });
   }
 
   setMatchId(event) {
-    this.setState({ 
-        matchId: event.target.value
+    this.setState({
+      matchId: event.target.value
     });
   }
 
   setTeam_id(event) {
-    this.setState({ 
-        team_id: event.target.value
+    this.setState({
+      team_id: event.target.value
     });
   }
 
   setScore(event) {
-    this.setState({ 
-        score: event.target.value
+    this.setState({
+      score: event.target.value
     });
   }
 
   setResult(event) {
-      this.setState({
-          result: event.target.value
-      })
+    this.setState({
+      result: event.target.value
+    });
   }
 
   render() {
-    let title = "Update Result"
+    let title = "Update Result";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -83,7 +85,6 @@ class UpdateResultTable extends React.Component {
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
             <Form.Group controlId="updateResultForm">
               <Form.Label>Match ID</Form.Label>
               <Form.Control

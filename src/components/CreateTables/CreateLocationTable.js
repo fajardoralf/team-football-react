@@ -68,9 +68,17 @@ class CreateLocationTable extends React.Component {
       )
       .then(res => {
         console.log("response: ", res);
+        this.setState({
+          submitted: true,
+          message: "Successfully Created"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          submitted: false,
+          message: "Something went wrong. Please check your inputs"
+        });
       });
     this.setState({
       addressId: "",
@@ -158,11 +166,12 @@ class CreateLocationTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+            </div>
+            <br />
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.name : ""}
-              </div>
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.name : ""}
             </div>
           </Form>
         </Card.Body>

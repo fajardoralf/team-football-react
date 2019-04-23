@@ -56,9 +56,15 @@ class UpdatePlayerTable extends React.Component {
           };
         });
         this.setState({ players: data });
+        this.setState({
+          message: "Successfully Updated"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
       });
   };
 
@@ -302,11 +308,12 @@ class UpdatePlayerTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+            </div>
+            <br />
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.number : ""}
-              </div>
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.number : ""}
             </div>
           </Form>
         </Card.Body>

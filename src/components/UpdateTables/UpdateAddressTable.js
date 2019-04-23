@@ -55,9 +55,15 @@ class UpdateAddressTable extends React.Component {
       )
       .then(res => {
         console.log("response: ", res);
+        this.setState({
+          message: "Successfully Updated"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
       });
   }
 
@@ -208,11 +214,12 @@ class UpdateAddressTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+            </div>
+            <br />
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.address_line_1 : ""}
-              </div>
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.address_line_1 : ""}
             </div>
           </Form>
         </Card.Body>

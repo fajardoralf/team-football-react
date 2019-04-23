@@ -50,9 +50,15 @@ class CreatePlayerTable extends React.Component {
       )
       .then(res => {
         console.log("response: ", res);
+        this.setState({
+          message: "Successfully Created"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
       });
   };
 
@@ -112,26 +118,22 @@ class CreatePlayerTable extends React.Component {
   };
 
   setPerson_id = event => {
-    console.log(event.target.value);
     this.setState({
       person_id: event.target.value
     });
   };
 
   setTeam_id = event => {
-    console.log(event.target.value);
     this.setState({
       team_id: event.target.value
     });
   };
   setNormal_position = event => {
-    console.log(event.target.value);
     this.setState({
       position: event.target.value
     });
   };
   setNumber = event => {
-    console.log(event.target.value);
     this.setState({
       number: event.target.value
     });
@@ -214,11 +216,13 @@ class CreatePlayerTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+            </div>
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.number : ""}
-              </div>
+            <br />
+
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.number : ""}
             </div>
           </Form>
         </Card.Body>

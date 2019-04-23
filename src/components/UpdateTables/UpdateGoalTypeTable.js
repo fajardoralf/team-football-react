@@ -19,45 +19,53 @@ class UpdateGoalTypeTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL + this.state.goal_type_id, {
-        goal_type_id: this.state.goal_type_id,
-        type: this.state.type,
-        message: "Successfully Updated",
-        submitted: true
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+      .post(
+        URL + this.state.goal_type_id,
+        {
+          goal_type_id: this.state.goal_type_id,
+          type: this.state.type,
+          message: "Successfully Updated",
+          submitted: true
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
         }
-      }
-    )
-    .then(res => {
-      console.log("response: ", res);
-    })
-    .catch(err => {
-      console.log("Axios error: ", err);
-    });
+      )
+      .then(res => {
+        console.log("response: ", res);
+        this.setState({
+          message: "Successfully Updated"
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
+      });
     this.setState({
-        goal_type_id: "",
-        type: ""
+      goal_type_id: "",
+      type: ""
     });
   }
 
   setGoalTypeId(event) {
-    this.setState({ 
+    this.setState({
       goal_type_id: event.target.value
     });
   }
 
   setType(event) {
-    this.setState({ 
+    this.setState({
       type: event.target.value
     });
   }
 
   render() {
-    let title = "Update Goal Type"
+    let title = "Update Goal Type";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -65,7 +73,6 @@ class UpdateGoalTypeTable extends React.Component {
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
             <Form.Group controlId="updateGoalTypeForm">
               <Form.Label>Goal Type IT</Form.Label>
               <Form.Control
@@ -95,11 +102,12 @@ class UpdateGoalTypeTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+            </div>
+            <br />
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.type : ""}
-              </div>
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.type : ""}
             </div>
           </Form>
         </Card.Body>

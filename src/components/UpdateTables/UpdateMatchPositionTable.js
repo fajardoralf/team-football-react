@@ -47,9 +47,15 @@ class UpdateMatchPositionTable extends React.Component {
       )
       .then(res => {
         console.log("response: ", res);
+        this.setState({
+          message: "Successfully Updated"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
       });
     this.setState({
       player_id: "",
@@ -131,6 +137,7 @@ class UpdateMatchPositionTable extends React.Component {
   };
 
   setMatch_id = event => {
+    console.log(event.target.selectedOptions[0].getAttribute("away_team_id"));
     this.setState({
       match_id: event.target.value,
       home_team_id: +event.target.selectedOptions[0].getAttribute(
@@ -251,11 +258,12 @@ class UpdateMatchPositionTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+            </div>
+            <br />
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.position : ""}
-              </div>
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.position : ""}
             </div>
           </Form>
         </Card.Body>
