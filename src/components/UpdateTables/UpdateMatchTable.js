@@ -8,7 +8,7 @@ class UpdateMatchTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      matchId: "",
+      matchId: 1,
       match: [],
       matchDate: "",
       homeTeam_id: "",
@@ -24,7 +24,7 @@ class UpdateMatchTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(
+      .put(
         URL + this.state.matchId,
         {
           macth_id: this.state.matchId,
@@ -48,18 +48,24 @@ class UpdateMatchTable extends React.Component {
         console.log("Axios error: ", err);
       });
     this.setState({
-      matchId: "",
+      matchId: 1,
       matchDate: "",
-      homeTeam_id: "",
-      awayTeam_id: "",
+      homeTeam_id: 1,
+      awayTeam_id: 2,
       season_id: "",
       location_id: ""
     });
   }
 
   setMatchId(event) {
+    let m = this.getMatch(parseInt(event.target.value))
     this.setState({
-      matchId: event.target.value
+      matchId: parseInt(event.target.value),
+      matchDate: m.date,
+      homeTeam_id: m.home_team_id,
+      awayTeam_id: m.away_team_id,
+      season_id: m.season_id,
+      location_id: m.location_id
     });
   }
 
@@ -71,26 +77,33 @@ class UpdateMatchTable extends React.Component {
 
   setHomeTeam_id(event) {
     this.setState({
-      homeTeam_id: event.target.value
+      homeTeam_id: parseInt(event.target.value)
     });
   }
 
   setAwayTeam_id(event) {
     this.setState({
-      awayTeam_id: event.target.value
+      awayTeam_id: parseInt(event.target.value)
     });
   }
 
   setSeason_id(event) {
     this.setState({
-      season_id: event.target.value
+      season_id: parseInt(event.target.value)
     });
   }
 
   setLocation_id(event) {
     this.setState({
-      location_id: event.target.value
+      location_id: parseInt(event.target.value)
     });
+  }
+
+  getMatch = id => {
+    for (let m of this.state.match){
+      if (m.key === id) return m
+    }
+    return {}
   }
 
   fetchMatch = () => {
@@ -103,9 +116,12 @@ class UpdateMatchTable extends React.Component {
       })
       .then(res => {
         this.setState({
-          match_id: res.data[0].match_id,
+          matchId: res.data[0].match_id,
+          matchDate: res.data[0].match_date,
           homeTeam_id: res.data[0].home_team.team_id,
-          awayTeam_id: res.data[0].away_team.team_id
+          awayTeam_id: res.data[0].away_team.team_id,
+          season_id: res.data[0].season_id,
+          location_id: res.data[0].location_id
         });
 
         let data = res.data.map(data => {
@@ -115,7 +131,9 @@ class UpdateMatchTable extends React.Component {
             home_team: data.home_team.team_name,
             home_team_id: data.home_team.team_id,
             away_team: data.away_team.team_name,
-            away_team_id: data.away_team.team_id
+            away_team_id: data.away_team.team_id,
+            season_id: data.season_id,
+            location_id: data.location_id
           };
         });
         this.setState({ match: data });
@@ -132,7 +150,7 @@ class UpdateMatchTable extends React.Component {
   render() {
     let title = "Update Match";
 
-    const { match } = this.state;
+    const { match, matchDate, season_id, location_id, homeTeam_id, awayTeam_id } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -142,7 +160,7 @@ class UpdateMatchTable extends React.Component {
           <Form onSubmit={this.handleForm.bind(this)}>
             <Form.Group controlId="updateMatchForm">
               <Form.Label>Match</Form.Label>
-              <Form.Control onChange={this.setMatch_id} as="select">
+              <Form.Control onChange={this.setMatchId.bind(this)} as="select">
                 {match.map(data => {
                   return (
                     <option
@@ -170,7 +188,7 @@ class UpdateMatchTable extends React.Component {
               <Form.Control
                 type="matchDate"
                 placeholder="Match Date"
-                value={this.state.matchDate}
+                value={matchDate}
                 onChange={this.setMatchDate.bind(this)}
               />
             </Form.Group>
@@ -180,7 +198,7 @@ class UpdateMatchTable extends React.Component {
               <Form.Control
                 type="homeTeam_id"
                 placeholder="Home Team ID"
-                value={this.state.homeTeam_id}
+                value={homeTeam_id}
                 onChange={this.setHomeTeam_id.bind(this)}
               />
             </Form.Group>
@@ -190,7 +208,7 @@ class UpdateMatchTable extends React.Component {
               <Form.Control
                 type="awayTeam_id"
                 placeholder="Away Team ID"
-                value={this.state.awayTeam_id}
+                value={awayTeam_id}
                 onChange={this.setAwayTeam_id.bind(this)}
               />
             </Form.Group>
@@ -200,7 +218,7 @@ class UpdateMatchTable extends React.Component {
               <Form.Control
                 type="season_id"
                 placeholder="Season ID"
-                value={this.state.season_id}
+                value={season_id}
                 onChange={this.setSeason_id.bind(this)}
               />
             </Form.Group>
@@ -210,7 +228,7 @@ class UpdateMatchTable extends React.Component {
               <Form.Control
                 type="location_id"
                 placeholder="Location ID"
-                value={this.state.location_id}
+                value={location_id}
                 onChange={this.setLocation_id.bind(this)}
               />
             </Form.Group>
