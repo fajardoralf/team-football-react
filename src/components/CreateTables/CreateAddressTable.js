@@ -21,61 +21,69 @@ class CreateAddressTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL,{
-        address_line_1: this.state.addressLine1,
-        postal_code: this.state.postalCode,
-        city: this.state.city,
-        country: this.state.country,
-        message: "Successfully created ",
-        submitted: true
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+      .post(
+        URL,
+        {
+          address_line_1: this.state.addressLine1,
+          postal_code: this.state.postalCode,
+          city: this.state.city,
+          country: this.state.country
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
         }
-      }
-    )
-    .then(res => {
-      console.log("response: ", res);
-    })
-    .catch(err => {
-      console.log("Axios error: ", err);
-    });
+      )
+      .then(res => {
+        console.log("response: ", res);
+        this.setState({
+          submitted: true,
+          message: "Successfully Created"
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+        this.setState({
+          submitted: false,
+          message: "Something went wrong. Please check your inputs"
+        });
+      });
     this.setState({
-        addressLine1: "",
-        postalCode: "",
-        city: "",
-        country: ""
+      addressLine1: "",
+      postalCode: "",
+      city: "",
+      country: ""
     });
   }
 
   setAddressLine1(event) {
-    this.setState({ 
+    this.setState({
       addressLine1: event.target.value
     });
   }
 
   setPostalCode(event) {
-    this.setState({ 
+    this.setState({
       postalCode: event.target.value
     });
   }
 
   setCity(event) {
-    this.setState({ 
+    this.setState({
       city: event.target.value
     });
   }
 
   setCountry(event) {
-    this.setState({ 
+    this.setState({
       country: event.target.value
     });
   }
 
   render() {
-    let title = "Create Address"
+    let title = "Create Address";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -83,7 +91,6 @@ class CreateAddressTable extends React.Component {
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
             <Form.Group controlId="createAddressForm">
               <Form.Label>Address Line 1</Form.Label>
               <Form.Control
@@ -133,11 +140,13 @@ class CreateAddressTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+            </div>
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.address_line_1 : ""}
-              </div>
+            <br />
+
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.address_line_1 : ""}
             </div>
           </Form>
         </Card.Body>

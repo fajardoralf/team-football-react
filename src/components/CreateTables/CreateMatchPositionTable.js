@@ -25,6 +25,7 @@ class CreateMatchPositionTable extends React.Component {
       away_team: "",
       away_team_id: "",
       position: "",
+      date: "",
       message: "",
       submitted: false
     };
@@ -62,14 +63,14 @@ class CreateMatchPositionTable extends React.Component {
         }
       })
       .then(res => {
-        console.log(res.data[0].match_id);
         this.setState({
           position: this.state.positionName[0].value,
           match_id: res.data[0].match_id,
           home_team: res.data[0].home_team.team_name,
           home_team_id: res.data[0].home_team.team_id,
           away_team: res.data[0].away_team.team_name,
-          away_team_id: res.data[0].away_team.team_id
+          away_team_id: res.data[0].away_team.team_id,
+          date: res.data[0].match_date
         });
         let data = res.data.map(data => {
           return {
@@ -98,14 +99,21 @@ class CreateMatchPositionTable extends React.Component {
       })
       .then(res => {
         console.log("response: ", res);
+        this.setState({
+          submitted: true,
+          message: "Successfully Created"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          submitted: false,
+          message: "Something went wrong. Please check your inputs"
+        });
       });
   };
 
   setPlayer_id = event => {
-    console.log(event.target.value);
     this.setState({
       player_id: event.target.value
     });
@@ -121,7 +129,8 @@ class CreateMatchPositionTable extends React.Component {
       away_team: event.target.selectedOptions[0].getAttribute("away_team"),
       away_team_id: +event.target.selectedOptions[0].getAttribute(
         "away_team_id"
-      )
+      ),
+      date: event.target.selectedOptions[0].getAttribute("date")
     });
   };
 
@@ -142,10 +151,11 @@ class CreateMatchPositionTable extends React.Component {
       player,
       match,
       positionName,
-      home_team,
+
       home_team_id,
-      away_team,
-      away_team_id
+
+      away_team_id,
+      date
     } = this.state;
 
     return (
@@ -196,14 +206,14 @@ class CreateMatchPositionTable extends React.Component {
                       home_team_id={data.home_team_id}
                       away_team={data.away_team}
                       away_team_id={data.away_team_id}
+                      date={data.date}
                     >
-                      {data.date}
+                      {data.home_team + " vs " + data.away_team}
                     </option>
                   );
                 })}
               </Form.Control>
-
-              {home_team + " vs " + away_team}
+              {"Date: " + date}
             </Form.Group>
 
             <Form.Group controlId="createMatchPositionForm">
@@ -228,11 +238,12 @@ class CreateMatchPositionTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+            </div>
+            <br />
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.position : ""}
-              </div>
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.position : ""}
             </div>
           </Form>
         </Card.Body>

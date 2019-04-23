@@ -24,7 +24,8 @@ class CreateMatchGoalTable extends React.Component {
       home_team_id: 0,
       away_team: "",
       away_team_id: 0,
-      description: ""
+      description: "",
+      date: ""
     };
   }
 
@@ -87,7 +88,8 @@ class CreateMatchGoalTable extends React.Component {
           home_team_id: res.data[0].home_team.team_id,
           away_team_id: res.data[0].away_team.team_id,
           home_team: res.data[0].home_team.team_name,
-          away_team: res.data[0].away_team.team_name
+          away_team: res.data[0].away_team.team_name,
+          date: res.data[0].match_date
         });
         let data = res.data.map(data => {
           return {
@@ -128,9 +130,17 @@ class CreateMatchGoalTable extends React.Component {
       )
       .then(res => {
         console.log("response: ", res);
+        this.setState({
+          submitted: true,
+          message: "Successfully Created"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          submitted: false,
+          message: "Something went wrong. Please check your inputs"
+        });
       });
     this.setState({
       playerId: "",
@@ -184,10 +194,9 @@ class CreateMatchGoalTable extends React.Component {
       player,
       goalType,
       match,
-      home_team,
       home_team_id,
-      away_team,
-      away_team_id
+      away_team_id,
+      date
     } = this.state;
 
     return (
@@ -251,12 +260,12 @@ class CreateMatchGoalTable extends React.Component {
                       home_team_id={data.home_team_id}
                       away_team_id={data.away_team_id}
                     >
-                      {data.date + " " + data.home_team_id + data.away_team_id}
+                      {data.home_team + " vs " + data.away_team}
                     </option>
                   );
                 })}
               </Form.Control>
-              {home_team + " vs " + away_team}
+              {"Date: " + date}
             </Form.Group>
 
             <Form.Group controlId="createMatchGoalForm">
@@ -278,11 +287,13 @@ class CreateMatchGoalTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
+            </div>
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.description : ""}
-              </div>
+            <br />
+
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.description : ""}
             </div>
           </Form>
         </Card.Body>

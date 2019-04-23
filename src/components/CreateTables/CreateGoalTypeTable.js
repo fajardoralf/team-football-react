@@ -18,38 +18,47 @@ class CreateGoalTypeTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(URL, {
-        type: this.state.type,
-        message: "Successfully created ",
-        submitted: true
-        
-      },
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+      .post(
+        URL,
+        {
+          type: this.state.type,
+          message: "Successfully created ",
+          submitted: true
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+          }
         }
-      }
-    )
-    .then(res => {
-      console.log("response: ", res);
-    })
-    .catch(err => {
-      console.log("Axios error: ", err);
-    });
+      )
+      .then(res => {
+        console.log("response: ", res);
+        this.setState({
+          submitted: true,
+          message: "Successfully Created"
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+        this.setState({
+          submitted: false,
+          message: "Something went wrong. Please check your inputs"
+        });
+      });
     this.setState({
       type: ""
     });
   }
 
   setType(event) {
-    this.setState({ 
+    this.setState({
       type: event.target.value
     });
   }
 
   render() {
-    let title = "Create Goal Type"
+    let title = "Create Goal Type";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>
@@ -57,7 +66,6 @@ class CreateGoalTypeTable extends React.Component {
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
             <Form.Group controlId="createGoalTypeForm">
               <Form.Label>Type</Form.Label>
               <Form.Control
@@ -77,11 +85,13 @@ class CreateGoalTypeTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Create
               </Button>
-
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.type : ""}
             </div>
+            <br />
+            <br />
+
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.type : ""}
             </div>
           </Form>
         </Card.Body>

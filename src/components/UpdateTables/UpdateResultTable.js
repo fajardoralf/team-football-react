@@ -13,6 +13,7 @@ class UpdateResultTable extends React.Component {
     this.state = {
       teams: [{}],
       matchId: "",
+      new_match_id: "",
       team_id: "",
       score: "",
       result: "",
@@ -136,7 +137,7 @@ class UpdateResultTable extends React.Component {
       .then(res => {  
         let data = res.data.map(data => {
           this.setState({
-            match_date: res.data.match_date,
+            match_date: res.data.match_date
           });
           return {
             key: data.match_id,
@@ -168,12 +169,12 @@ class UpdateResultTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           this.setState({
-            team_name: res.data.team_name,
+            team_name: res.data.team_name
           });
           return {
             key: data.team_id,
             value: data.team_id,
-            text: data.team_name,
+            text: data.team_name
           };
         });
         this.setState({ teams: data });
@@ -215,7 +216,6 @@ class UpdateResultTable extends React.Component {
           <h3 className="text-center">{title}</h3>
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
-
             <Form.Group controlId="updateResultForm">
               <Form.Label>Match ID</Form.Label>
               <Form.Control
