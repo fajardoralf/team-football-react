@@ -119,7 +119,6 @@ class UpdateResultTable extends React.Component {
           result_id: res.data[0].result_id,
           matchId: res.data[0].match_id,
           team_id: res.data[0].team_id,
-          team_id: res.data[0].match.home_team_id,
           score: res.data[0].score,
           result: res.data[0].result
         })
