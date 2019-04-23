@@ -173,10 +173,10 @@ class ManageWatchlist extends React.Component {
 
         const title = "Manage Watchlist"
         const players = playerList
-            .filter(d => {
-
-                return playerInput === '' || (d.person.first_name + ' ' + d.person.last_name).toLocaleLowerCase().includes(playerInput.toLocaleLowerCase())
-            })
+            .filter(d =>
+                playerInput === '' || 
+                (d.person.first_name + ' ' + d.person.last_name).toLocaleLowerCase().includes(playerInput.toLocaleLowerCase())
+            )
             .map((d, index) =>
                 <li
                     onClick={this.onClickPlayer.bind(this, (d.person.first_name + ' ' + d.person.last_name))}
@@ -206,15 +206,15 @@ class ManageWatchlist extends React.Component {
 
         const teamWatch = teamWatchList
             .filter(d => d.user_id = personId)
-            .map((d, index) =>{
-                let team =this.getTeam(d.team_id)
+            .map((d, index) => {
+                let team = this.getTeam(d.team_id)
                 return (<li key={index}>
                     {team.team_name}
-                    <Button 
-                        variant="outline-danger" 
+                    <Button
+                        variant="outline-danger"
                         size="sm" style={{ marginLeft: '10px' }}
                         onClick={e => this.removeTeam(d.watchlist_team_id, e)}>Remove</Button>
-            </li>)
+                </li>)
             })
         return (
             <div>
