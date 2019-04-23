@@ -141,7 +141,7 @@ class UpdateAddressTable extends React.Component {
     const title = "Update Address";
     const { address } = this.state;
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
@@ -166,7 +166,7 @@ class UpdateAddressTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="updateAddressForm">
-              <Form.Label>Address Line 1</Form.Label>
+              <Form.Label>To</Form.Label>
               <Form.Control
                 type="addressLine1"
                 placeholder={this.state.addressLine1}
@@ -178,7 +178,7 @@ class UpdateAddressTable extends React.Component {
             <Form.Group controlId="updateAddressForm">
               <Form.Label>Postal Code</Form.Label>
               <Form.Control
-                type="postalCode"
+                type="number"
                 placeholder={this.state.postalcode}
                 value={this.state.new_postalCode}
                 onChange={this.setPostalCode}

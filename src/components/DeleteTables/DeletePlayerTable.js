@@ -88,7 +88,7 @@ class DeletePlayerTable extends React.Component {
     let title = "Delete Player";
     const { data } = this.state.player;
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />

@@ -17,7 +17,7 @@ class CreateAddressTable extends React.Component {
     };
   }
 
-  handleForm(event) {
+  handleForm = event => {
     event.preventDefault();
 
     axios
@@ -56,37 +56,37 @@ class CreateAddressTable extends React.Component {
       city: "",
       country: ""
     });
-  }
+  };
 
-  setAddressLine1(event) {
+  setAddressLine1 = event => {
     this.setState({
       addressLine1: event.target.value
     });
-  }
+  };
 
-  setPostalCode(event) {
+  setPostalCode = event => {
     this.setState({
       postalCode: event.target.value
     });
-  }
+  };
 
-  setCity(event) {
+  setCity = event => {
     this.setState({
       city: event.target.value
     });
-  }
+  };
 
-  setCountry(event) {
+  setCountry = event => {
     this.setState({
       country: event.target.value
     });
-  }
+  };
 
   render() {
     let title = "Create Address";
 
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
@@ -95,9 +95,9 @@ class CreateAddressTable extends React.Component {
               <Form.Label>Address Line 1</Form.Label>
               <Form.Control
                 type="addressLine1"
-                placeholder="Address Line 1"
+                placeholder="Address"
                 value={this.state.addressLine1}
-                onChange={this.setAddressLine1.bind(this)}
+                onChange={this.setAddressLine1}
               />
             </Form.Group>
 
@@ -107,7 +107,7 @@ class CreateAddressTable extends React.Component {
                 type="postalCode"
                 placeholder="Postal Code"
                 value={this.state.postalCode}
-                onChange={this.setPostalCode.bind(this)}
+                onChange={this.setPostalCode}
               />
             </Form.Group>
 
@@ -117,7 +117,7 @@ class CreateAddressTable extends React.Component {
                 type="city"
                 placeholder="City"
                 value={this.state.city}
-                onChange={this.setCity.bind(this)}
+                onChange={this.setCity}
               />
             </Form.Group>
 
@@ -127,7 +127,7 @@ class CreateAddressTable extends React.Component {
                 type="country"
                 placeholder="Country"
                 value={this.state.country}
-                onChange={this.setCountry.bind(this)}
+                onChange={this.setCountry}
               />
             </Form.Group>
             <div

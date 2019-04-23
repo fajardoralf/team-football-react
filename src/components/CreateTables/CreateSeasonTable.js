@@ -75,7 +75,7 @@ class CreateSeasonTable extends React.Component {
     let title = "Create Season";
 
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
