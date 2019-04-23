@@ -25,7 +25,7 @@ class NavigationBar extends React.Component {
           <Nav className="mr-auto">
             <Login />
           </Nav>
-          <div className="translate" id="google_translate_element" />
+          <div className="translate" id="google_translate_element" style={{marginTop: 10}}/>
         </Navbar.Collapse>
       </Navbar>
     );
