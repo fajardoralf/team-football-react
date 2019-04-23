@@ -13,6 +13,7 @@ class UpdateResultTable extends React.Component {
       matches: [],
       teams: [],
       matchId: "",
+      new_match_id: "",
       team_id: "",
       new_team_id: "",
       score: "",
@@ -66,25 +67,25 @@ class UpdateResultTable extends React.Component {
 
   setMatchId(event) {
     this.setState({ 
-        matchId: event.target.value
+        new_match_id: event.target.value
     });
   }
 
   setTeam_id(event) {
     this.setState({ 
-        team_id: event.target.value
+        new_team_id: event.target.value
     });
   }
 
   setScore(event) {
     this.setState({ 
-        score: event.target.value
+        new_score: event.target.value
     });
   }
 
   setResult(event) {
       this.setState({
-          result: event.target.value
+          new_result: event.target.value
       })
   }
 
