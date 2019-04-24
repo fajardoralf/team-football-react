@@ -1,0 +1,27 @@
+.col-6 {
+  left: 25%;
+  align-self: center;
+}
+
+.Collapsible {
+  color: #696969;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  vertical-align: middle;
+  padding: 5%;
+  text-align: center;
+  outline: none;
+}
+
+.Collapsible__trigger {
+  display: block;
+  font-weight: 400;
+  text-decoration: none;
+  position: relative;
+  padding: 10px;
+}
+
+.container {
+  padding: 5%;
+}
