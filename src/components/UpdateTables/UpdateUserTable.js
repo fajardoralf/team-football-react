@@ -24,15 +24,19 @@ class UpdateUser extends React.Component {
 
     axios.put(URL + "users/" + this.state.user_id, {
       user_id: this.state.user_id,
-      username:
-        this.state.new_username !== ""
+      username: this.state.new_username !== ""
           ? this.state.new_username
           : this.state.username,
-      password: 
-        this.state.new_password !== ""
+      password: this.state.new_password !== ""
           ? this.state.new_password
           : this.state.password,
       role: this.state.new_role
+    },
+    {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*"
+      }
     });
   }
 
@@ -41,6 +45,13 @@ class UpdateUser extends React.Component {
       if ("" + user.user_id === id) return user.username;
     }
     return "unknown";
+  }
+
+  getUser = id => {
+    for (let u of this.state.users){
+      if (id === u.user_id) return u
+    }
+    return {}
   }
 
   setNewPassword(e) {
@@ -56,9 +67,12 @@ class UpdateUser extends React.Component {
   }
 
   setNewUserID(e) {
+    let u = this.getUser(parseInt(e.target.value))
     this.setState({
-      user_id: e.target.value,
-      username: this.getUsername(e.target.value)
+      user_id: parseInt(e.target.value),
+      username: u.username,
+      password: u.password,
+      new_role: u.role
     });
   }
 
@@ -74,7 +88,8 @@ class UpdateUser extends React.Component {
         users: json.data,
         username: json.data[0].username,
         user_id: json.data[0].user_id,
-        password: json.data.password
+        password: json.data[0].password,
+        new_role: json.data[0].role
       })
     );
   }
