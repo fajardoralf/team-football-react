@@ -68,7 +68,7 @@ class UpdateMatchTable extends React.Component {
   }
 
   setMatchId(event) {
-    let m = this.getMatch(parseInt(event.target.value))
+    let m = this.getMatch(parseInt(event.target.value));
     this.setState({
       matchId: parseInt(event.target.value),
       matchDate: m.date,
@@ -112,11 +112,11 @@ class UpdateMatchTable extends React.Component {
   }
 
   getMatch = id => {
-    for (let m of this.state.match){
-      if (m.key === id) return m
+    for (let m of this.state.match) {
+      if (m.key === id) return m;
     }
-    return {}
-  }
+    return {};
+  };
 
   fetchLocationId = () => {
     axios
@@ -129,12 +129,12 @@ class UpdateMatchTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           this.setState({
-            location_name: res.data.name,
+            location_name: res.data.name
           });
           return {
             key: data.location_id,
             value: data.location_id,
-            text: data.name,
+            text: data.name
           };
         });
         this.setState({ location: data });
@@ -155,12 +155,12 @@ class UpdateMatchTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           this.setState({
-            season_name: res.data.name,
+            season_name: res.data.name
           });
           return {
             key: data.season_id,
             value: data.season_id,
-            text: data.name,
+            text: data.name
           };
         });
 
@@ -182,12 +182,12 @@ class UpdateMatchTable extends React.Component {
       .then(res => {
         let data = res.data.map(data => {
           this.setState({
-            team_name: res.data.team_name,
+            team_name: res.data.team_name
           });
           return {
             key: data.team_id,
             value: data.team_id,
-            text: data.team_name,
+            text: data.team_name
           };
         });
         this.setState({ teams: data });
@@ -236,7 +236,6 @@ class UpdateMatchTable extends React.Component {
       });
   };
 
-
   componentDidMount() {
     this.fetchMatch();
     this.fetchTeam();
@@ -247,13 +246,22 @@ class UpdateMatchTable extends React.Component {
   render() {
     let title = "Update Match";
 
-    const { match, matchDate, season_id, location_id, homeTeam_id, awayTeam_id, homeTeam_name, awayTeam_name} = this.state;
+    const {
+      match,
+      matchDate,
+      season_id,
+      location_id,
+      homeTeam_id,
+      awayTeam_id,
+      homeTeam_name,
+      awayTeam_name
+    } = this.state;
     const { teams } = this.state;
-    const{ seasons } = this.state;
-    const{ location } = this.state;
+    const { seasons } = this.state;
+    const { location } = this.state;
 
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />
@@ -295,15 +303,14 @@ class UpdateMatchTable extends React.Component {
 
             <Form.Group controlId="updateMatchForm">
               <Form.Label>Home Team ID</Form.Label>
-              <Form.Control 
+              <Form.Control
                 value={homeTeam_id}
-                onChange={this.setHomeTeam_id.bind(this)} as="select">
-              {teams.map(data => {
+                onChange={this.setHomeTeam_id.bind(this)}
+                as="select"
+              >
+                {teams.map(data => {
                   return (
-                    <option
-                      key={data.key}
-                      value={data.value}
-                    >
+                    <option key={data.key} value={data.value}>
                       {data.text}
                     </option>
                   );
@@ -313,15 +320,14 @@ class UpdateMatchTable extends React.Component {
 
             <Form.Group controlId="updateMatchForm">
               <Form.Label>Away Team ID</Form.Label>
-              <Form.Control 
+              <Form.Control
                 value={awayTeam_id}
-                onChange={this.setAwayTeam_id.bind(this)} as="select">
-              {teams.map(data => {
+                onChange={this.setAwayTeam_id.bind(this)}
+                as="select"
+              >
+                {teams.map(data => {
                   return (
-                    <option
-                      key={data.key}
-                      value={data.value}
-                    >
+                    <option key={data.key} value={data.value}>
                       {data.text}
                     </option>
                   );
@@ -331,15 +337,14 @@ class UpdateMatchTable extends React.Component {
 
             <Form.Group controlId="updateMatchForm">
               <Form.Label>Season ID</Form.Label>
-              <Form.Control 
+              <Form.Control
                 value={season_id}
-                onChange={this.setSeason_id.bind(this)} as="select">
-              {seasons.map(data => {
+                onChange={this.setSeason_id.bind(this)}
+                as="select"
+              >
+                {seasons.map(data => {
                   return (
-                    <option
-                      key={data.key}
-                      value={data.value}
-                    >
+                    <option key={data.key} value={data.value}>
                       {data.text}
                     </option>
                   );
@@ -350,15 +355,14 @@ class UpdateMatchTable extends React.Component {
             <Form.Group controlId="updateMatchForm">
               <Form.Label>Location ID</Form.Label>
 
-              <Form.Control 
+              <Form.Control
                 value={location_id}
-                onChange={this.setLocation_id.bind(this)} as="select">
-              {location.map(data => {
+                onChange={this.setLocation_id.bind(this)}
+                as="select"
+              >
+                {location.map(data => {
                   return (
-                    <option
-                      key={data.key}
-                      value={data.value}
-                    >
+                    <option key={data.key} value={data.value}>
                       {data.text}
                     </option>
                   );

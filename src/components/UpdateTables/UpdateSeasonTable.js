@@ -21,9 +21,23 @@ class UpdateSeasonTable extends React.Component {
       description: "",
       current_description: "",
       message: "",
+      dateArray: [],
       submitted: false
     };
   }
+
+  createDate = () => {
+    let dateArray = [];
+
+    for (let i = 1; i < 100; i++) {
+      dateArray.push({ key: i, value: 2018 + i });
+    }
+    this.setState({
+      startDate: dateArray[0].value,
+      endDate: dateArray[0].value,
+      dateArray
+    });
+  };
 
   fetchSeason = () => {
     axios
@@ -34,7 +48,6 @@ class UpdateSeasonTable extends React.Component {
         }
       })
       .then(res => {
-        console.log(res.data[0]);
         this.setState({
           seasonId: res.data[0].season_id,
           current_startDate: res.data[0].start_date,
@@ -63,6 +76,14 @@ class UpdateSeasonTable extends React.Component {
 
   handleForm(event) {
     event.preventDefault();
+
+    if (this.state.startDate > this.state.endDate) {
+      this.setState({
+        message: "The start date cannot be newer than end date"
+      });
+
+      return;
+    }
     axios
       .put(
         URL + this.state.seasonId,
@@ -142,6 +163,7 @@ class UpdateSeasonTable extends React.Component {
 
   componentDidMount() {
     this.fetchSeason();
+    this.createDate();
   }
 
   render() {
@@ -156,7 +178,8 @@ class UpdateSeasonTable extends React.Component {
       startDate,
       endDate,
       description,
-      name
+      name,
+      dateArray
     } = this.state;
 
     return (
@@ -187,23 +210,29 @@ class UpdateSeasonTable extends React.Component {
 
             <Form.Group controlId="updateSeasonForm">
               <Form.Label>Start Date</Form.Label>
-              <Form.Control
-                type="startDate"
-                placeholder="YYYY-MM-DD"
-                value={startDate}
-                onChange={this.setStartDate.bind(this)}
-              />
+              <Form.Control as="select" onChange={this.setStartDate.bind(this)}>
+                {dateArray.map(date => {
+                  return (
+                    <option key={date.key} value={date.value}>
+                      {date.value}
+                    </option>
+                  );
+                })}
+              </Form.Control>
               <h6>Current Start date: {current_startDate}</h6>
             </Form.Group>
 
             <Form.Group controlId="updateSeasonForm">
               <Form.Label>End Date</Form.Label>
-              <Form.Control
-                type="endDate"
-                placeholder="YYYY-MM-DD"
-                value={endDate}
-                onChange={this.setEndDate.bind(this)}
-              />
+              <Form.Control as="select" onChange={this.setEndDate.bind(this)}>
+                {dateArray.map(date => {
+                  return (
+                    <option key={date.key} value={date.value}>
+                      {date.value}
+                    </option>
+                  );
+                })}
+              </Form.Control>
               <h6>Current End date: {current_endDate}</h6>
             </Form.Group>
 

@@ -13,12 +13,32 @@ class CreateSeasonTable extends React.Component {
       name: "",
       description: "",
       message: "",
+      dateArray: [],
       submitted: false
     };
   }
 
+  createDate = () => {
+    let dateArray = [];
+
+    for (let i = 1; i < 100; i++) {
+      dateArray.push({ key: i, value: 2018 + i });
+    }
+    this.setState({
+      startDate: dateArray[0].value,
+      endDate: dateArray[0].value,
+      dateArray
+    });
+  };
+
   handleForm = event => {
     event.preventDefault();
+    if (this.state.startDate > this.state.endDate) {
+      this.setState({
+        message: "The start date cannot be newer than end date"
+      });
+      return;
+    }
 
     axios
       .post(URL, {
@@ -71,8 +91,14 @@ class CreateSeasonTable extends React.Component {
     });
   };
 
+  componentDidMount() {
+    this.createDate();
+  }
+
   render() {
     let title = "Create Season";
+
+    const { dateArray } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "100%" }}>
@@ -82,22 +108,28 @@ class CreateSeasonTable extends React.Component {
           <Form onSubmit={this.handleForm}>
             <Form.Group controlId="createSeasonForm">
               <Form.Label>Start Date</Form.Label>
-              <Form.Control
-                type="startDate"
-                placeholder="YYYY"
-                value={this.state.startDate}
-                onChange={this.setStartDate}
-              />
+              <Form.Control as="select" onChange={this.setStartDate}>
+                {dateArray.map(date => {
+                  return (
+                    <option key={date.key} value={date.value}>
+                      {date.value}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="createSeasonForm">
               <Form.Label>End Date</Form.Label>
-              <Form.Control
-                type="endDate"
-                placeholder="YYYY"
-                value={this.state.endDate}
-                onChange={this.setEndDate}
-              />
+              <Form.Control as="select" onChange={this.setEndDate}>
+                {dateArray.map(date => {
+                  return (
+                    <option key={date.key} value={date.value}>
+                      {date.value}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="createSeasonForm">

@@ -3,7 +3,7 @@ import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/result/";
-const resultURL = "https://team-football-api.herokuapp.com/result"
+const resultURL = "https://team-football-api.herokuapp.com/result";
 const teamURL = "https://team-football-api.herokuapp.com/team";
 const matchURL = "https://team-football-api.herokuapp.com/match";
 
@@ -28,13 +28,15 @@ class UpdateResultTable extends React.Component {
     event.preventDefault();
 
     axios
-      .put(URL + this.state.result_id, {
-        result_id: this.state.result_id,
-        match_id: this.state.matchId,
-        team_id: this.state.team_id,
-        score: this.state.score,
-        result: this.state.result,
-      },
+      .put(
+        URL + this.state.result_id,
+        {
+          result_id: this.state.result_id,
+          match_id: this.state.matchId,
+          team_id: this.state.team_id,
+          score: this.state.score,
+          result: this.state.result
+        },
         {
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -54,7 +56,7 @@ class UpdateResultTable extends React.Component {
   }
 
   setMatchId(event) {
-    let r = this.getResult(parseInt(event.target.value), this.state.team_id)
+    let r = this.getResult(parseInt(event.target.value), this.state.team_id);
     this.setState({
       matchId: parseInt(event.target.value),
       result_id: r.result_id,
@@ -62,13 +64,10 @@ class UpdateResultTable extends React.Component {
       result: r.result
     });
     //this.setResultId()
-
-
-
   }
 
   setTeamId(event) {
-    let r = this.getResult(this.state.matchId, parseInt(event.target.value))
+    let r = this.getResult(this.state.matchId, parseInt(event.target.value));
     this.setState({
       team_id: parseInt(event.target.value),
       result_id: r.result_id,
@@ -87,24 +86,24 @@ class UpdateResultTable extends React.Component {
   setResult(event) {
     this.setState({
       result: event.target.value
-    })
+    });
   }
 
   setResultId = () => {
     for (let r of this.state.results) {
-      if (r.match_id === this.state.matchId && r.team_id === this.state.team_id) {
-        this.setState(
-          {
-            result_id: r.result_id,
-            score: r.score,
-            result: r.result
-          }
-        )
+      if (
+        r.match_id === this.state.matchId &&
+        r.team_id === this.state.team_id
+      ) {
+        this.setState({
+          result_id: r.result_id,
+          score: r.score,
+          result: r.result
+        });
         return;
       }
     }
-  }
-
+  };
 
   fetchResult = () => {
     axios
@@ -122,9 +121,9 @@ class UpdateResultTable extends React.Component {
           team_id: res.data[0].team_id,
           score: res.data[0].score,
           result: res.data[0].result
-        })
-      })
-  }
+        });
+      });
+  };
 
   /*fetchMatch = () => {
     axios
@@ -185,30 +184,30 @@ class UpdateResultTable extends React.Component {
   }; */
 
   componentDidMount() {
-    this.fetchResult()
+    this.fetchResult();
   }
 
   getMatch = (id, matches) => {
     for (let m of matches) {
-      if (m.match_id === id) return m
+      if (m.match_id === id) return m;
     }
-    return { home_team: '', away_team: '' }
-  }
+    return { home_team: "", away_team: "" };
+  };
 
   getResult = (match, team) => {
     for (let r of this.state.results) {
-      if (r.match_id === match && r.team_id === team) return r
+      if (r.match_id === match && r.team_id === team) return r;
     }
-    return {}
-  }
+    return {};
+  };
 
   render() {
-    let title = "Update Result"
+    let title = "Update Result";
     const { results, matchId, team_id } = this.state;
 
-    const matches = results.map(r => r.match)
-    const match = this.getMatch(matchId, matches)
-    const teams = [match.home_team, match.away_team]
+    const matches = results.map(r => r.match);
+    const match = this.getMatch(matchId, matches);
+    const teams = [match.home_team, match.away_team];
 
     return (
       <Card bg="light" text="black" style={{ width: "100%" }}>
@@ -220,7 +219,9 @@ class UpdateResultTable extends React.Component {
               <Form.Label>Match ID</Form.Label>
               <Form.Control
                 value={matchId}
-                onChange={this.setMatchId.bind(this)} as="select">
+                onChange={this.setMatchId.bind(this)}
+                as="select"
+              >
                 {matches.map((data, index) => {
                   return (
                     <option
@@ -229,7 +230,11 @@ class UpdateResultTable extends React.Component {
                       match_date={data.match_date}
                       onChange={this.setMatchId.bind(this)}
                     >
-                      {data.match_date + " " + data.home_team.team_name + " : " + data.away_team.team_name}
+                      {data.match_date +
+                        " " +
+                        data.home_team.team_name +
+                        " : " +
+                        data.away_team.team_name}
                     </option>
                   );
                 })}
@@ -240,7 +245,9 @@ class UpdateResultTable extends React.Component {
               <Form.Label>Team ID</Form.Label>
               <Form.Control
                 value={team_id}
-                onChange={this.setTeamId.bind(this)} as="select">
+                onChange={this.setTeamId.bind(this)}
+                as="select"
+              >
                 {teams.map(data => {
                   return (
                     <option

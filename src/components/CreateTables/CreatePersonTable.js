@@ -106,6 +106,7 @@ class CreatePersonTable extends React.Component {
     });
   };
   setDateOfBirth = event => {
+    console.log(event.target.value);
     this.setState({
       dateOfBirth: event.target.value
     });
@@ -166,7 +167,7 @@ class CreatePersonTable extends React.Component {
             <Form.Group controlId="addPersonForm">
               <Form.Label>Date of Birth</Form.Label>
               <Form.Control
-                type="dateOfBirth"
+                type="date"
                 placeholder="YYYY-MM-DD"
                 value={this.state.dateOfBirth}
                 onChange={this.setDateOfBirth.bind(this)}
