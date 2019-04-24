@@ -169,6 +169,7 @@ class UpdateAddressTable extends React.Component {
               <Form.Label>To</Form.Label>
               <Form.Control
                 type="addressLine1"
+                style={{ textTransform: "capitalize" }}
                 placeholder={this.state.addressLine1}
                 value={this.state.new_address}
                 onChange={this.setAddressLine1}
@@ -189,6 +190,7 @@ class UpdateAddressTable extends React.Component {
               <Form.Label>City</Form.Label>
               <Form.Control
                 type="city"
+                style={{ textTransform: "capitalize" }}
                 placeholder={this.state.city}
                 value={this.state.new_city}
                 onChange={this.setCity}
@@ -199,6 +201,7 @@ class UpdateAddressTable extends React.Component {
               <Form.Label>Country</Form.Label>
               <Form.Control
                 type="country"
+                style={{ textTransform: "capitalize" }}
                 placeholder={this.state.country}
                 value={this.state.new_country}
                 onChange={this.setCountry}

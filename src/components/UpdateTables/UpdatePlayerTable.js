@@ -56,15 +56,9 @@ class UpdatePlayerTable extends React.Component {
           };
         });
         this.setState({ players: data });
-        this.setState({
-          message: "Successfully Updated"
-        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
-        this.setState({
-          message: "Something went wrong. Please check your inputs"
-        });
       });
   };
 
@@ -143,9 +137,15 @@ class UpdatePlayerTable extends React.Component {
       )
       .then(res => {
         console.log("response: ", res);
+        this.setState({
+          message: "Successfully Updated"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
       });
     this.setState({
       player_id: "",

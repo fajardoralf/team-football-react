@@ -4,8 +4,6 @@ import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/result/";
 const resultURL = "https://team-football-api.herokuapp.com/result";
-const teamURL = "https://team-football-api.herokuapp.com/team";
-const matchURL = "https://team-football-api.herokuapp.com/match";
 
 class UpdateResultTable extends React.Component {
   constructor(props) {

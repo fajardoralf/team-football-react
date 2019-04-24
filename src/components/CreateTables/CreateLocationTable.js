@@ -142,6 +142,7 @@ class CreateLocationTable extends React.Component {
               <Form.Control
                 type="name"
                 placeholder="Name"
+                style={{ textTransform: "capitalize" }}
                 value={this.state.name}
                 onChange={this.setName.bind(this)}
               />
@@ -152,6 +153,7 @@ class CreateLocationTable extends React.Component {
               <Form.Control
                 type="description"
                 placeholder="Description"
+                style={{ textTransform: "capitalize" }}
                 value={this.state.description}
                 onChange={this.setDescription.bind(this)}
               />

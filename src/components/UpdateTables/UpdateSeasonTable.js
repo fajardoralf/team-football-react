@@ -175,8 +175,6 @@ class UpdateSeasonTable extends React.Component {
       current_endDate,
       current_description,
       current_name,
-      startDate,
-      endDate,
       description,
       name,
       dateArray
@@ -241,6 +239,7 @@ class UpdateSeasonTable extends React.Component {
               <Form.Control
                 type="name"
                 placeholder="Name"
+                style={{ textTransform: "capitalize" }}
                 value={name}
                 onChange={this.setName.bind(this)}
               />
@@ -252,6 +251,7 @@ class UpdateSeasonTable extends React.Component {
               <Form.Control
                 type="description"
                 placeholder="Description"
+                style={{ textTransform: "capitalize" }}
                 value={description}
                 onChange={this.setDescription.bind(this)}
               />

@@ -253,6 +253,7 @@ class UpdatePersonTable extends React.Component {
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="firstName"
+                style={{ textTransform: "capitalize" }}
                 placeholder={this.state.firstName}
                 value={this.state.new_firstName}
                 onChange={this.setFirstName}
@@ -263,6 +264,7 @@ class UpdatePersonTable extends React.Component {
               <Form.Label>Last Name</Form.Label>
               <Form.Control
                 type="lastName"
+                style={{ textTransform: "capitalize" }}
                 placeholder={this.state.lastName}
                 value={this.state.new_lastName}
                 onChange={this.setLastName}

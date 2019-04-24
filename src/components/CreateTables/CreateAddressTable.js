@@ -95,6 +95,7 @@ class CreateAddressTable extends React.Component {
               <Form.Label>Address Line 1</Form.Label>
               <Form.Control
                 type="addressLine1"
+                style={{ textTransform: "capitalize" }}
                 placeholder="Address"
                 value={this.state.addressLine1}
                 onChange={this.setAddressLine1}
@@ -104,7 +105,7 @@ class CreateAddressTable extends React.Component {
             <Form.Group controlId="createAddressForm">
               <Form.Label>Postal Code</Form.Label>
               <Form.Control
-                type="postalCode"
+                type="number"
                 placeholder="Postal Code"
                 value={this.state.postalCode}
                 onChange={this.setPostalCode}
@@ -116,6 +117,7 @@ class CreateAddressTable extends React.Component {
               <Form.Control
                 type="city"
                 placeholder="City"
+                style={{ textTransform: "capitalize" }}
                 value={this.state.city}
                 onChange={this.setCity}
               />
@@ -126,6 +128,7 @@ class CreateAddressTable extends React.Component {
               <Form.Control
                 type="country"
                 placeholder="Country"
+                style={{ textTransform: "capitalize" }}
                 value={this.state.country}
                 onChange={this.setCountry}
               />

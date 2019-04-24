@@ -149,6 +149,7 @@ class CreatePersonTable extends React.Component {
               <Form.Control
                 type="firstName"
                 placeholder="First Name"
+                style={{ textTransform: "capitalize" }}
                 value={this.state.firstName}
                 onChange={this.setFirstName.bind(this)}
               />
@@ -159,6 +160,7 @@ class CreatePersonTable extends React.Component {
               <Form.Control
                 type="lastName"
                 placeholder="Last Name"
+                style={{ textTransform: "capitalize" }}
                 value={this.state.lastName}
                 onChange={this.setLastName.bind(this)}
               />
