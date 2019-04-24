@@ -1,5 +1,5 @@
 import React from "react";
-import { Form as label, Button, Card } from "react-bootstrap";
+import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/";
@@ -86,19 +86,18 @@ class UpdateUser extends React.Component {
       <Card bg="light" text="black">
         <Card.Body>
           <h3 className="text-center">{title}</h3>
-          <form onSubmit={this.handleForm.bind(this)}>
-            <div className="form-group" controlId="updateUserForm">
-              <label for="userID">User ID</label>
-              <select
-                id="userID"
-                type="number"
-                placeholder="user ID"
+          <Form onSubmit={this.handleForm.bind(this)}>
+            <Form.Group controlId="updateUserForm">
+              <Form.Label>User ID</Form.Label>
+              <Form.Control onChange={this.setNewUserID.bind(this)} as="select">
+              <option
+                key={this.state.user_id}
                 value={this.state.user_id}
-                onChange={this.setNewUserID.bind(this)}
               >
                 {userids}
-              </select>
-            </div>
+              </option>
+            </Form.Control>
+            </Form.Group>
             <div className="form-group" controlId="updateUserForm">
               <label for="new_username">Username</label>
               <input
@@ -134,7 +133,7 @@ class UpdateUser extends React.Component {
             <Button variant="dark" type="submit">
               Update
             </Button>
-          </form>
+          </Form>
         </Card.Body>
       </Card>
     );
