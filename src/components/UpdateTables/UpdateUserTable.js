@@ -28,7 +28,10 @@ class UpdateUser extends React.Component {
         this.state.new_username !== ""
           ? this.state.new_username
           : this.state.username,
-      password: this.state.new_password,
+      password: 
+        this.state.new_password !== ""
+          ? this.state.new_password
+          : this.state.password,
       role: this.state.new_role
     });
   }
@@ -88,48 +91,50 @@ class UpdateUser extends React.Component {
           <h3 className="text-center">{title}</h3>
           <Form onSubmit={this.handleForm.bind(this)}>
             <Form.Group controlId="updateUserForm">
-              <Form.Label>User ID</Form.Label>
-              <Form.Control onChange={this.setNewUserID.bind(this)} as="select">
-              <option
-                key={this.state.user_id}
+              <Form.Label for="userID">User ID</Form.Label>
+              <Form.Control
+                id="userID"
+                type="number"
+                placeholder="user ID"
                 value={this.state.user_id}
+                onChange={this.setNewUserID.bind(this)}
+                as="select"
               >
                 {userids}
-              </option>
-            </Form.Control>
+              </Form.Control>
             </Form.Group>
-            <div className="form-group" controlId="updateUserForm">
-              <label for="new_username">Username</label>
-              <input
+            <Form.Group  controlId="updateUserForm">
+              <Form.Label for="new_username">Username</Form.Label>
+              <Form.Control
                 id="new_username"
                 type="text"
                 placeholder={this.state.username}
                 value={this.state.new_username}
                 onChange={this.setNewUsername.bind(this)}
               />
-            </div>
-            <div className="form-group" controlId="updateUserForm">
-              <label for="new_password">New Password</label>
-              <input
+            </Form.Group>
+            <Form.Group  controlId="updateUserForm">
+              <Form.Label for="new_password">New Password</Form.Label>
+              <Form.Control
                 id="new_password"
                 type="password"
                 placeholder="New password"
                 value={this.state.new_password}
                 onChange={this.setNewPassword.bind(this)}
               />
-            </div>
-            <div className="form-group" controlId="updateUserForm">
-              <label for="new_role">Role</label>
-              <select
+            </Form.Group>
+            <Form.Group  controlId="updateUserForm">
+              <Form.Label for="new_role">Role</Form.Label>
+              <Form.Control
                 value={this.state.new_role}
                 onChange={this.setNewRole.bind(this)}
-                class="form-group"
                 id="new_role"
+                as="select"
               >
                 <option value={true}>Admin</option>
                 <option value={false}>User</option>
-              </select>
-            </div>
+              </Form.Control>
+            </Form.Group>
             <Button variant="dark" type="submit">
               Update
             </Button>
