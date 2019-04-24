@@ -1,5 +1,5 @@
 import React from "react";
-import { Form as label, Button, Card } from "react-bootstrap";
+import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
 const URL = "https://team-football-api.herokuapp.com/";
@@ -24,12 +24,19 @@ class UpdateUser extends React.Component {
 
     axios.put(URL + "users/" + this.state.user_id, {
       user_id: this.state.user_id,
-      username:
-        this.state.new_username !== ""
+      username: this.state.new_username !== ""
           ? this.state.new_username
           : this.state.username,
-      password: this.state.new_password,
+      password: this.state.new_password !== ""
+          ? this.state.new_password
+          : this.state.password,
       role: this.state.new_role
+    },
+    {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*"
+      }
     });
   }
 
@@ -38,6 +45,13 @@ class UpdateUser extends React.Component {
       if ("" + user.user_id === id) return user.username;
     }
     return "unknown";
+  }
+
+  getUser = id => {
+    for (let u of this.state.users){
+      if (id === u.user_id) return u
+    }
+    return {}
   }
 
   setNewPassword(e) {
@@ -53,9 +67,12 @@ class UpdateUser extends React.Component {
   }
 
   setNewUserID(e) {
+    let u = this.getUser(parseInt(e.target.value))
     this.setState({
-      user_id: e.target.value,
-      username: this.getUsername(e.target.value)
+      user_id: parseInt(e.target.value),
+      username: u.username,
+      password: u.password,
+      new_role: u.role
     });
   }
 
@@ -71,7 +88,8 @@ class UpdateUser extends React.Component {
         users: json.data,
         username: json.data[0].username,
         user_id: json.data[0].user_id,
-        password: json.data.password
+        password: json.data[0].password,
+        new_role: json.data[0].role
       })
     );
   }
@@ -86,55 +104,56 @@ class UpdateUser extends React.Component {
       <Card bg="light" text="black">
         <Card.Body>
           <h3 className="text-center">{title}</h3>
-          <form onSubmit={this.handleForm.bind(this)}>
-            <div className="form-group" controlId="updateUserForm">
-              <label for="userID">User ID</label>
-              <select
+          <Form onSubmit={this.handleForm.bind(this)}>
+            <Form.Group controlId="updateUserForm">
+              <Form.Label for="userID">User ID</Form.Label>
+              <Form.Control
                 id="userID"
                 type="number"
                 placeholder="user ID"
                 value={this.state.user_id}
                 onChange={this.setNewUserID.bind(this)}
+                as="select"
               >
                 {userids}
-              </select>
-            </div>
-            <div className="form-group" controlId="updateUserForm">
-              <label for="new_username">Username</label>
-              <input
+              </Form.Control>
+            </Form.Group>
+            <Form.Group  controlId="updateUserForm">
+              <Form.Label for="new_username">Username</Form.Label>
+              <Form.Control
                 id="new_username"
                 type="text"
                 placeholder={this.state.username}
                 value={this.state.new_username}
                 onChange={this.setNewUsername.bind(this)}
               />
-            </div>
-            <div className="form-group" controlId="updateUserForm">
-              <label for="new_password">New Password</label>
-              <input
+            </Form.Group>
+            <Form.Group  controlId="updateUserForm">
+              <Form.Label for="new_password">New Password</Form.Label>
+              <Form.Control
                 id="new_password"
                 type="password"
                 placeholder="New password"
                 value={this.state.new_password}
                 onChange={this.setNewPassword.bind(this)}
               />
-            </div>
-            <div className="form-group" controlId="updateUserForm">
-              <label for="new_role">Role</label>
-              <select
+            </Form.Group>
+            <Form.Group  controlId="updateUserForm">
+              <Form.Label for="new_role">Role</Form.Label>
+              <Form.Control
                 value={this.state.new_role}
                 onChange={this.setNewRole.bind(this)}
-                class="form-group"
                 id="new_role"
+                as="select"
               >
                 <option value={true}>Admin</option>
                 <option value={false}>User</option>
-              </select>
-            </div>
+              </Form.Control>
+            </Form.Group>
             <Button variant="dark" type="submit">
               Update
             </Button>
-          </form>
+          </Form>
         </Card.Body>
       </Card>
     );

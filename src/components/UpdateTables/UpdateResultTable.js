@@ -248,10 +248,10 @@ class UpdateResultTable extends React.Component {
                 onChange={this.setTeamId.bind(this)}
                 as="select"
               >
-                {teams.map(data => {
+                {teams.map((data, index) => {
                   return (
                     <option
-                      key={data.team_id}
+                      key={index}
                       value={data.team_id}
                       team_name={data.team_name}
                     >

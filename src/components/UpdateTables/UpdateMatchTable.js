@@ -252,9 +252,7 @@ class UpdateMatchTable extends React.Component {
       season_id,
       location_id,
       homeTeam_id,
-      awayTeam_id,
-      homeTeam_name,
-      awayTeam_name
+      awayTeam_id
     } = this.state;
     const { teams } = this.state;
     const { seasons } = this.state;
