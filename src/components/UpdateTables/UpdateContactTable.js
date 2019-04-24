@@ -196,6 +196,7 @@ class UpdateContactTable extends React.Component {
               <Form.Control
                 type="contactType"
                 placeholder={this.state.contactType}
+                style={{ textTransform: "capitalize" }}
                 value={this.state.new_contactType}
                 onChange={this.setContactType}
               />
@@ -206,6 +207,7 @@ class UpdateContactTable extends React.Component {
               <Form.Control
                 type="contactDetail"
                 placeholder={this.state.contactDetail}
+                style={{ textTransform: "capitalize" }}
                 value={this.state.new_contactDetail}
                 onChange={this.setContactDetail}
               />

@@ -172,13 +172,13 @@ class UpdateLocationTable extends React.Component {
 
   setName = event => {
     this.setState({
-      name: event.target.value
+      new_name: event.target.value
     });
   };
 
   setDescription = event => {
     this.setState({
-      description: event.target.value
+      new_description: event.target.value
     });
   };
 
@@ -266,6 +266,7 @@ class UpdateLocationTable extends React.Component {
               <Form.Control
                 type="name"
                 placeholder={name}
+                style={{ textTransform: "capitalize" }}
                 value={new_name}
                 onChange={this.setName}
               />
@@ -276,6 +277,7 @@ class UpdateLocationTable extends React.Component {
               <Form.Control
                 type="description"
                 placeholder={description}
+                style={{ textTransform: "capitalize" }}
                 value={new_description}
                 onChange={this.setDescription}
               />

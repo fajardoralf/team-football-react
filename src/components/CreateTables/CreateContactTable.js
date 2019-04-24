@@ -146,6 +146,7 @@ class CreateContactTable extends React.Component {
               <Form.Control
                 type="contactDetail"
                 placeholder="Contact Detail"
+                style={{ textTransform: "capitalize" }}
                 value={this.state.contactDetail}
                 onChange={this.setContactDetail.bind(this)}
               />

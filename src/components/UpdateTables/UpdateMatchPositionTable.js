@@ -73,7 +73,6 @@ class UpdateMatchPositionTable extends React.Component {
         }
       })
       .then(res => {
-        console.log(res);
         this.setState({
           matchPosition_id: res.data[0].matchPosition_id,
           player_id: res.data[0].player.player_id,

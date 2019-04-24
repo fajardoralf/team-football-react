@@ -137,6 +137,7 @@ class CreateSeasonTable extends React.Component {
               <Form.Control
                 type="name"
                 placeholder="Name"
+                style={{ textTransform: "capitalize" }}
                 value={this.state.name}
                 onChange={this.setName}
               />
@@ -147,6 +148,7 @@ class CreateSeasonTable extends React.Component {
               <Form.Control
                 type="description"
                 placeholder="Description"
+                style={{ textTransform: "capitalize" }}
                 value={this.state.description}
                 onChange={this.setDescription}
               />
