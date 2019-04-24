@@ -3,6 +3,9 @@ import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 
+import "./Teams.css";
+//import Collapsible from "react-collapsible";
+
 const teamURL = "https://team-football-api.herokuapp.com/team/";
 const playerURL = "https://team-football-api.herokuapp.com/playerbyteam/";
 
@@ -34,7 +37,7 @@ class Teams extends React.Component {
         <NavigationBar />
         <h1 className="text-center">Teams</h1>
         <div className="row">
-          <div className="col-4">
+          <div className="col-6">
             {this.state.teams.map(data => {
               counter1++;
               return (
@@ -49,8 +52,9 @@ class Teams extends React.Component {
               );
             })}
           </div>
-          <div className="col-7">
-            <Table responsive>
+          <div className="col-7" />
+          <div className="container">
+            <Table responsive="sm">
               <thead>
                 <tr>
                   <th>Name</th>
