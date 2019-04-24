@@ -159,7 +159,7 @@ class CreateMatchPositionTable extends React.Component {
     } = this.state;
 
     return (
-      <Card bg="light" text="black" style={{ width: "30rem" }}>
+      <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />

@@ -99,7 +99,7 @@ class DeleteAddressTable extends React.Component {
     let title = "Delete Address";
     const { first_name, last_name } = this.state;
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />

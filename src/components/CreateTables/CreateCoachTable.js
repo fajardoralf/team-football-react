@@ -90,7 +90,7 @@ class CreateCoachTable extends React.Component {
     let title = "Create Coach";
     const { person } = this.state;
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />

@@ -95,7 +95,7 @@ class DeleteMatchPositionTable extends React.Component {
   render() {
     let title = "Delete Match Position";
     return (
-      <Card bg="light" text="black" style={{ width: "18rem" }}>
+      <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>
           <h3 className="text-center">{title}</h3>
           <br />

@@ -15,7 +15,7 @@ class UpdateSelfTable extends React.Component {
       lastName: "",
       dateOfBirth: "",
       message: "",
-      new_password: '',
+      new_password: "",
       submitted: false,
       password_updated: false
     };
@@ -24,16 +24,15 @@ class UpdateSelfTable extends React.Component {
   handleForm(event) {
     event.preventDefault();
 
-    axios
-      .post(URL + "person", {
-        person_id: this.state.personId,
-        address_id: this.state.addressId,
-        first_name: this.state.firstName,
-        last_name: this.state.lastName,
-        dateOfBirth: this.state.dateOfBirth,
-        message: "Successfully Updated",
-        submitted: true
-      })
+    axios.post(URL + "person", {
+      person_id: this.state.personId,
+      address_id: this.state.addressId,
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
+      dateOfBirth: this.state.dateOfBirth,
+      message: "Successfully Updated",
+      submitted: true
+    });
     this.setState({
       addressId: "",
       firstName: "",
@@ -61,48 +60,56 @@ class UpdateSelfTable extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(URL+ 'person/' + this.state.personId).then(res => this.setState({
-      addressId: res.data.address_id,
-      firstName: res.data.first_name,
-      lastName: res.data.last_name,
-      dateOfBirth: res.data.date_of_birth,}));
-    axios.get(URL+'users/'+this.state.personId).then(res => this.setState({user: res.data}))
+    axios.get(URL + "person/" + this.state.personId).then(res =>
+      this.setState({
+        addressId: res.data.address_id,
+        firstName: res.data.first_name,
+        lastName: res.data.last_name,
+        dateOfBirth: res.data.date_of_birth
+      })
+    );
+    axios
+      .get(URL + "users/" + this.state.personId)
+      .then(res => this.setState({ user: res.data }));
   }
 
-  handlePasswordChange = (event) => {
-    event.preventDefault()
-    axios.put(URL+"users/"+this.state.personId, {
-      user_id: this.state.personId,
-      username: this.state.user.username,
-      password: this.state.new_password !== "" ?
-        this.state.new_password : this.state.user.password,
-      role: this.state.user.role,
-    }).then(res => {
-      if (res.status === 202) {
-        this.setState({
-          password_updated: true
-        })
-      }
-    })
-  }
-  
-  setNewPassword = (event) => {
-    this.setState({new_password: event.target.value})
-  }
+  handlePasswordChange = event => {
+    event.preventDefault();
+    axios
+      .put(URL + "users/" + this.state.personId, {
+        user_id: this.state.personId,
+        username: this.state.user.username,
+        password:
+          this.state.new_password !== ""
+            ? this.state.new_password
+            : this.state.user.password,
+        role: this.state.user.role
+      })
+      .then(res => {
+        if (res.status === 202) {
+          this.setState({
+            password_updated: true
+          });
+        }
+      });
+  };
+
+  setNewPassword = event => {
+    this.setState({ new_password: event.target.value });
+  };
 
   render() {
     const titleInfo = "Update Your Info";
-    const titlePassword = "Update Your Password"
+    const titlePassword = "Update Your Password";
 
     return (
       <div className="row">
         <div className="col">
-          <Card bg="light" text="black" style={{ width: "18rem" }}>
+          <Card bg="light" text="black" style={{ width: "100%" }}>
             <Card.Body>
               <h3 className="text-center">{titleInfo}</h3>
               <br />
               <Form onSubmit={this.handleForm.bind(this)}>
-
                 <Form.Group controlId="updatePersonForm">
                   <Form.Label>Address ID</Form.Label>
                   <Form.Control
@@ -151,11 +158,9 @@ class UpdateSelfTable extends React.Component {
                 >
                   <Button variant="dark" type="Submit">
                     Update
-              </Button>
+                  </Button>
 
-                  <div className="text-center">
-                    {this.state.message}
-                  </div>
+                  <div className="text-center">{this.state.message}</div>
                 </div>
               </Form>
             </Card.Body>
@@ -166,21 +171,23 @@ class UpdateSelfTable extends React.Component {
             <Card.Body>
               <h3>{titlePassword}</h3>
               <Form onSubmit={this.handlePasswordChange}>
-                  <Form.Group controlId="changePassword">
-                    <Form.Label>New Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="New password"
-                      value={this.state.new_password}
-                      onChange={this.setNewPassword}
-                    />
-                  </Form.Group>
-                  
-                  <Button variant="dark" type="submit">
-                    Change
-                  </Button>
-                  <br/>
-                  {this.state.password_updated ? "Password successfully changed" : ''}
+                <Form.Group controlId="changePassword">
+                  <Form.Label>New Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="New password"
+                    value={this.state.new_password}
+                    onChange={this.setNewPassword}
+                  />
+                </Form.Group>
+
+                <Button variant="dark" type="submit">
+                  Change
+                </Button>
+                <br />
+                {this.state.password_updated
+                  ? "Password successfully changed"
+                  : ""}
               </Form>
             </Card.Body>
           </Card>
