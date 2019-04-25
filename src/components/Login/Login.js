@@ -22,13 +22,11 @@ class Login extends Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    const data = new FormData(this.form)
-    axios({
-      method: 'post',
-      url: URL,
-      data: new URLSearchParams(data),
-      config: { headers: {'Content-Type': 'multipart/form-data' }}
-    })
+    axios
+      .post(URL, {
+        username: this.state.username,
+        password: this.state.password
+      })
       .then(res => console.log(res))
 
     this.setState({
@@ -59,7 +57,7 @@ class Login extends Component {
     return (
       <div>
         {sessionStorage.getItem("username") === null ? (
-          <Form inline onSubmit={this.handleSubmit.bind(this)} ref={fm => {this.form=fm}}>
+          <Form inline onSubmit={this.handleSubmit.bind(this)} ref={fm => { this.form = fm }}>
             <InputGroup>
               <FormControl
                 type="username"
