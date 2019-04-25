@@ -56,6 +56,10 @@ class CreateMatchTable extends React.Component {
         }
       })
       .then(res => {
+        this.setState({
+          start_date: res.data[0].start_date,
+          end_date: res.data[0].end_date
+        });
         let data = res.data.map(data => {
           return {
             key: data.season_id,
@@ -96,6 +100,17 @@ class CreateMatchTable extends React.Component {
   handleForm = event => {
     event.preventDefault();
 
+    const { start_date, end_date } = this.state;
+
+    if (
+      this.state.matchDate.slice(0, 4) < start_date ||
+      this.state.matchDate.slice(0, 4) > end_date
+    ) {
+      this.setState({
+        message: "The date doenst match with the season chosen"
+      });
+      return;
+    }
     axios
       .post(
         URL,
@@ -154,7 +169,9 @@ class CreateMatchTable extends React.Component {
 
   setSeason_id = event => {
     this.setState({
-      season_id: event.target.value
+      season_id: event.target.value,
+      start_date: +event.target.selectedOptions[0].getAttribute("start_date"),
+      end_date: +event.target.selectedOptions[0].getAttribute("end_date")
     });
   };
 
@@ -182,8 +199,8 @@ class CreateMatchTable extends React.Component {
             <Form.Group controlId="createMatchForm">
               <Form.Label>Match Date</Form.Label>
               <Form.Control
-                type="match_date"
-                placeholder="Match Date"
+                type="date"
+                placeholder="YYYY-MM-DD"
                 value={this.state.matchDate}
                 onChange={this.setMatchDate.bind(this)}
               />
@@ -220,7 +237,12 @@ class CreateMatchTable extends React.Component {
               <Form.Control onChange={this.setSeason_id} as="select">
                 {this.state.season.map(data => {
                   return (
-                    <option key={data.key} value={data.key}>
+                    <option
+                      key={data.key}
+                      value={data.key}
+                      start_date={data.season_start}
+                      end_date={data.season_end}
+                    >
                       {data.season_name +
                         ": " +
                         data.season_start +
