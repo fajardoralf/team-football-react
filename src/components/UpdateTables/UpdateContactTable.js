@@ -29,7 +29,7 @@ class UpdateContactTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(
+      .put(
         URL + this.state.contactId,
         {
           contact_id: this.state.contactId,
@@ -41,9 +41,7 @@ class UpdateContactTable extends React.Component {
           contact_detail:
             this.state.new_contactDetail !== ""
               ? this.state.new_contactDetail
-              : this.state.contactDetail,
-          message: "Successfully Updated ",
-          submitted: true
+              : this.state.contactDetail
         },
         {
           headers: {
@@ -64,15 +62,20 @@ class UpdateContactTable extends React.Component {
           message: "Something went wrong. Please check your inputs"
         });
       });
-    this.setState({
-      contactId: "",
-      personId: "",
-      contactType: "",
-      contactDetail: ""
-    });
+
+    console.log(
+      this.state.contactId +
+        " " +
+        this.state.personId +
+        " " +
+        this.state.contactType +
+        " " +
+        this.state.contactDetail
+    );
   }
 
   setContactId = event => {
+    console.log(event.target.value);
     console.log(event.target.selectedOptions[0].getAttribute("contact_detail"));
     this.setState(
       {
@@ -90,6 +93,7 @@ class UpdateContactTable extends React.Component {
   };
 
   setPersonId = event => {
+    console.log(event.target.value);
     this.setState({
       personId: event.target.value
     });
@@ -97,13 +101,13 @@ class UpdateContactTable extends React.Component {
 
   setContactType = event => {
     this.setState({
-      contactType: event.target.value
+      new_contactType: event.target.value
     });
   };
 
   setContactDetail = event => {
     this.setState({
-      contactDetail: event.target.value
+      new_contactDetail: event.target.value
     });
   };
 
@@ -158,7 +162,8 @@ class UpdateContactTable extends React.Component {
   }
   render() {
     let title = "Update Contact";
-    const { contact, first_name, last_name, personId } = this.state;
+    const { contact, first_name, last_name, personId, contactId } = this.state;
+    console.log(contactId + " " + personId);
     return (
       <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>

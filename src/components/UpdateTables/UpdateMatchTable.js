@@ -175,7 +175,6 @@ class UpdateMatchTable extends React.Component {
         }
       })
       .then(res => {
-        console.log(res);
         this.setState({
           start_date: res.data[0].start_date,
           end_date: res.data[0].end_date
@@ -288,8 +287,6 @@ class UpdateMatchTable extends React.Component {
       seasons,
       location
     } = this.state;
-
-    console.log(start_date);
 
     return (
       <Card bg="light" text="black" style={{ width: "100%" }}>
