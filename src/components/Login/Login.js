@@ -13,7 +13,8 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      role: "admin"
+      role: "admin",
+      message: ''
     };
   }
 
@@ -27,14 +28,27 @@ class Login extends Component {
         username: this.state.username,
         password: this.state.password
       })
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res)
+        if (res.status === 202) {
+          sessionStorage.setItem("username", res.username);
+          sessionStorage.setItem("user_id", res.password);
+          sessionStorage.setItem("role", res.role);
+          this.setState({message: ''})
+        }
+        else if (res.status === 404) {
+          this.setState({
+            username: '',
+            password: '',
+            message: 'Wrong username/password'
+          })
+        }
+      })
 
     this.setState({
       username: this.state.username
     })
-    sessionStorage.setItem("username", this.state.username);
-    sessionStorage.setItem("password", this.state.password);
-    sessionStorage.setItem("role", this.state.role); //admin, user, undefined == anonymous
+    //admin, user, undefined == anonymous
   }
 
   handleChangeUsername(event) {
@@ -48,7 +62,8 @@ class Login extends Component {
   handleLogout(event) {
     this.setState({
       user: "",
-      passworrd: ""
+      passworrd: "",
+      message: ''
     });
     sessionStorage.clear();
   }
@@ -84,7 +99,8 @@ class Login extends Component {
               </Button>
               <Button variant="outline-light" id="button" href="/signup">
                 Sign Up
-          </Button>
+              </Button>
+              {this.state.message}
             </InputGroup>
           </Form>
         )
