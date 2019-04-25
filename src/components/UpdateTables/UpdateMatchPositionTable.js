@@ -222,7 +222,7 @@ class UpdateMatchPositionTable extends React.Component {
                       away_team={data.away_team.team_name}
                       away_team_id={data.away_team_id}
                     >
-                      {data.date +
+                      {new Date(data.date).toLocaleDateString() +
                         "-" +
                         data.home_team +
                         " Vs. " +
