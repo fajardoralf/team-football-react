@@ -19,7 +19,7 @@ class UpdateGoalTypeTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post(
+      .put(
         URL + this.state.goal_type_id,
         {
           goal_type_id: this.state.goal_type_id,

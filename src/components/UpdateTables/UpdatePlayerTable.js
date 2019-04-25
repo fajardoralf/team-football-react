@@ -25,12 +25,19 @@ class UpdatePlayerTable extends React.Component {
       current_team: "",
       normal_position: "",
       current_position: "",
+      numbers: [],
       number: "",
       current_number: "",
       message: "",
       submitted: false
     };
   }
+
+  createNumber = () => {
+    for (let i = 1; i < 100; i++) {
+      this.state.numbers.push({ key: i, value: i });
+    }
+  };
 
   fetchPlayer = () => {
     axios
@@ -196,6 +203,7 @@ class UpdatePlayerTable extends React.Component {
     this.fetchPlayer();
     this.fetchPerson();
     this.fetchTeam();
+    this.createNumber();
 
     this.setState({ normal_position: this.state.positions[0].value });
   }
@@ -210,7 +218,8 @@ class UpdatePlayerTable extends React.Component {
       current_number,
       current_position,
       current_team,
-      positions
+      positions,
+      numbers
     } = this.state;
 
     return (
@@ -290,12 +299,15 @@ class UpdatePlayerTable extends React.Component {
 
             <Form.Group controlId="updatePlayerForm">
               <Form.Label>Number</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Number"
-                value={this.state.number}
-                onChange={this.setNumber}
-              />
+              <Form.Control as="select" onChange={this.setNumber}>
+                {numbers.map(data => {
+                  return (
+                    <option key={data.key} value={data.value}>
+                      {data.value}
+                    </option>
+                  );
+                })}
+              </Form.Control>
               <h6>Current Number: {current_number}</h6>
             </Form.Group>
             <div

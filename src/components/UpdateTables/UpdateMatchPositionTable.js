@@ -89,7 +89,7 @@ class UpdateMatchPositionTable extends React.Component {
             last_name: data.player.person.last_name
           };
         });
-        console.log(data);
+
         this.setState({ matchPosition: data });
       })
       .catch(err => {

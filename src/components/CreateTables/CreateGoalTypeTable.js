@@ -69,8 +69,9 @@ class CreateGoalTypeTable extends React.Component {
             <Form.Group controlId="createGoalTypeForm">
               <Form.Label>Type</Form.Label>
               <Form.Control
-                type="type"
+                type="goal_type"
                 placeholder="Type"
+                style={{ textTransform: "capitalize" }}
                 value={this.state.type}
                 onChange={this.setType.bind(this)}
               />

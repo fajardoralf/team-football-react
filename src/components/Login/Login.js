@@ -3,6 +3,9 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import { InputGroup } from "react-bootstrap";
+import axios from "axios";
+
+URL = 'https://team-football-api.herokuapp.com/login'
 
 class Login extends Component {
   constructor(props) {
@@ -16,14 +19,22 @@ class Login extends Component {
 
   componentDidMount() { }
 
-  handleSubmit() {
-    var _this = this;
-    _this.setState({
-      username: _this.state.username
+  handleSubmit(event) {
+    event.preventDefault()
+
+    axios
+      .post(URL, {
+        username: this.state.username,
+        password: this.state.password
+      })
+      .then(res => console.log(res))
+
+    this.setState({
+      username: this.state.username
     })
-    sessionStorage.setItem("username", _this.state.username);
-    sessionStorage.setItem("password", _this.state.password);
-    sessionStorage.setItem("role", _this.state.role); //admin, user, undefined == anonymous
+    sessionStorage.setItem("username", this.state.username);
+    sessionStorage.setItem("password", this.state.password);
+    sessionStorage.setItem("role", this.state.role); //admin, user, undefined == anonymous
   }
 
   handleChangeUsername(event) {
@@ -46,7 +57,7 @@ class Login extends Component {
     return (
       <div>
         {sessionStorage.getItem("username") === null ? (
-          <Form inline onSubmit={this.handleSubmit.bind(this)}>
+          <Form inline onSubmit={this.handleSubmit.bind(this)} ref={fm => { this.form = fm }}>
             <InputGroup>
               <FormControl
                 type="username"

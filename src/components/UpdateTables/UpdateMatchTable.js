@@ -17,6 +17,8 @@ class UpdateMatchTable extends React.Component {
       matchId: 1,
       match: [],
       matchDate: "",
+      start_date: "",
+      end_date: "",
       homeTeam_id: "",
       awayTeam_id: "",
       homeTeam_name: "",
@@ -30,6 +32,18 @@ class UpdateMatchTable extends React.Component {
 
   handleForm(event) {
     event.preventDefault();
+
+    const { start_date, end_date } = this.state;
+
+    if (
+      this.state.matchDate.slice(0, 4) < start_date ||
+      this.state.matchDate.slice(0, 4) > end_date
+    ) {
+      this.setState({
+        message: "The date doenst match with the season chosen"
+      });
+      return;
+    }
 
     axios
       .put(
@@ -53,9 +67,15 @@ class UpdateMatchTable extends React.Component {
       )
       .then(res => {
         console.log("response: ", res);
+        this.setState({
+          message: "Successfully Updated"
+        });
       })
       .catch(err => {
         console.log("Axios error: ", err);
+        this.setState({
+          message: "Something went wrong. Please check your inputs"
+        });
       });
     this.setState({
       matchId: 1,
@@ -101,7 +121,9 @@ class UpdateMatchTable extends React.Component {
 
   setSeason_id(event) {
     this.setState({
-      season_id: parseInt(event.target.value)
+      season_id: parseInt(event.target.value),
+      start_date: +event.target.selectedOptions[0].getAttribute("start_date"),
+      end_date: +event.target.selectedOptions[0].getAttribute("end_date")
     });
   }
 
@@ -153,6 +175,10 @@ class UpdateMatchTable extends React.Component {
         }
       })
       .then(res => {
+        this.setState({
+          start_date: res.data[0].start_date,
+          end_date: res.data[0].end_date
+        });
         let data = res.data.map(data => {
           this.setState({
             season_name: res.data.name
@@ -160,6 +186,8 @@ class UpdateMatchTable extends React.Component {
           return {
             key: data.season_id,
             value: data.season_id,
+            start_date: data.start_date,
+            end_date: data.end_date,
             text: data.name
           };
         });
@@ -248,15 +276,17 @@ class UpdateMatchTable extends React.Component {
 
     const {
       match,
-      matchDate,
+
       season_id,
       location_id,
       homeTeam_id,
-      awayTeam_id
+      awayTeam_id,
+      start_date,
+      end_date,
+      teams,
+      seasons,
+      location
     } = this.state;
-    const { teams } = this.state;
-    const { seasons } = this.state;
-    const { location } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "100%" }}>
@@ -292,9 +322,11 @@ class UpdateMatchTable extends React.Component {
             <Form.Group controlId="updateMatchForm">
               <Form.Label>Match Date</Form.Label>
               <Form.Control
+
                 type="matchDate"
                 placeholder="Match Date"
                 value={new Date(matchDate).toLocaleDateString()}
+
                 onChange={this.setMatchDate.bind(this)}
               />
             </Form.Group>
@@ -342,12 +374,18 @@ class UpdateMatchTable extends React.Component {
               >
                 {seasons.map(data => {
                   return (
-                    <option key={data.key} value={data.value}>
+                    <option
+                      key={data.key}
+                      value={data.value}
+                      start_date={data.start_date}
+                      end_date={data.end_date}
+                    >
                       {data.text}
                     </option>
                   );
                 })}
               </Form.Control>
+              {"Start date: " + start_date + " End date: " + end_date}
             </Form.Group>
 
             <Form.Group controlId="updateMatchForm">
@@ -377,11 +415,12 @@ class UpdateMatchTable extends React.Component {
               <Button variant="dark" type="Submit">
                 Update
               </Button>
+            </div>
+            <br />
 
-              <div className="text-center">
-                {this.state.message}
-                {this.state.submitted ? this.state.address_line_1 : ""}
-              </div>
+            <div className="text-center">
+              {this.state.message}
+              {this.state.submitted ? this.state.address_line_1 : ""}
             </div>
           </Form>
         </Card.Body>

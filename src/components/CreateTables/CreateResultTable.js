@@ -88,7 +88,6 @@ class CreateResultTable extends React.Component {
         }
       })
       .then(res => {
-        console.log(res.data[0].away_team.team_id);
         this.setState({
           match_id: res.data[0].match_id,
           home_team_id: res.data[0].home_team.team_id,
