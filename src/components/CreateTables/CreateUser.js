@@ -25,9 +25,7 @@ class CreateUser extends React.Component {
         {
           username: this.state.username,
           password: this.state.password,
-          role: false, // false == regular user
-          message: "Successfully created ",
-          submitted: true
+          role: false // false == regular user
         },
         {
           headers: {
@@ -43,7 +41,9 @@ class CreateUser extends React.Component {
           sessionStorage.setItem("role", "user");
           sessionStorage.setItem("password", res.data.password);
           this.setState({
-            redirect: true
+            redirect: true,
+            message: "Successfully created ",
+            submitted: true
           });
         }
       })
@@ -73,12 +73,9 @@ class CreateUser extends React.Component {
       return <Redirect to="/" />;
     }
   };
-  //componentDidMount() {
-  //axios.get(URL).then(json => this.setState({ store: json.data }));
-  //}
 
   render() {
-    let title = "Register User";
+    let title = "Create User";
 
     return (
       <Card bg="light" text="black" style={{ width: "18rem" }}>

@@ -21,11 +21,18 @@ class CreatePlayerTable extends React.Component {
         { key: 3, value: "Midfielder" },
         { key: 4, value: "Forward" }
       ],
-      number: "",
+      number: 1,
+      numbers: [],
       message: "",
       submitted: false
     };
   }
+
+  createNumber = () => {
+    for (let i = 1; i < 100; i++) {
+      this.state.numbers.push({ key: i, value: i });
+    }
+  };
 
   handleForm = event => {
     event.preventDefault();
@@ -134,6 +141,7 @@ class CreatePlayerTable extends React.Component {
     });
   };
   setNumber = event => {
+    console.log(event.target.value);
     this.setState({
       number: event.target.value
     });
@@ -142,11 +150,12 @@ class CreatePlayerTable extends React.Component {
   componentDidMount() {
     this.fetchPerson();
     this.fetchTeam();
+    this.createNumber();
   }
 
   render() {
     let title = "Create Player";
-    const { persons, teams, normal_position } = this.state;
+    const { persons, teams, normal_position, numbers } = this.state;
 
     return (
       <Card bg="light" text="black" style={{ width: "100%" }}>
@@ -199,12 +208,15 @@ class CreatePlayerTable extends React.Component {
 
             <Form.Group controlId="addPlayerForm">
               <Form.Label>Number</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Number"
-                value={this.state.number}
-                onChange={this.setNumber}
-              />
+              <Form.Control as="select" onChange={this.setNumber}>
+                {numbers.map(data => {
+                  return (
+                    <option key={data.key} value={data.value}>
+                      {data.value}
+                    </option>
+                  );
+                })}
+              </Form.Control>
             </Form.Group>
             <div
               style={{
