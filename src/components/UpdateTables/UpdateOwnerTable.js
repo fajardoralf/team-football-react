@@ -118,7 +118,7 @@ class UpdateOwnerTable extends React.Component {
   }
 
   render() {
-    let title = "Create Owner";
+    let title = "Update Owner";
     const { person, owner } = this.state;
     return (
       <Card bg="light" text="black" style={{ width: "100%" }}>

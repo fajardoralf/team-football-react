@@ -276,7 +276,7 @@ class UpdateMatchTable extends React.Component {
 
     const {
       match,
-      matchDate,
+
       season_id,
       location_id,
       homeTeam_id,
@@ -324,7 +324,6 @@ class UpdateMatchTable extends React.Component {
               <Form.Control
                 type="date"
                 placeholder="YYYY-MM-DD"
-                value={matchDate}
                 onChange={this.setMatchDate.bind(this)}
               />
             </Form.Group>

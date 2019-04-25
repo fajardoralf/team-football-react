@@ -273,12 +273,7 @@ class UpdatePersonTable extends React.Component {
 
             <Form.Group controlId="updatePersonForm">
               <Form.Label>Date of Birth</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder={this.state.dateOfBirth}
-                value={this.state.new_dateOfBirth}
-                onChange={this.setDateOfBirth}
-              />
+              <Form.Control type="date" onChange={this.setDateOfBirth} />
 
               <h6>{"Current date of birth: " + this.state.dateOfBirth}</h6>
             </Form.Group>
