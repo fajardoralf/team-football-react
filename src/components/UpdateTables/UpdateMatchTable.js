@@ -278,7 +278,7 @@ class UpdateMatchTable extends React.Component {
                       away_team={data.away_team.team_name}
                       away_team_id={data.away_team_id}
                     >
-                      {data.date +
+                      {new Date(data.date).toLocaleDateString() +
                         "-" +
                         data.home_team +
                         " Vs. " +
@@ -294,7 +294,7 @@ class UpdateMatchTable extends React.Component {
               <Form.Control
                 type="matchDate"
                 placeholder="Match Date"
-                value={matchDate}
+                value={new Date(matchDate).toLocaleDateString()}
                 onChange={this.setMatchDate.bind(this)}
               />
             </Form.Group>

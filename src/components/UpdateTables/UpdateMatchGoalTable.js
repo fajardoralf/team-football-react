@@ -230,7 +230,7 @@ class UpdateMatchGoalTable extends React.Component {
       goalType,
       player,
       matchId,
-      matchGoal,
+      description,
       home_team_id,
       away_team_id
     } = this.state;
@@ -259,7 +259,7 @@ class UpdateMatchGoalTable extends React.Component {
                       away_team={data.away_team.team_name}
                       away_team_id={data.away_team_id}
                     >
-                      {data.date +
+                      {new Date(data.date).toLocaleDateString() +
                         "-" +
                         data.home_team +
                         " Vs. " +
@@ -314,15 +314,11 @@ class UpdateMatchGoalTable extends React.Component {
 
             <Form.Group controlId="updateMatchGoalForm">
               <Form.Label>Description</Form.Label>
-              <Form.Control onChange={this.setDescription} as="select">
-                {matchGoal.map(data => {
-                  return (
-                    <option key={data.key} value={data.key}>
-                      {data.description}
-                    </option>
-                  );
-                })}
-              </Form.Control>
+              <Form.Control
+                onChange={this.setDescription}
+                type="text"
+                value={this.state.new_description}
+              />
               {this.state.description}
             </Form.Group>
             <div

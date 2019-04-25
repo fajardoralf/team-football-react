@@ -280,7 +280,10 @@ class UpdatePersonTable extends React.Component {
                 onChange={this.setDateOfBirth}
               />
 
-              <h6>{"Current date of birth: " + this.state.dateOfBirth}</h6>
+              <h6>
+                {"Current date of birth: " +
+                  new Date(this.state.dateOfBirth).toLocaleDateString()}
+              </h6>
             </Form.Group>
             <div
               style={{
