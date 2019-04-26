@@ -38,7 +38,10 @@ class Login extends Component {
       .post(URL, {
         username: this.state.username,
         password: this.state.password
-      })*/
+      },
+      {headers: {
+        "Content-Type": "application/json",
+      }})*/
     axios({
       method: 'post',
       url: URL,
@@ -46,14 +49,21 @@ class Login extends Component {
       config: { headers: {'Content-Type': 'multipart/form-data' }}
     })
       .then(res => {
-        console.log(res)
-        if (res.status === 200) {
+        if (!res.request.responseURL.includes("error")) {
           sessionStorage.setItem("username", res.data.username);
           sessionStorage.setItem("user_id", res.data.user_id);
           sessionStorage.setItem("role", res.data.role);
           this.state.rerender()
           this.setState({message: ''})
           
+        }
+
+        else {
+          this.setState({
+            username: '',
+            password: '',
+            message: 'Wrong username/password'
+          }) 
         }
       }).catch(e => this.setState({
         username: '',
