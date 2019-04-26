@@ -185,7 +185,7 @@ class DeleteMatchGoal extends React.Component {
                 })}
               </Form.Control>
               <Form.Label>Date</Form.Label>
-              <h6>{this.state.date}</h6>
+              <h6>{new Date(this.state.date).toLocaleDateString()}</h6>
               <Form.Label>Team</Form.Label>
               <h6>{data && data.team.team_name}</h6>
               <Form.Label>Player</Form.Label>

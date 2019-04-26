@@ -228,7 +228,7 @@ class UpdateResultTable extends React.Component {
                       match_date={data.match_date}
                       onChange={this.setMatchId.bind(this)}
                     >
-                      {data.match_date +
+                      {new Date(data.match_date).toLocaleDateString() +
                         " " +
                         data.home_team.team_name +
                         " : " +
