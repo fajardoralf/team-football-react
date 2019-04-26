@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import { InputGroup } from "react-bootstrap";
+import { Redirect } from 'react-router-dom'
 import axios from "axios";
 
 URL = 'https://team-football-api.herokuapp.com/login'
@@ -14,13 +15,15 @@ class Login extends Component {
       username: "",
       password: "",
       role: "admin",
-      message: ''
+      message: '',
+      rerender: props.rerender,
+      redirect: false
     };
   }
 
   componentDidMount() { }
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     event.preventDefault()
 
     axios
@@ -32,11 +35,13 @@ class Login extends Component {
         console.log(res)
         if (res.status === 202) {
           sessionStorage.setItem("username", res.data.username);
-          sessionStorage.setItem("user_id", res.data.password);
+          sessionStorage.setItem("user_id", res.data.user_id);
           sessionStorage.setItem("role", res.data.role);
+          this.state.rerender()
           this.setState({message: ''})
+          
         }
-        else if (res.status === 404) {
+        else /*if (res.status === 404)*/ {
           this.setState({
             username: '',
             password: '',
@@ -63,9 +68,17 @@ class Login extends Component {
     this.setState({
       user: "",
       passworrd: "",
-      message: ''
+      message: '',
+      redirect: true
     });
+    this.state.rerender()
     sessionStorage.clear();
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/' />
+    }
   }
 
   render() {
@@ -115,6 +128,7 @@ class Login extends Component {
             Log out
           </Button>
         }
+        {this.renderRedirect()}
       </div>
       /*
       <div id="form">

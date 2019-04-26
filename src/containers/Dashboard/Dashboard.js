@@ -70,7 +70,7 @@ class Dashboard extends React.Component {
         <div id="dashboard">
           <h1 className="text-center">Dashboard</h1>
           <div className="row">
-            {sessionStorage.getItem("role") ? (
+            {sessionStorage.getItem("role") !== 'false' ? (
               <div className="col-sm-4">
                 <ul className="list-group text-center">
                   <Collapsible trigger="Create" id="button">
