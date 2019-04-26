@@ -57,7 +57,7 @@ class CreateResultTable extends React.Component {
       .get(teamURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -84,7 +84,7 @@ class CreateResultTable extends React.Component {
       .get(matchURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {

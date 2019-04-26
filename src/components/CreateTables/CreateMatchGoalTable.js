@@ -34,7 +34,7 @@ class CreateMatchGoalTable extends React.Component {
       .get(playerURL, {
         header: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -57,7 +57,7 @@ class CreateMatchGoalTable extends React.Component {
       .get(goalTypeURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -79,7 +79,7 @@ class CreateMatchGoalTable extends React.Component {
       .get(matchURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -124,7 +124,7 @@ class CreateMatchGoalTable extends React.Component {
         {
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*"
+            
           }
         }
       )

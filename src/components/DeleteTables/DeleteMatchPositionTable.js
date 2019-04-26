@@ -50,7 +50,7 @@ class DeleteMatchPositionTable extends React.Component {
       .get(URL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -74,7 +74,7 @@ class DeleteMatchPositionTable extends React.Component {
       .get(playerURL + this.state.player_id, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
