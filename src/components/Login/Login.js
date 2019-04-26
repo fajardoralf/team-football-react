@@ -6,7 +6,8 @@ import { InputGroup } from "react-bootstrap";
 import { Redirect } from 'react-router-dom'
 import axios from "axios";
 
-URL = 'https://team-football-api.herokuapp.com/perform_login'
+const URL = 'https://team-football-api.herokuapp.com/perform_login'
+const userURL = 'https://team-football-api.herokuapp.com/userdetails/'
 
 class Login extends Component {
   constructor(props) {
@@ -30,10 +31,6 @@ class Login extends Component {
     var bodyFormData = new FormData()
     bodyFormData.append('username', this.state.username)
     bodyFormData.append('password', this.state.password)
-    var data = {
-        username: this.state.username,
-        password: this.state.password
-      }
     /*axios
       .post(URL, {
         username: this.state.username,
@@ -46,16 +43,21 @@ class Login extends Component {
       method: 'post',
       url: URL,
       data: bodyFormData,
-      config: { headers: {'Content-Type': 'multipart/form-data' }}
+      config: { headers: { 'Content-Type': 'multipart/form-data' } }
     })
-      .then(res => {
-        if (!res.request.responseURL.includes("error")) {
-          sessionStorage.setItem("username", res.data.username);
-          sessionStorage.setItem("user_id", res.data.user_id);
-          sessionStorage.setItem("role", res.data.role);
-          this.state.rerender()
-          this.setState({message: ''})
-          
+      .then(login => {
+        if (login.status === 200) {
+          axios
+            .get(userURL + this.state.username)
+            .then(res => {
+              sessionStorage.setItem("username", res.data.username);
+              sessionStorage.setItem("user_id", res.data.user_id);
+              sessionStorage.setItem("role", res.data.role);
+              this.state.rerender()
+              this.setState({ message: '' })
+            })
+
+
         }
 
         else {
@@ -63,13 +65,13 @@ class Login extends Component {
             username: '',
             password: '',
             message: 'Wrong username/password'
-          }) 
+          })
         }
       }).catch(e => this.setState({
         username: '',
         password: '',
         message: 'Wrong username/password'
-      }) )
+      }))
 
     this.setState({
       username: this.state.username
@@ -94,7 +96,7 @@ class Login extends Component {
     });
     sessionStorage.clear()
     this.state.rerender()
-    
+
   }
 
   renderRedirect = () => {
@@ -135,7 +137,7 @@ class Login extends Component {
               <Button variant="outline-light" id="button" href="/signup">
                 Sign Up
               </Button>
-              <div style={{color:"whitesmoke"}}>{this.state.message}</div>
+              <div style={{ color: "whitesmoke" }}>{this.state.message}</div>
             </InputGroup>
           </Form>
         )
