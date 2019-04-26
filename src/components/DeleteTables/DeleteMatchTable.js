@@ -174,8 +174,11 @@ class DeleteMatchPositionTable extends React.Component {
               <Form.Control onChange={this.handleChange} as="select">
                 {this.state.match.map(data => {
                   return (
-                    <option key={data.key} value={data.value}>
-                      {data.text}
+                    <option
+                      key={data.key}
+                      value={new Date(data.value).toLocaleDateString()}
+                    >
+                      {new Date(data.text).toLocaleDateString()}
                     </option>
                   );
                 })}
