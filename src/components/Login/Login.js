@@ -31,9 +31,9 @@ class Login extends Component {
       .then(res => {
         console.log(res)
         if (res.status === 202) {
-          sessionStorage.setItem("username", res.username);
-          sessionStorage.setItem("user_id", res.password);
-          sessionStorage.setItem("role", res.role);
+          sessionStorage.setItem("username", res.data.username);
+          sessionStorage.setItem("user_id", res.data.password);
+          sessionStorage.setItem("role", res.data.role);
           this.setState({message: ''})
         }
         else if (res.status === 404) {
