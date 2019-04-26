@@ -30,19 +30,19 @@ class UpdateMatchGoalTable extends React.Component {
     };
   }
 
-  handleForm(event) {
+  handleForm = event => {
     event.preventDefault();
 
     axios
       .put(
-        URL + this.state.goalId,
+        URL + this.state.matchGoalId,
         {
-          goal_id: this.state.goalId,
+          goal_id: this.state.matchGoalId,
           player_id: this.state.playerId,
           goal_type_id: this.state.goalTypeId,
           match_id: this.state.matchId,
           description:
-            this.state.description !== ""
+            this.state.new_description !== ""
               ? this.state.new_description
               : this.state.description
         },
@@ -65,18 +65,23 @@ class UpdateMatchGoalTable extends React.Component {
           message: "Something went wrong. Please check your inputs"
         });
       });
-    this.setState({
-      playerId: "",
-      goalTypeId: "",
-      matchId: "",
-      matchGoalId: "",
-      description: ""
-    });
-  }
+
+    console.log(
+      this.state.playerId +
+        " " +
+        this.state.goalTypeId +
+        " " +
+        this.state.matchId +
+        " " +
+        this.state.matchGoalId +
+        " " +
+        this.state.description
+    );
+  };
 
   setGoalId = event => {
     this.setState({
-      goalId: event.target.value
+      matchGoalId: event.target.value
     });
   };
 
@@ -87,12 +92,14 @@ class UpdateMatchGoalTable extends React.Component {
   };
 
   setGoalTypeId = event => {
+    console.log(event.target.value);
     this.setState({
       goalTypeId: event.target.value
     });
   };
 
   setMatchId = event => {
+    console.log(event.target.value);
     this.setState({
       matchId: event.target.value,
       home_team_id: +event.target.selectedOptions[0].getAttribute(
@@ -157,11 +164,11 @@ class UpdateMatchGoalTable extends React.Component {
         }
       })
       .then(res => {
-        this.setState({ matchGoalId: res.data[0].match_goal_id });
+        this.setState({ matchGoalId: res.data[0].goal_id });
         let data = res.data.map(data => {
           return {
             key: data.goal_id,
-            foreginkey: data.match_id,
+            value: data.goal_id,
             description: data.description
           };
         });
@@ -243,16 +250,12 @@ class UpdateMatchGoalTable extends React.Component {
           <Form onSubmit={this.handleForm}>
             <Form.Group controlId="updateMatchGoalForm">
               <Form.Label>Match</Form.Label>
-              <Form.Control
-                value={matchId}
-                onChange={this.setMatchId}
-                as="select"
-              >
+              <Form.Control onChange={this.setMatchId} as="select">
                 {match.map(data => {
                   return (
                     <option
                       key={data.key}
-                      value={data.match_id}
+                      value={data.key}
                       date={data.match_date}
                       home_team={data.home_team.team_name}
                       home_team_id={data.home_team_id}
@@ -317,7 +320,7 @@ class UpdateMatchGoalTable extends React.Component {
               <Form.Control onChange={this.setDescription} as="select">
                 {matchGoal.map(data => {
                   return (
-                    <option key={data.key} value={data.key}>
+                    <option key={data.key} value={data.description}>
                       {data.description}
                     </option>
                   );

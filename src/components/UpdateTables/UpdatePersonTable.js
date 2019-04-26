@@ -108,7 +108,8 @@ class UpdatePersonTable extends React.Component {
   };
 
   setDateOfBirth = event => {
-    this.setState({ new_dataOfBirth: event.target.value });
+    console.log(event.target.value);
+    this.setState({ new_dateOfBirth: event.target.value });
   };
 
   fetchPersons = () => {
