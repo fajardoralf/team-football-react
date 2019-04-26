@@ -10,6 +10,9 @@ class NavigationBar extends React.Component {
     this.state = {};
   }
 
+  loginRerender = () => {
+    this.setState({rerender: 'yes'})
+  }
   render() {
     return (
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -18,12 +21,12 @@ class NavigationBar extends React.Component {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+            <Nav.Link href="/dashboard" disabled={sessionStorage.getItem('role') ? false : true}>Dashboard</Nav.Link>
             <Nav.Link href="/teams">Teams</Nav.Link>
             <Nav.Link href="/about">About</Nav.Link>
           </Nav>
           <Nav className="mr-auto">
-            <Login />
+            <Login rerender={this.loginRerender.bind(this)}/>
           </Nav>
           <div
             className="translate"
