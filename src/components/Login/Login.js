@@ -6,7 +6,7 @@ import { InputGroup } from "react-bootstrap";
 import { Redirect } from 'react-router-dom'
 import axios from "axios";
 
-URL = 'https://team-football-api.herokuapp.com/login'
+URL = 'https://team-football-api.herokuapp.com/perform_login'
 
 class Login extends Component {
   constructor(props) {
@@ -27,13 +27,27 @@ class Login extends Component {
   handleSubmit = event => {
     event.preventDefault()
 
-    axios
+    var bodyFormData = new FormData()
+    bodyFormData.append('username', this.state.username)
+    bodyFormData.append('password', this.state.password)
+    var data = {
+        username: this.state.username,
+        password: this.state.password
+      }
+    /*axios
       .post(URL, {
         username: this.state.username,
         password: this.state.password
-      })
+      })*/
+    axios({
+      method: 'post',
+      url: URL,
+      data: bodyFormData,
+      config: { headers: {'Content-Type': 'multipart/form-data' }}
+    })
       .then(res => {
-        if (res.status === 202) {
+        console.log(res)
+        if (res.status === 200) {
           sessionStorage.setItem("username", res.data.username);
           sessionStorage.setItem("user_id", res.data.user_id);
           sessionStorage.setItem("role", res.data.role);
@@ -111,7 +125,7 @@ class Login extends Component {
               <Button variant="outline-light" id="button" href="/signup">
                 Sign Up
               </Button>
-              {this.state.message}
+              <div style={{color:"whitesmoke"}}>{this.state.message}</div>
             </InputGroup>
           </Form>
         )

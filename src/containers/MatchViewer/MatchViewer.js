@@ -24,7 +24,6 @@ class MatchViewer extends React.Component {
 
   componentWillMount() {
     axios.get(URL + "team").then(res => {
-      console.log(res.data);
       this.setState({
         teamList: res.data
       });
