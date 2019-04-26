@@ -41,7 +41,7 @@ class UpdateMatchPositionTable extends React.Component {
         {
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*"
+            
           }
         }
       )
@@ -69,7 +69,7 @@ class UpdateMatchPositionTable extends React.Component {
       .get(URL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -102,7 +102,7 @@ class UpdateMatchPositionTable extends React.Component {
       .get(matchURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {

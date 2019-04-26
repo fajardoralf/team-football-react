@@ -55,7 +55,7 @@ class UpdatePersonTable extends React.Component {
         {
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*"
+            
           }
         }
       )
@@ -116,8 +116,7 @@ class UpdatePersonTable extends React.Component {
     axios
       .get(URL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -150,7 +149,6 @@ class UpdatePersonTable extends React.Component {
       .get(addressURL + this.state.address_id, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
         }
       })
       .then(res => {
@@ -169,7 +167,6 @@ class UpdatePersonTable extends React.Component {
       .get(addressURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
         }
       })
       .then(res => {

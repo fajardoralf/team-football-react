@@ -35,7 +35,7 @@ class UpdateTeamTable extends React.Component {
       .get(teamURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -75,7 +75,7 @@ class UpdateTeamTable extends React.Component {
       .get(ownerURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -105,7 +105,7 @@ class UpdateTeamTable extends React.Component {
       .get(coachURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -135,7 +135,7 @@ class UpdateTeamTable extends React.Component {
       .get(locationURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -176,7 +176,7 @@ class UpdateTeamTable extends React.Component {
         {
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*"
+            
           }
         }
       )

@@ -44,7 +44,7 @@ class UpdateSeasonTable extends React.Component {
       .get(seasonURL + this.state.seasonId, {
         header: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -97,7 +97,7 @@ class UpdateSeasonTable extends React.Component {
         {
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*"
+            
           }
         }
       )
