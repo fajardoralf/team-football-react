@@ -317,23 +317,11 @@ class UpdateMatchGoalTable extends React.Component {
 
             <Form.Group controlId="updateMatchGoalForm">
               <Form.Label>Description</Form.Label>
-<<<<<<< HEAD
-              <Form.Control onChange={this.setDescription} as="select">
-                {matchGoal.map(data => {
-                  return (
-                    <option key={data.key} value={data.description}>
-                      {data.description}
-                    </option>
-                  );
-                })}
-              </Form.Control>
-=======
               <Form.Control
                 onChange={this.setDescription}
                 type="text"
                 value={this.state.new_description}
               />
->>>>>>> 60e5d6ac2aa613f891f90d47e17d204b3bab2a41
               {this.state.description}
             </Form.Group>
             <div
