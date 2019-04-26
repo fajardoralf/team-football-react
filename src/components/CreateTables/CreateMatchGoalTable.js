@@ -33,11 +33,11 @@ class CreateMatchGoalTable extends React.Component {
     axios
       .get(playerURL, {
         header: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
+        console.log(res);
         this.setState({ playerId: res.data[0].player_id });
         let data = res.data.map(data => {
           return {
@@ -56,8 +56,7 @@ class CreateMatchGoalTable extends React.Component {
     axios
       .get(goalTypeURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -78,8 +77,7 @@ class CreateMatchGoalTable extends React.Component {
     axios
       .get(matchURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -123,8 +121,7 @@ class CreateMatchGoalTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )
@@ -265,7 +262,7 @@ class CreateMatchGoalTable extends React.Component {
                   );
                 })}
               </Form.Control>
-              {"Date: " + date}
+              {"Date: " + new Date(date).toLocaleDateString()}
             </Form.Group>
 
             <Form.Group controlId="createMatchGoalForm">

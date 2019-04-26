@@ -52,7 +52,9 @@ class DeleteMatchGoal extends React.Component {
       {
         id: event.target.value,
         matchGoal: event.target.selectedOptions[0].text,
-        match_id: event.target.selectedOptions[0].getAttribute("match_id")
+        match_id: event.target.selectedOptions[0].getAttribute("match_id"),
+        message: "",
+        submitted: false
       },
       () => {
         this.fetchMatchGoal();
@@ -67,8 +69,7 @@ class DeleteMatchGoal extends React.Component {
     axios
       .get(URL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -91,8 +92,7 @@ class DeleteMatchGoal extends React.Component {
     axios
       .get(playerURL + this.state.id, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -107,8 +107,7 @@ class DeleteMatchGoal extends React.Component {
     axios
       .get(matchURL + this.state.match_id, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -129,8 +128,7 @@ class DeleteMatchGoal extends React.Component {
     axios
       .get(resultURL + this.state.match_id, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -224,10 +222,7 @@ class DeleteMatchGoal extends React.Component {
             </div>
             <br />
 
-            <div className="text-center">
-              {this.state.message}
-              {this.state.submitted ? this.state.goalType : ""}
-            </div>
+            <div className="text-center">{this.state.message}</div>
           </Form>
         </Card.Body>
       </Card>

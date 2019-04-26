@@ -35,8 +35,7 @@ class CreateMatchPositionTable extends React.Component {
     axios
       .get(playerURL, {
         header: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -58,8 +57,7 @@ class CreateMatchPositionTable extends React.Component {
     axios
       .get(matchURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -213,7 +211,7 @@ class CreateMatchPositionTable extends React.Component {
                   );
                 })}
               </Form.Control>
-              {"Date: " + date}
+              {"Date: " + new Date(date).toLocaleDateString()}
             </Form.Group>
 
             <Form.Group controlId="createMatchPositionForm">

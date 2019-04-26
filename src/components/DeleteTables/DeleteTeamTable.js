@@ -33,7 +33,8 @@ class DeleteTeamTable extends React.Component {
   handleChange = event => {
     this.setState({
       id: event.target.value,
-      name: event.target.selectedOptions[0].text
+      name: event.target.selectedOptions[0].text,
+      message: ""
     });
   };
 
@@ -42,8 +43,7 @@ class DeleteTeamTable extends React.Component {
       axios
         .get(URL, {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         })
         .then(res => {
@@ -100,10 +100,7 @@ class DeleteTeamTable extends React.Component {
             </div>
             <br />
 
-            <div className="text-center">
-              {this.state.message}
-              {this.state.submitted ? this.state.person : ""}
-            </div>
+            <div className="text-center">{this.state.message}</div>
           </Form>
         </Card.Body>
       </Card>

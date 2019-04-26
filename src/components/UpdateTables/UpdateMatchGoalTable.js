@@ -48,8 +48,7 @@ class UpdateMatchGoalTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )
@@ -127,8 +126,7 @@ class UpdateMatchGoalTable extends React.Component {
     axios
       .get(matchURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -159,8 +157,7 @@ class UpdateMatchGoalTable extends React.Component {
     axios
       .get(matchGoalURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -183,8 +180,7 @@ class UpdateMatchGoalTable extends React.Component {
     axios
       .get(goalTypeURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -204,8 +200,7 @@ class UpdateMatchGoalTable extends React.Component {
     axios
       .get(playerURL, {
         header: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -236,8 +231,7 @@ class UpdateMatchGoalTable extends React.Component {
       match,
       goalType,
       player,
-      matchId,
-      description,
+
       home_team_id,
       away_team_id
     } = this.state;

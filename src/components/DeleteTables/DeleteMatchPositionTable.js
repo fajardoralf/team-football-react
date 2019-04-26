@@ -39,7 +39,9 @@ class DeleteMatchPositionTable extends React.Component {
       {
         id: event.target.value,
         player_id: event.target.selectedOptions[0].getAttribute("player_id"),
-        matchPosition: event.target.selectedOptions[0].text
+        matchPosition: event.target.selectedOptions[0].text,
+        message: "",
+        submitted: false
       },
       this.fetchPlayer
     );
@@ -49,11 +51,13 @@ class DeleteMatchPositionTable extends React.Component {
     axios
       .get(URL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
+        this.setState({
+          player_id: res.data[0].player_id
+        });
         let data = res.data.map(data => {
           return {
             key: data.matchPosition_id,
@@ -73,8 +77,7 @@ class DeleteMatchPositionTable extends React.Component {
     axios
       .get(playerURL + this.state.player_id, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -140,10 +143,7 @@ class DeleteMatchPositionTable extends React.Component {
             </div>
             <br />
 
-            <div className="text-center">
-              {this.state.message}
-              {this.state.submitted ? this.state.matchPosition : ""}
-            </div>
+            <div className="text-center">{this.state.message}</div>
           </Form>
         </Card.Body>
       </Card>

@@ -33,7 +33,9 @@ class DeletePersonTable extends React.Component {
   handleChange = event => {
     this.setState({
       id: event.target.value,
-      user: event.target.selectedOptions[0].text
+      user: event.target.selectedOptions[0].text,
+      message: "",
+      submitted: false
     });
   };
 
@@ -42,8 +44,7 @@ class DeletePersonTable extends React.Component {
       axios
         .get(URL, {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         })
         .then(res => {

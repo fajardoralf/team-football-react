@@ -40,7 +40,9 @@ class DeleteAddressTable extends React.Component {
       {
         id: event.target.value,
         addressName: event.target.selectedOptions[0].text,
-        address_id: event.target.selectedOptions[0].getAttribute("address_id")
+        address_id: event.target.selectedOptions[0].getAttribute("address_id"),
+        message: "",
+        submitted: false
       },
       this.fetchPerson
     );
@@ -50,8 +52,7 @@ class DeleteAddressTable extends React.Component {
     axios
       .get(URL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -73,8 +74,7 @@ class DeleteAddressTable extends React.Component {
     axios
       .get(personURL + this.state.id, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -132,10 +132,7 @@ class DeleteAddressTable extends React.Component {
             </div>
             <br />
 
-            <div className="text-center">
-              {this.state.message}
-              {this.state.submitted ? this.state.addressName : ""}
-            </div>
+            <div className="text-center">{this.state.message}</div>
           </Form>
         </Card.Body>
       </Card>

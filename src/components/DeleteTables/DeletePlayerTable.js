@@ -11,7 +11,7 @@ class DeletePlayerTable extends React.Component {
       players: [],
       player: [],
       player_name: "",
-      id: 1,
+      id: "",
       message: "",
       submitted: false,
       mounted: true
@@ -33,7 +33,9 @@ class DeletePlayerTable extends React.Component {
     this.setState(
       {
         id: event.target.value,
-        player_name: event.target.selectedOptions[0].text
+        player_name: event.target.selectedOptions[0].text,
+        message: "",
+        submitted: false
       },
       this.fetchPlayer
     );
@@ -43,11 +45,13 @@ class DeletePlayerTable extends React.Component {
     axios
       .get(URL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
+        this.setState({
+          id: res.data[0].player_id
+        });
         let data = res.data.map(data => {
           return {
             key: data.player_id,
@@ -68,8 +72,7 @@ class DeletePlayerTable extends React.Component {
     axios
       .get(URL + this.state.id, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -125,10 +128,7 @@ class DeletePlayerTable extends React.Component {
             </div>
             <br />
 
-            <div className="text-center">
-              {this.state.message}
-              {this.state.submitted ? this.state.player_name : ""}
-            </div>
+            <div className="text-center">{this.state.message}</div>
           </Form>
         </Card.Body>
       </Card>

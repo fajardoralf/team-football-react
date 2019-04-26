@@ -45,8 +45,7 @@ class UpdateContactTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )
@@ -115,8 +114,7 @@ class UpdateContactTable extends React.Component {
     axios
       .get(URL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -141,8 +139,7 @@ class UpdateContactTable extends React.Component {
     axios
       .get(personURL + this.state.personId, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -163,7 +160,7 @@ class UpdateContactTable extends React.Component {
   render() {
     let title = "Update Contact";
     const { contact, first_name, last_name, personId, contactId } = this.state;
-    console.log(contactId + " " + personId);
+
     return (
       <Card bg="light" text="black" style={{ width: "100%" }}>
         <Card.Body>

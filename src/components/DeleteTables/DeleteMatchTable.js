@@ -44,10 +44,13 @@ class DeleteMatchPositionTable extends React.Component {
   };
 
   handleChange = event => {
+    console.log(event.target.value);
     this.setState(
       {
         id: event.target.value,
-        matchPosition: event.target.selectedOptions[0].text
+        matchPosition: event.target.selectedOptions[0].text,
+        message: "",
+        submitted: false
       },
       this.fetchMatchInfo
     );
@@ -58,7 +61,7 @@ class DeleteMatchPositionTable extends React.Component {
       .get(seasonURL + this.state.season, {
         header: {
           "Content-Type": "application/json;charset=UTF-8",
-          
+          "Access-Control-Allow-Origin": "*"
         }
       })
       .then(res => {
@@ -77,8 +80,7 @@ class DeleteMatchPositionTable extends React.Component {
     axios
       .get(URL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -100,8 +102,7 @@ class DeleteMatchPositionTable extends React.Component {
     axios
       .get(URL + this.state.id, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -125,8 +126,7 @@ class DeleteMatchPositionTable extends React.Component {
     axios
       .get(resultURL + this.state.match_id, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -174,10 +174,7 @@ class DeleteMatchPositionTable extends React.Component {
               <Form.Control onChange={this.handleChange} as="select">
                 {this.state.match.map(data => {
                   return (
-                    <option
-                      key={data.key}
-                      value={new Date(data.value).toLocaleDateString()}
-                    >
+                    <option key={data.key} value={data.key}>
                       {new Date(data.text).toLocaleDateString()}
                     </option>
                   );
@@ -213,10 +210,7 @@ class DeleteMatchPositionTable extends React.Component {
             </div>
             <br />
 
-            <div className="text-center">
-              {this.state.message}
-              {this.state.submitted ? this.state.match : ""}
-            </div>
+            <div className="text-center">{this.state.message}</div>
           </Form>
         </Card.Body>
       </Card>
