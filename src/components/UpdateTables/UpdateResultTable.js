@@ -38,7 +38,7 @@ class UpdateResultTable extends React.Component {
         {
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*"
+            
           }
         }
       )
@@ -108,7 +108,7 @@ class UpdateResultTable extends React.Component {
       .get(resultURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -128,7 +128,7 @@ class UpdateResultTable extends React.Component {
       .get(matchURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {  
@@ -160,7 +160,7 @@ class UpdateResultTable extends React.Component {
       .get(teamURL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {

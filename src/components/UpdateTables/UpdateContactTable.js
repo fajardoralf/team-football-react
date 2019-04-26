@@ -46,7 +46,7 @@ class UpdateContactTable extends React.Component {
         {
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*"
+            
           }
         }
       )
@@ -116,7 +116,7 @@ class UpdateContactTable extends React.Component {
       .get(URL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -142,7 +142,7 @@ class UpdateContactTable extends React.Component {
       .get(personURL + this.state.personId, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
