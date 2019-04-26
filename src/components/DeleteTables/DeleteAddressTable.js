@@ -51,7 +51,7 @@ class DeleteAddressTable extends React.Component {
       .get(URL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -74,7 +74,7 @@ class DeleteAddressTable extends React.Component {
       .get(personURL + this.state.id, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {

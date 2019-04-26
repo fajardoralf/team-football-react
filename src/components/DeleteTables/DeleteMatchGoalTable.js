@@ -68,7 +68,7 @@ class DeleteMatchGoal extends React.Component {
       .get(URL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -92,7 +92,7 @@ class DeleteMatchGoal extends React.Component {
       .get(playerURL + this.state.id, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -108,7 +108,7 @@ class DeleteMatchGoal extends React.Component {
       .get(matchURL + this.state.match_id, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -130,7 +130,7 @@ class DeleteMatchGoal extends React.Component {
       .get(resultURL + this.state.match_id, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {

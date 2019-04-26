@@ -58,7 +58,7 @@ class DeleteMatchPositionTable extends React.Component {
       .get(seasonURL + this.state.season, {
         header: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -78,7 +78,7 @@ class DeleteMatchPositionTable extends React.Component {
       .get(URL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -101,7 +101,7 @@ class DeleteMatchPositionTable extends React.Component {
       .get(URL + this.state.id, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -126,7 +126,7 @@ class DeleteMatchPositionTable extends React.Component {
       .get(resultURL + this.state.match_id, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {

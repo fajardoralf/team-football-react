@@ -44,7 +44,7 @@ class DeletePlayerTable extends React.Component {
       .get(URL, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
@@ -69,7 +69,7 @@ class DeletePlayerTable extends React.Component {
       .get(URL + this.state.id, {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*"
+          
         }
       })
       .then(res => {
