@@ -35,10 +35,10 @@ class CreateUser extends React.Component {
       )
       .then(res => {
         console.log("Response", res);
-        if (res.status === 202) {
+        if (res.status === 201) {
           console.log("User" + this.state.username + " registered");
           sessionStorage.setItem("username", res.data.username);
-          sessionStorage.setItem("role", "user");
+          sessionStorage.setItem("role", false);
           sessionStorage.setItem("password", res.data.password);
           this.setState({
             redirect: true,

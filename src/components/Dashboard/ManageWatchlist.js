@@ -9,7 +9,7 @@ class ManageWatchlist extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            personId: 1,
+            personId: parseInt(sessionStorage.getItem('user_id')),
             playerWatchList: [],
             teamWatchList: [],
             playerList: [],
@@ -205,7 +205,7 @@ class ManageWatchlist extends React.Component {
             })
 
         const teamWatch = teamWatchList
-            .filter(d => d.user_id = personId)
+            .filter(d => d.user_id === personId)
             .map((d, index) => {
                 let team = this.getTeam(d.team_id)
                 return (<li key={index}>
