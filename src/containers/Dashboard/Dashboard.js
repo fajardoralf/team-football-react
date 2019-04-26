@@ -66,7 +66,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div className="container">
-        <NavigationBar />
+        <NavigationBar path="/dashboard"/>
         <div id="dashboard">
           <h1 className="text-center">Dashboard</h1>
           <div className="row">

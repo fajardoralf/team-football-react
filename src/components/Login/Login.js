@@ -17,6 +17,7 @@ class Login extends Component {
       role: "admin",
       message: '',
       rerender: props.rerender,
+      path: props.path,
       redirect: false
     };
   }
@@ -32,7 +33,6 @@ class Login extends Component {
         password: this.state.password
       })
       .then(res => {
-        console.log(res)
         if (res.status === 202) {
           sessionStorage.setItem("username", res.data.username);
           sessionStorage.setItem("user_id", res.data.user_id);
@@ -41,14 +41,11 @@ class Login extends Component {
           this.setState({message: ''})
           
         }
-        else /*if (res.status === 404)*/ {
-          this.setState({
-            username: '',
-            password: '',
-            message: 'Wrong username/password'
-          })
-        }
-      })
+      }).catch(e => this.setState({
+        username: '',
+        password: '',
+        message: 'Wrong username/password'
+      }) )
 
     this.setState({
       username: this.state.username
@@ -66,17 +63,18 @@ class Login extends Component {
 
   handleLogout(event) {
     this.setState({
-      user: "",
-      passworrd: "",
+      username: "",
+      password: "",
       message: '',
       redirect: true
     });
+    sessionStorage.clear()
     this.state.rerender()
-    sessionStorage.clear();
+    
   }
 
   renderRedirect = () => {
-    if (this.state.redirect) {
+    if (this.state.redirect && this.state.path !== '/') {
       return <Redirect to='/' />
     }
   }
