@@ -7,7 +7,10 @@ class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      rerender: false,
+      path: props.path
+    };
   }
 
   loginRerender = () => {
@@ -26,7 +29,7 @@ class NavigationBar extends React.Component {
             <Nav.Link href="/about">About</Nav.Link>
           </Nav>
           <Nav className="mr-auto">
-            <Login rerender={this.loginRerender.bind(this)}/>
+            <Login path={this.state.path} rerender={this.loginRerender.bind(this)}/>
           </Nav>
           <div
             className="translate"

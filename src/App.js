@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <div className="container text-center">
-        <NavigationBar></NavigationBar>
+        <NavigationBar path="/"></NavigationBar>
         <MatchViewer></MatchViewer>
       </div>
     );
