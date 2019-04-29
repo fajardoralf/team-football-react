@@ -15,29 +15,45 @@ class UpdateUser extends React.Component {
       new_role: false,
       username: "",
       new_username: "",
-      users: []
+      users: [],
+      message: ""
     };
   }
 
   handleForm(e) {
     e.preventDefault();
 
-    axios.put(URL + "users/" + this.state.user_id, {
-      user_id: this.state.user_id,
-      username: this.state.new_username !== ""
-          ? this.state.new_username
-          : this.state.username,
-      password: this.state.new_password !== ""
-          ? this.state.new_password
-          : this.state.password,
-      role: this.state.new_role
-    },
-    {
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        
-      }
-    });
+    axios
+      .put(
+        URL + "users/" + this.state.user_id,
+        {
+          user_id: this.state.user_id,
+          username:
+            this.state.new_username !== ""
+              ? this.state.new_username
+              : this.state.username,
+          password:
+            this.state.new_password !== ""
+              ? this.state.new_password
+              : this.state.password,
+          role: this.state.new_role
+        },
+        {
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+          }
+        }
+      )
+      .then(res => {
+        console.log(res);
+        this.setState({ message: "Successfully Updated" });
+      })
+      .catch(err => {
+        this.setState({
+          message: "Something went wrong. Please check your input"
+        });
+        console.log(err);
+      });
   }
 
   getUsername(id) {
@@ -48,11 +64,11 @@ class UpdateUser extends React.Component {
   }
 
   getUser = id => {
-    for (let u of this.state.users){
-      if (id === u.user_id) return u
+    for (let u of this.state.users) {
+      if (id === u.user_id) return u;
     }
-    return {}
-  }
+    return {};
+  };
 
   setNewPassword(e) {
     this.setState({
@@ -67,12 +83,13 @@ class UpdateUser extends React.Component {
   }
 
   setNewUserID(e) {
-    let u = this.getUser(parseInt(e.target.value))
+    let u = this.getUser(parseInt(e.target.value));
     this.setState({
       user_id: parseInt(e.target.value),
       username: u.username,
       password: u.password,
-      new_role: u.role
+      new_role: u.role,
+      message: ""
     });
   }
 
@@ -97,8 +114,9 @@ class UpdateUser extends React.Component {
   render() {
     const title = "Update user info";
 
-    const userids = this.state.users.map(u =>
-        <option value={u.user_id}>{u.username}</option>)
+    const userids = this.state.users.map(u => (
+      <option value={u.user_id}>{u.username}</option>
+    ));
 
     return (
       <Card bg="light" text="black">
@@ -118,7 +136,7 @@ class UpdateUser extends React.Component {
                 {userids}
               </Form.Control>
             </Form.Group>
-            <Form.Group  controlId="updateUserForm">
+            <Form.Group controlId="updateUserForm">
               <Form.Label for="new_username">Username</Form.Label>
               <Form.Control
                 id="new_username"
@@ -128,7 +146,7 @@ class UpdateUser extends React.Component {
                 onChange={this.setNewUsername.bind(this)}
               />
             </Form.Group>
-            <Form.Group  controlId="updateUserForm">
+            <Form.Group controlId="updateUserForm">
               <Form.Label for="new_password">New Password</Form.Label>
               <Form.Control
                 id="new_password"
@@ -138,7 +156,7 @@ class UpdateUser extends React.Component {
                 onChange={this.setNewPassword.bind(this)}
               />
             </Form.Group>
-            <Form.Group  controlId="updateUserForm">
+            <Form.Group controlId="updateUserForm">
               <Form.Label for="new_role">Role</Form.Label>
               <Form.Control
                 value={this.state.new_role}
@@ -150,9 +168,21 @@ class UpdateUser extends React.Component {
                 <option value={false}>User</option>
               </Form.Control>
             </Form.Group>
-            <Button variant="dark" type="submit">
-              Update
-            </Button>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Button variant="dark" type="submit">
+                Update
+              </Button>
+            </div>
+            <div className="text-center">
+              <br />
+              {this.state.message}
+            </div>
           </Form>
         </Card.Body>
       </Card>
