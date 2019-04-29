@@ -8,7 +8,7 @@ class UpdateSelfTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      personId: 1,
+      personId: sessionStorage.getItem('user_id'),
       user: {},
       addressId: "",
       firstName: "",
@@ -17,7 +17,8 @@ class UpdateSelfTable extends React.Component {
       message: "",
       new_password: "",
       submitted: false,
-      password_updated: false
+      password_updated: false,
+      addresses: []
     };
   }
 
@@ -71,6 +72,26 @@ class UpdateSelfTable extends React.Component {
     axios
       .get(URL + "users/" + this.state.personId)
       .then(res => this.setState({ user: res.data }));
+    axios
+      .get(URL + "address/", {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+        }
+      })
+      .then(res => {
+        let data = res.data.map(data => {
+          return {
+            key: data.address_id,
+            address_line_1: data.address_line_1
+          };
+        });
+        this.setState({
+          addresses: data
+        });
+      })
+      .catch(err => {
+        console.log("Axios error: ", err);
+      });
   }
 
   handlePasswordChange = event => {
@@ -101,6 +122,7 @@ class UpdateSelfTable extends React.Component {
   render() {
     const titleInfo = "Update Your Info";
     const titlePassword = "Update Your Password";
+    const { addressId, addresses } = this.state
 
     return (
       <div className="row">
@@ -114,10 +136,22 @@ class UpdateSelfTable extends React.Component {
                   <Form.Label>Address ID</Form.Label>
                   <Form.Control
                     type="addressId"
-                    placeholder="Address OD"
-                    value={this.state.addressId}
+                    placeholder="Address ID"
+                    value={addressId}
                     onChange={this.setAddressId.bind(this)}
-                  />
+                    as="select"
+                  >
+                    {addresses.map((a, index) => {
+                      return (
+                        <option
+                          key={index}
+                          value={a.address_id}
+                        >
+                          {a.address_line_1}
+                        </option>
+                      )
+                    })}
+                  </Form.Control>
                 </Form.Group>
 
                 <Form.Group controlId="udpatePersonForm">

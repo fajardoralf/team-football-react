@@ -20,7 +20,6 @@ import UpdateOwnerTable from "../../components/UpdateTables/UpdateOwnerTable";
 import UpdateAddressTable from "../../components/UpdateTables/UpdateAddressTable";
 import UpdateSelfTable from "../../components/UpdateTables/UpdateSelfTable";
 import ManageWatchlist from "../../components/Dashboard/ManageWatchlist";
-import SubmitCorrection from "../../components/Dashboard/SubmitCorrection";
 import UpdateContactTable from "../../components/UpdateTables/UpdateContactTable";
 import UpdateLocationTable from "../../components/UpdateTables/UpdateLocationTable";
 import UpdateMatchGoalTable from "../../components/UpdateTables/UpdateMatchGoalTable";
@@ -298,11 +297,6 @@ class Dashboard extends React.Component {
                     Manage Watchlist
                   </li>
                 </div>
-                <div onClick={this.setStatus.bind(this, 17)}>
-                  <li className="list-group-item" id="button">
-                    BONUS: Submit Correction
-                  </li>
-                </div>
               </ul>
             )}
             <div className="col">
@@ -328,7 +322,6 @@ class Dashboard extends React.Component {
                   14: <UpdateAddressTable />,
                   15: <UpdateSelfTable personID="0" />,
                   16: <ManageWatchlist />,
-                  17: <SubmitCorrection />,
                   19: <UpdateContactTable />,
                   20: <UpdateLocationTable />,
                   21: <UpdateMatchGoalTable />,
