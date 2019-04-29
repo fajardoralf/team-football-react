@@ -56,8 +56,7 @@ class CreateTeamTable extends React.Component {
     axios
       .get(coachURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -84,8 +83,7 @@ class CreateTeamTable extends React.Component {
     axios
       .get(ownerURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -112,8 +110,7 @@ class CreateTeamTable extends React.Component {
     axios
       .get(locationURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -187,7 +184,7 @@ class CreateTeamTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="createTeamForm">
-              <Form.Label>Coach ID</Form.Label>
+              <Form.Label>Coach</Form.Label>
               <Form.Control onChange={this.handleCoachId} as="select">
                 {coaches.map(data => {
                   return (
@@ -204,7 +201,7 @@ class CreateTeamTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="createTeamForm">
-              <Form.Label>Owner ID</Form.Label>
+              <Form.Label>Owner</Form.Label>
               <Form.Control onChange={this.handleOwnerId} as="select">
                 {owners.map(data => {
                   return (
@@ -221,7 +218,7 @@ class CreateTeamTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="createTeamForm">
-              <Form.Label>Location ID</Form.Label>
+              <Form.Label>Location</Form.Label>
               <Form.Control onChange={this.handleLocationId} as="select">
                 {locations.map(data => {
                   return (

@@ -28,8 +28,7 @@ class CreateMatchTable extends React.Component {
     axios
       .get(teamURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -51,8 +50,7 @@ class CreateMatchTable extends React.Component {
     axios
       .get(seasonURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -79,8 +77,7 @@ class CreateMatchTable extends React.Component {
     axios
       .get(locationURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -123,8 +120,7 @@ class CreateMatchTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )
@@ -220,7 +216,7 @@ class CreateMatchTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="createMatchForm">
-              <Form.Label>Away Team ID</Form.Label>
+              <Form.Label>Away Team</Form.Label>
               <Form.Control onChange={this.setAwayTeam_id} as="select">
                 {this.state.match.map(data => {
                   return (
@@ -233,7 +229,7 @@ class CreateMatchTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="createMatchForm">
-              <Form.Label>Season ID</Form.Label>
+              <Form.Label>Season</Form.Label>
               <Form.Control onChange={this.setSeason_id} as="select">
                 {this.state.season.map(data => {
                   return (
@@ -255,7 +251,7 @@ class CreateMatchTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="createMatchForm">
-              <Form.Label>Location ID</Form.Label>
+              <Form.Label>Location</Form.Label>
               <Form.Control onChange={this.setLocation_id} as="select">
                 {this.state.location.map(data => {
                   return (

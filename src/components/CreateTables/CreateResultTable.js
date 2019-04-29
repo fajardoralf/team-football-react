@@ -56,8 +56,7 @@ class CreateResultTable extends React.Component {
     axios
       .get(teamURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -83,8 +82,7 @@ class CreateResultTable extends React.Component {
     axios
       .get(matchURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -163,7 +161,7 @@ class CreateResultTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
             <Form.Group controlId="createResultForm">
-              <Form.Label>Team ID</Form.Label>
+              <Form.Label>Team</Form.Label>
               <Form.Control onChange={this.handleTeamId} as="select">
                 {teams
                   .filter(
