@@ -178,7 +178,7 @@ class CreatePlayerTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="addPlayerForm">
-              <Form.Label>Team ID</Form.Label>
+              <Form.Label>Team</Form.Label>
               <Form.Control onChange={this.setTeam_id} as="select">
                 {teams.map(data => {
                   return (
