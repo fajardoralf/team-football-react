@@ -8,13 +8,14 @@ class UpdateSelfTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      personId: sessionStorage.getItem('user_id'),
+      personId: sessionStorage.getItem("user_id"),
       user: {},
       addressId: "",
       firstName: "",
       lastName: "",
       dateOfBirth: "",
       message: "",
+      new_username: "",
       new_password: "",
       submitted: false,
       password_updated: false,
@@ -61,6 +62,7 @@ class UpdateSelfTable extends React.Component {
   }
 
   componentDidMount() {
+    /*
     axios.get(URL + "person/" + this.state.personId).then(res =>
       this.setState({
         addressId: res.data.address_id,
@@ -69,13 +71,16 @@ class UpdateSelfTable extends React.Component {
         dateOfBirth: res.data.date_of_birth
       })
     );
+    */
     axios
+
       .get(URL + "users/" + this.state.personId)
       .then(res => this.setState({ user: res.data }));
+    /*
     axios
       .get(URL + "address/", {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -92,6 +97,7 @@ class UpdateSelfTable extends React.Component {
       .catch(err => {
         console.log("Axios error: ", err);
       });
+      */
   }
 
   handlePasswordChange = event => {
@@ -99,7 +105,8 @@ class UpdateSelfTable extends React.Component {
     axios
       .put(URL + "users/" + this.state.personId, {
         user_id: this.state.personId,
-        username: this.state.user.username,
+        //username: this.state.user.username,
+        username: this.state.new_username,
         password:
           this.state.new_password !== ""
             ? this.state.new_password
@@ -115,17 +122,22 @@ class UpdateSelfTable extends React.Component {
       });
   };
 
+  setNewUsername = event => {
+    this.setState({ new_username: event.target.value });
+  };
+
   setNewPassword = event => {
     this.setState({ new_password: event.target.value });
   };
 
   render() {
-    const titleInfo = "Update Your Info";
+    const titleInfo = "Update Your Information";
     const titlePassword = "Update Your Password";
-    const { addressId, addresses } = this.state
+    const { addressId, addresses } = this.state;
 
     return (
       <div className="row">
+        {/*
         <div className="col">
           <Card bg="light" text="black" style={{ width: "100%" }}>
             <Card.Body>
@@ -143,13 +155,10 @@ class UpdateSelfTable extends React.Component {
                   >
                     {addresses.map((a, index) => {
                       return (
-                        <option
-                          key={index}
-                          value={a.address_id}
-                        >
+                        <option key={index} value={a.address_id}>
                           {a.address_line_1}
                         </option>
-                      )
+                      );
                     })}
                   </Form.Control>
                 </Form.Group>
@@ -200,11 +209,21 @@ class UpdateSelfTable extends React.Component {
             </Card.Body>
           </Card>
         </div>
+        */}
         <div className="col">
           <Card bg="light" text="black">
             <Card.Body>
-              <h3>{titlePassword}</h3>
+              <h3>{titleInfo}</h3>
               <Form onSubmit={this.handlePasswordChange}>
+                <Form.Group controlId="changeUsername">
+                  <Form.Label>New Username</Form.Label>
+                  <Form.Control
+                    type="username"
+                    placeholder="New Username"
+                    value={this.state.new_username}
+                    onChange={this.setNewUsername}
+                  />
+                </Form.Group>
                 <Form.Group controlId="changePassword">
                   <Form.Label>New Password</Form.Label>
                   <Form.Control
