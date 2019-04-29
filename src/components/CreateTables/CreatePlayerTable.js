@@ -50,8 +50,7 @@ class CreatePlayerTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )
@@ -73,8 +72,7 @@ class CreatePlayerTable extends React.Component {
     axios
       .get(personURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -102,8 +100,7 @@ class CreatePlayerTable extends React.Component {
     axios
       .get(teamURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -164,7 +161,7 @@ class CreatePlayerTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm}>
             <Form.Group controlId="addPlayerForm">
-              <Form.Label>Person ID</Form.Label>
+              <Form.Label>Person</Form.Label>
               <Form.Control onChange={this.setPerson_id} as="select">
                 {persons.map(data => {
                   return (
