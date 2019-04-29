@@ -54,8 +54,7 @@ class UpdatePersonTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )
@@ -74,13 +73,19 @@ class UpdatePersonTable extends React.Component {
   };
 
   handlePersonId = event => {
+    console.log(+event.target.selectedOptions[0].getAttribute("date_of_birth"));
+    console.log(
+      new Date(
+        +event.target.selectedOptions[0].getAttribute("date_of_birth")
+      ).toLocaleDateString()
+    );
     this.setState(
       {
         person_id: event.target.value,
         address_id: event.target.selectedOptions[0].getAttribute("address_id"),
         firstName: event.target.selectedOptions[0].getAttribute("first_name"),
         lastName: event.target.selectedOptions[0].getAttribute("last_name"),
-        dateOfBirth: event.target.selectedOptions[0].getAttribute(
+        dateOfBirth: +event.target.selectedOptions[0].getAttribute(
           "date_of_birth"
         )
       },
@@ -120,6 +125,7 @@ class UpdatePersonTable extends React.Component {
         }
       })
       .then(res => {
+        console.log(new Date(res.data[0].date_of_birth).toLocaleDateString());
         this.setState({
           person_id: res.data[0].person_id,
           address_id: res.data[0].address_id,
@@ -148,7 +154,7 @@ class UpdatePersonTable extends React.Component {
     axios
       .get(addressURL + this.state.address_id, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -166,7 +172,7 @@ class UpdatePersonTable extends React.Component {
     axios
       .get(addressURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
