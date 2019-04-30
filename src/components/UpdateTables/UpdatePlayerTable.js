@@ -43,8 +43,7 @@ class UpdatePlayerTable extends React.Component {
     axios
       .get(URL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -73,8 +72,7 @@ class UpdatePlayerTable extends React.Component {
     axios
       .get(personURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -101,8 +99,7 @@ class UpdatePlayerTable extends React.Component {
     axios
       .get(teamURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -137,8 +134,7 @@ class UpdatePlayerTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )
@@ -229,7 +225,7 @@ class UpdatePlayerTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
             <Form.Group controlId="updatePlayerForm">
-              <Form.Label>Where Player ID is:</Form.Label>
+              <Form.Label>Player</Form.Label>
               <Form.Control onChange={this.setPlayer_id} as="select">
                 {players.map(data => {
                   return (
@@ -249,7 +245,7 @@ class UpdatePlayerTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="updatePlayerForm">
-              <Form.Label>Person ID</Form.Label>
+              <Form.Label>Person</Form.Label>
               <Form.Control onChange={this.setPerson_id} as="select">
                 {persons.map(data => {
                   return (
@@ -266,7 +262,7 @@ class UpdatePlayerTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="udpatePlayerForm">
-              <Form.Label>Team ID</Form.Label>
+              <Form.Label>Team</Form.Label>
               <Form.Control onChange={this.setTeam_id} as="select">
                 {teams.map(data => {
                   return (

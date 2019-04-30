@@ -37,8 +37,7 @@ class UpdateResultTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )
@@ -107,8 +106,7 @@ class UpdateResultTable extends React.Component {
     axios
       .get(resultURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -214,7 +212,7 @@ class UpdateResultTable extends React.Component {
           <br />
           <Form onSubmit={this.handleForm.bind(this)}>
             <Form.Group controlId="updateResultForm">
-              <Form.Label>Match ID</Form.Label>
+              <Form.Label>Match</Form.Label>
               <Form.Control
                 value={matchId}
                 onChange={this.setMatchId.bind(this)}
@@ -240,7 +238,7 @@ class UpdateResultTable extends React.Component {
             </Form.Group>
 
             <Form.Group controlId="updateResultForm">
-              <Form.Label>Team ID</Form.Label>
+              <Form.Label>Team</Form.Label>
               <Form.Control
                 value={team_id}
                 onChange={this.setTeamId.bind(this)}

@@ -113,7 +113,8 @@ class CreateMatchPositionTable extends React.Component {
 
   setPlayer_id = event => {
     this.setState({
-      player_id: event.target.value
+      player_id: event.target.value,
+      message: ""
     });
   };
 
@@ -128,7 +129,8 @@ class CreateMatchPositionTable extends React.Component {
       away_team_id: +event.target.selectedOptions[0].getAttribute(
         "away_team_id"
       ),
-      date: event.target.selectedOptions[0].getAttribute("date")
+      date: +event.target.selectedOptions[0].getAttribute("date"),
+      message: ""
     });
   };
 
@@ -239,10 +241,7 @@ class CreateMatchPositionTable extends React.Component {
             </div>
             <br />
 
-            <div className="text-center">
-              {this.state.message}
-              {this.state.submitted ? this.state.position : ""}
-            </div>
+            <div className="text-center">{this.state.message}</div>
           </Form>
         </Card.Body>
       </Card>

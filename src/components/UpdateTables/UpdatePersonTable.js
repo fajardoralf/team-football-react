@@ -60,9 +60,12 @@ class UpdatePersonTable extends React.Component {
       )
       .then(res => {
         console.log("response: ", res);
-        this.setState({
-          message: "Successfully Updated"
-        });
+        this.setState(
+          {
+            message: "Successfully Updated"
+          },
+          this.fetchPersons()
+        );
       })
       .catch(err => {
         console.log("Axios error: ", err);
@@ -79,18 +82,15 @@ class UpdatePersonTable extends React.Component {
         +event.target.selectedOptions[0].getAttribute("date_of_birth")
       ).toLocaleDateString()
     );
-    this.setState(
-      {
-        person_id: event.target.value,
-        address_id: event.target.selectedOptions[0].getAttribute("address_id"),
-        firstName: event.target.selectedOptions[0].getAttribute("first_name"),
-        lastName: event.target.selectedOptions[0].getAttribute("last_name"),
-        dateOfBirth: +event.target.selectedOptions[0].getAttribute(
-          "date_of_birth"
-        )
-      },
-      this.fetchAddress
-    );
+    this.setState({
+      person_id: event.target.value,
+      address_id: event.target.selectedOptions[0].getAttribute("address_id"),
+      firstName: event.target.selectedOptions[0].getAttribute("first_name"),
+      lastName: event.target.selectedOptions[0].getAttribute("last_name"),
+      dateOfBirth: +event.target.selectedOptions[0].getAttribute(
+        "date_of_birth"
+      )
+    });
   };
 
   setAddressId = event => {

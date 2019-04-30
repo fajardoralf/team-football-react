@@ -34,11 +34,11 @@ class UpdateTeamTable extends React.Component {
     axios
       .get(teamURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
+        console.log(res);
         this.setState({
           team_id: res.data[0].team_id,
           team_name: res.data[0].team_name,
@@ -74,8 +74,7 @@ class UpdateTeamTable extends React.Component {
     axios
       .get(ownerURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -104,8 +103,7 @@ class UpdateTeamTable extends React.Component {
     axios
       .get(coachURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -134,8 +132,7 @@ class UpdateTeamTable extends React.Component {
     axios
       .get(locationURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -175,8 +172,7 @@ class UpdateTeamTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )

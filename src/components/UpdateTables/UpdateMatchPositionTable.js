@@ -40,8 +40,7 @@ class UpdateMatchPositionTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )
@@ -68,11 +67,11 @@ class UpdateMatchPositionTable extends React.Component {
     axios
       .get(URL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
+        console.log(res);
         this.setState({
           matchPosition_id: res.data[0].matchPosition_id,
           player_id: res.data[0].player.player_id,
@@ -101,8 +100,7 @@ class UpdateMatchPositionTable extends React.Component {
     axios
       .get(matchURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {

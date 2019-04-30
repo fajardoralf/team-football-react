@@ -22,8 +22,7 @@ class CreateContactTable extends React.Component {
     axios
       .get(personURL, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          
+          "Content-Type": "application/json;charset=UTF-8"
         }
       })
       .then(res => {
@@ -54,8 +53,7 @@ class CreateContactTable extends React.Component {
         },
         {
           headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            
+            "Content-Type": "application/json;charset=UTF-8"
           }
         }
       )
@@ -146,7 +144,6 @@ class CreateContactTable extends React.Component {
               <Form.Control
                 type="contactDetail"
                 placeholder="Contact Detail"
-                style={{ textTransform: "capitalize" }}
                 value={this.state.contactDetail}
                 onChange={this.setContactDetail.bind(this)}
               />
