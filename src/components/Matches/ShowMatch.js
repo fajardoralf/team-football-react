@@ -25,7 +25,7 @@ class ShowMatch extends React.Component {
 
         return (
             <Card className="match">
-                <div className="team">{homeTeam} - {awayTeam} </div>
+                <div className="team"><strong>{homeTeam} - {awayTeam} </strong></div>
                 {(role) ?
                     <div className="result"> {result[0]} - {result[1]} </div>
                     :

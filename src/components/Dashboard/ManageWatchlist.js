@@ -51,7 +51,10 @@ class ManageWatchlist extends React.Component {
         for (let player of this.state.playerList) {
             if (player.player_id === id) return player
         }
-        return { person: {} }
+        return { person: {
+            first_name: '',
+            last_name: ''
+        } }
     }
 
     getTeamId(name) {
@@ -175,13 +178,13 @@ class ManageWatchlist extends React.Component {
         const players = playerList
             .filter(d =>
                 playerInput === '' || 
-                (d.person.first_name + ' ' + d.person.last_name).toLocaleLowerCase().includes(playerInput.toLocaleLowerCase())
+                (d.person ? d.person.first_name + ' ' + d.person.last_name : '').toLocaleLowerCase().includes(playerInput.toLocaleLowerCase())
             )
             .map((d, index) =>
                 <li
-                    onClick={this.onClickPlayer.bind(this, (d.person.first_name + ' ' + d.person.last_name))}
+                    onClick={this.onClickPlayer.bind(this, (d.person && d.person.first_name + ' ' + d.person.last_name))}
                     key={index}>
-                    {d.person.first_name + ' ' + d.person.last_name}
+                    {d.person ? d.person.first_name + ' ' + d.person.last_name : 'Unknown name'}
                 </li>);
         const teams = teamList
             .filter(d => teamInput === '' || d.team_name.toLocaleLowerCase().includes(teamInput.toLocaleLowerCase()))

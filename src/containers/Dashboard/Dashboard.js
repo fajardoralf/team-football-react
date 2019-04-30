@@ -320,7 +320,7 @@ class Dashboard extends React.Component {
                   43: <UpdateOwnerTable />,
                   44: <UpdateCoachTable />,
                   14: <UpdateAddressTable />,
-                  15: <UpdateSelfTable personID="0" />,
+                  15: <UpdateSelfTable />,
                   16: <ManageWatchlist />,
                   19: <UpdateContactTable />,
                   20: <UpdateLocationTable />,
